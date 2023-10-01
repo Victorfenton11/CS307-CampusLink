@@ -16,6 +16,10 @@ module.exports = {
           loader: "babel-loader",
         },
       },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'], // Add this rule for CSS files
+      },
     ],
   },
   optimization: {
@@ -26,4 +30,5 @@ module.exports = {
       "process.env.NODE_ENV": JSON.stringify("development")
     }),
   ],
+  
 };
