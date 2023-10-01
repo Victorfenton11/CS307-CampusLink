@@ -46,7 +46,7 @@ export default function LandingPage() {
 
   return (
     <div className='background'>
-      <img src='campuslink.png' alt='Campus link' className='logo'></img>
+      <img src='/static/campuslink.png' alt='Campus link' className='logo'></img>
       <h1>Register an Account</h1>
       {emailError && <p className="error">{emailError}</p>}
       <form onSubmit={handleSubmit}>
