@@ -1,5 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const devMode = process.env.NODE_ENV !== "production";
 
 module.exports = {
   entry: "./src/index.js",
@@ -10,12 +12,26 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",
         },
       },
+      {
+        test: /\.(jpg|jpeg|png)$/,
+        use: {
+          loader: 'url-loader'
+        }
+      },
+      {
+        test: /\.css$/,
+        use: [
+          devMode ? "style-loader" : MiniCssExtractPlugin.loader,
+          "css-loader",
+          "postcss-loader",
+        ],
+      }
     ],
   },
   optimization: {

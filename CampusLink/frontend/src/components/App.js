@@ -1,10 +1,11 @@
 import React from 'react';
+import LandingPage from './LandingPage';
 
 export default function App() {
 
   return (
     <>
-      <h1>CampusLink Frontend</h1>
+      <LandingPage />
     </>
   );
 }
