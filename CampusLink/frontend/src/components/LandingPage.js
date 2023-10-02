@@ -1,8 +1,9 @@
 import React from 'react'
+import HomePage from './HomePage'
 import '../styles/LandingPage.css'
 
 export default function LandingPage() {
   return (
-    <div className='Landing'>Landing Page Test</div>
+    <HomePage />
   )
 }
