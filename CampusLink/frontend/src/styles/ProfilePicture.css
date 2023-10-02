@@ -1,0 +1,89 @@
+body{
+    font-family: 'Hind Guntur', sans-serif;
+    color: #054231;
+    display: flex;
+    justify-content: center;
+  }
+  
+  form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .field{
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    }
+  input[type="file"] {
+    display: none;
+  }
+  
+  .custom-file-upload {
+    border-radius: 50%;
+    position: relative;
+    display: inline-block;
+    padding: 6px;
+    cursor: pointer;
+    background: linear-gradient(270deg, #440c5a, #0912b7);
+    margin-bottom: 25px;
+  }
+  
+  .img-wrap{
+    position: relative;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+  .img-upload:hover:before{
+   opacity: 1;
+  }
+  img {
+    width: auto;
+    height: 100%;
+  }
+
+  input:focus{
+    outline: none;
+    border: 1px solid #1f11bb;
+  }
+  button{
+    position: relative;
+    color: #054231;
+    letter-spacing: 1px;
+    margin: 20px;
+    font-size: 18px;
+    padding: 10px;
+    text-align: center;
+    transition: 0.5s;
+    border-radius: 10px;
+    cursor: pointer;
+    border-radius: 25px;
+    border: none;
+    background: #2e14d5;
+  }
+  .save{
+    font-weight: 600;
+    left: -20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    width: 20px;
+    box-shadow: 20px 0px 40px 0px  #2912bd;
+  }
+  .edit{
+    color: #fff;
+    width: 180px;
+  }
+  button:hover{
+    left: 0;
+    color: #fff;
+    width: 180px;
+  }
+  button:focus{
+    outline: none;
+  }
+
+  

@@ -1,5 +1,5 @@
 import React from 'react'
-
+import '../styles/ProfilePicture.css'
 
 const ImgUpload =({
     onChange,
@@ -23,7 +23,7 @@ const Profile =({
         <h1>Profile Card</h1>
         <label className="custom-file-upload fas">
         <div className="img-wrap" >
-            <img for="photo-upload" src={src}/>
+            <img htmlFor="photo-upload" src={src}/>
         </div>
         </label>
         <button type="submit" className="edit">Edit Profile </button>
@@ -37,7 +37,7 @@ const Edit =({
 })=>
     <div className="card">
     <form onSubmit={onSubmit}>
-        <h1>Profile Card</h1>
+        <h1>Profile</h1>
         {children}
         <button type="submit" className="save">Save </button>
     </form>
@@ -46,7 +46,7 @@ const Edit =({
 class ProfilePic extends React.Component {
     state = {
     file: '',
-    imagePreviewUrl: 'https://github.com/OlgaKoplik/CodePen/blob/master/profile.jpg?raw=true',
+    imagePreviewUrl: require('./DummyProfilePic.jpg').default,
     name:'',
     status:'',
     active: 'edit'
