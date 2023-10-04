@@ -47,8 +47,6 @@ class ProfilePic extends React.Component {
     state = {
     file: '',
     imagePreviewUrl: require('./DummyProfilePic.jpg').default,
-    name:'',
-    status:'',
     active: 'edit'
     }
 
@@ -75,8 +73,6 @@ class ProfilePic extends React.Component {
     
     render() {
     const {imagePreviewUrl, 
-            name, 
-            status, 
             active} = this.state;
     return (
         <div>
@@ -87,9 +83,7 @@ class ProfilePic extends React.Component {
         ):(
             <Profile 
             onSubmit={this.handleSubmit} 
-            src={imagePreviewUrl} 
-            name={name} 
-            status={status}/>)}
+            src={imagePreviewUrl} />)}
         
         </div>
     )
