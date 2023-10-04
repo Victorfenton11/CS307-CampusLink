@@ -12,11 +12,6 @@ body{
     align-items: center;
   }
   
-  .field{
-    margin: 5px;
-    display: flex;
-    flex-direction: column;
-    }
   input[type="file"] {
     display: none;
   }
@@ -25,16 +20,16 @@ body{
     border-radius: 50%;
     position: relative;
     display: inline-block;
-    padding: 6px;
+    padding: 0.5em;
     cursor: pointer;
     background: linear-gradient(270deg, #440c5a, #0912b7);
-    margin-bottom: 25px;
+    margin-bottom: 2em;
   }
   
   .img-wrap{
     position: relative;
-    width: 200px;
-    height: 200px;
+    width: 10em;
+    height: 10em;
     overflow: hidden;
     border-radius: 50%;
   }
@@ -48,42 +43,46 @@ body{
 
   input:focus{
     outline: none;
-    border: 1px solid #1f11bb;
+    border: 0.05em solid #1f11bb;
   }
   button{
     position: relative;
     color: #054231;
-    letter-spacing: 1px;
-    margin: 20px;
-    font-size: 18px;
-    padding: 10px;
+    letter-spacing: 0.05em;
+    margin: 1em;
+    font-size: 1em;
+    padding: 0.5em;
     text-align: center;
     transition: 0.5s;
-    border-radius: 10px;
+    border-radius: 0.5em;
     cursor: pointer;
-    border-radius: 25px;
+    border-radius: 1.5em;
     border: none;
     background: #2e14d5;
   }
   .save{
     font-weight: 600;
-    left: -20px;
+    left: -1em;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    width: 20px;
-    box-shadow: 20px 0px 40px 0px  #2912bd;
+    letter-spacing: 0.05em;
+    width: 1em;
+    box-shadow: 1em 0em 2em 0em  #2912bd;
   }
   .edit{
     color: #fff;
-    width: 180px;
+    width: 8em;
   }
   button:hover{
     left: 0;
     color: #fff;
-    width: 180px;
+    width: 8em;
   }
   button:focus{
     outline: none;
+  }
+
+  @media screen and (min-width: 50em)  {
+
   }
 
   
