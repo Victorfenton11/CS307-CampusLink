@@ -1,0 +1,47 @@
+
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .field{
+    margin: 0.1em;
+    display: flex;
+    flex-direction: column;
+    }
+label{
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #676767;
+    }
+  input{
+    font-family: Georgia, serif;
+    border-radius: 1.5em;
+    border: 0.05em solid #b7b7b7;
+    padding: 0.5em 0.5em 0.5em 1em;
+    font-size: 1em;
+    transition: 0.2s;
+  }
+  input:focus{
+    outline: none;
+    border: 1px solid #2b18a4;
+  }
+  input::placeholder{
+    color: #bebebe;
+  }
+  .name{ 
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #676767;
+    max-width: 220px;
+    overflow-wrap: break-word;
+  }
+  
+
+
+  
+
+  
