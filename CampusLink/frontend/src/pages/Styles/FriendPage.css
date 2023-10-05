@@ -1,0 +1,23 @@
+.page-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(63, 46, 97);
+
+}
+
+.content-wrapper {
+    position: absolute;
+    top: 20vh;
+    left: 25%;
+    width: 50%;
+    margin:auto;
+}
+
+.Searchbar {
+    text-align: center;
+}
+
+.Friendlist {
+    text-align: center;
+}
