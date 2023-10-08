@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './LandingPage.css';
+import '../styles/LandingPage.css';
 
 export default function LandingPage() {
   const [formData, setFormData] = useState({
@@ -43,34 +43,33 @@ export default function LandingPage() {
     // Handle form submission logic here
   }
   
-
   return (
     <div className='background'>
-      <img src='/static/campuslink.png' alt='Campus link' className='logo'></img>
+      <img src='/static/campuslink.png' alt='Campus link' className='landinglogo'></img>
       <h1>Register an Account</h1>
       {emailError && <p className="error">{emailError}</p>}
-      <form onSubmit={handleSubmit}>
-        <label>
+      <form onSubmit={handleSubmit} className='form'>
+        <label className='label'>
           Name
-          <input type="text" name="Name"  className='input_box' onChange={handleChange} />
+          <input type="text" name="Name"  className='input input_box' onChange={handleChange}/>
         </label>
         <br />
-        <label>
+        <label className='label'>
           Email
-          <input type="email" name="Email" className='input_box' onChange={handleChange}  />
+          <input type="email" name="Email" className='input input_box' onChange={handleChange}  />
         </label>
         <br />
-        <label>
+        <label className='label'>
           Username
-          <input type="text" name="username" className='input_box' onChange={handleChange} />
+          <input type="text" name="username" className='input input_box' onChange={handleChange} />
         </label>
         <br />
-        <label>
+        <label className='label'>
           Password
-          <input type="password" name="password" className='input_box' onChange={handleChange} />
+          <input type="password" name="password" className='input input_box' onChange={handleChange} />
         </label>
         <br />
-        <label>
+        <label className='label'>
           Profile Pic
           <input type="file" onChange={handleFileChange} />
         </label>
