@@ -1,15 +1,10 @@
-import React from "react";
+import React, { useMemo } from "react";
 import "./styles/DataTable.css";
 import {useTable} from "react-table";
 
-function Table({ columns, data }) {
-    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = 
-    useTable({columns, data});
-}
-
 const DataTable = ({userdata}) => {
     //when API is implemented, this is where you fetch
-    const data = React.useMemo(() => {userdata}, []);
+    const data = React.useMemo(() => userdata, []);
     const columns = React.useMemo(() => [  
         {
             Header: "Profile Picture",
@@ -24,12 +19,43 @@ const DataTable = ({userdata}) => {
             accessor: "last_name"
         }
 
-    ]);
+      ],
+      []
+    );
+    const tableInstance = useTable({ 
+        columns,
+        data
+    })
+    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = 
+    tableInstance
 
     return (
-        <div>
-            < Table columns={columns} data={data} />
-            <h1>hi</h1>
+        <div className="container">
+            <table {...getTableProps()}>
+                <thead>
+                  {headerGroups.map((headerGroup) => (
+                    <tr {...headerGroup.getHeaderGroupProps()}>
+                        {headerGroup.headers.map((column) => (
+                            <th {...column.getHeaderProps()}>
+                                {column.render("Header")}
+                            </th>
+                        ))}
+                    </tr>  
+                  ))}
+                </thead>
+                <tbody {...getTableBodyProps()}>
+                  {rows.map((row) => {
+                      prepareRow(row)
+                      return (
+                          <tr {...row.getRowProps()}>
+                              {row.cells.map((cell) => (
+                                  <td {...cell.getCellProps()}> {cell.render("Cell")}</td>
+                              ))}
+                          </tr>
+                      );
+                  })}
+                </tbody>
+            </table>
         </div>
     );
 

@@ -9,8 +9,9 @@ export default function FriendPage() {
     <div className="page-wrapper">
         <div className="content-wrapper">
             <div className="Searchbar" >Searchbar</div>
-            <div className="Friendlist" >Friendlist</div>
-            <DataTable data={MockData}/>
+            <div className="List-Wrapper" >
+              <DataTable userdata={MockData}/>
+            </div>
         </div>
         
         <Footer></Footer>
