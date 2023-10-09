@@ -1,5 +1,5 @@
 :root {
-    --background-color: #2b3e4f;
+    --background-color: #2B3947;
 }
 
 .navbar {
@@ -29,9 +29,10 @@ ion-icon {
 }
 
 .icon {
-    width: 70%;
-    height: 70%;
+    width: 60%;
+    height: 60%;
     margin-right: 2%;
+    margin-top: 5%;
     padding: 0;
 }
 
@@ -62,10 +63,16 @@ ion-icon {
     }
 
     .Home {
-        transform: translateY(4.5vh);
+        transform: translateY(3.6vh);
         height: auto;
         max-width: 6em;
         max-height: 6em;
+    }
+
+    .icon {
+        width: 50%;
+        height: 50%;
+        margin-right: 2%;
     }
 
     ion-icon {
