@@ -4,4 +4,4 @@ from .models import ClassLocation
 class ClassLocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = ClassLocation
-        fields = ('acronym', 'building_name', 'floor', 'room')
+        fields = ('acronym', 'building_name')
