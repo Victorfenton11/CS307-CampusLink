@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import main
+from .views import ClassLocationView
 
 urlpatterns = [
-    path('', main)
+    path('class_location/', ClassLocationView.as_view())
 ]

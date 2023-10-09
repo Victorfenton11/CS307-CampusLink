@@ -22,7 +22,6 @@ export default function HomePage() {
         </Routes>
       </div>
       <Navbar className='navbar'/>
-      <Footer />
     </div>
   )
 }

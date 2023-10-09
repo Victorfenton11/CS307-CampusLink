@@ -5,7 +5,7 @@ import { render } from "react-dom";
 
 const Footer = () => (
     <div className="footerWrapper"> 
-        <div classname="logo">
+        <div>
             <Logo style={{height: "30%", width: "30%"}}></Logo>
         </div>
         <div className="contentWrapper">

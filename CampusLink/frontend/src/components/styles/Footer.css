@@ -1,12 +1,8 @@
-.footerWrapper {
-    display: none;
-}
-
 @media screen and (min-width: 50em)  {
     .footerWrapper {
         display: flex;
         align-content: center;
-        position: absolute;
+        max-height: 10vh;
         bottom: 0;
         width: 100%;;
         background-color: rgba(25, 7, 77, 0.664);
