@@ -3,7 +3,7 @@ import "./styles/DataTable.css";
 import {useTable} from "react-table";
 
 const DataTable = ({userdata}) => {
-    //when API is implemented, this is where you fetch
+    //So that it works with whatever we end up using, this literally just takes in json data
     const data = React.useMemo(() => userdata, []);
     const columns = React.useMemo(() => [  
         {

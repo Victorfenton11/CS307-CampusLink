@@ -12,8 +12,7 @@ export default function FriendPage() {
             <div className="List-Wrapper" >
               <DataTable userdata={MockData}/>
             </div>
-        </div>
-        
+        </div>        
     </div>
   )
 }
