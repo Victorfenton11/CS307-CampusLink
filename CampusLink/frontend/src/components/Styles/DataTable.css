@@ -1,0 +1,62 @@
+/* Container styles */
+.container {
+    width: 100%;
+    overflow: scroll; /* Enable horizontal scrolling if needed */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+/* Table styles */
+table {
+    height: 100%;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Table header row styles */
+thead tr {
+    background-color: #f2f2f2;
+}
+
+/* Table header cell styles */
+th {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+}
+
+/* Table body row styles */
+tbody tr {
+    background-color: #fff;
+}
+
+/* Table body cell styles */
+td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+}
+
+/* Alternate row styling (optional) */
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Hover effect for table rows (optional) */
+tbody tr:hover {
+    background-color: #e0e0e0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    th, td {
+        padding: 5px; /* Adjust cell padding for smaller screens */
+    }
+}
+
+@media (max-width: 500px) {
+    .container {
+        overflow-x: auto; /* Enable horizontal scrolling on smaller screens */
+    }
+}

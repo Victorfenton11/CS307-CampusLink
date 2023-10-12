@@ -14,7 +14,6 @@ export default function FriendPage() {
             </div>
         </div>
         
-        <Footer></Footer>
     </div>
   )
 }
