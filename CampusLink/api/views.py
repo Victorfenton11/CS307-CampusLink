@@ -18,14 +18,14 @@ def main(request):
 
 @api_view(['GET'])
 def getAccount(request,id):
-    user = User.objects.get(UserId=id)
+    user = User.objects.get(UserID=id)
     user_serializer = UserSerializer(user, many=False)
     return JsonResponse(user_serializer.data, safe=False)
 
 @csrf_exempt
 def userApi(request,id=0):
     if request.method=='GET' and id !=0:
-        user = User.objects.get(UserId=id)
+        user = User.objects.get(UserID=id)
         user_serializer = UserSerializer(user, many=False)
         return JsonResponse(user_serializer.data, safe=False)
     elif request.method=='GET':
@@ -41,14 +41,14 @@ def userApi(request,id=0):
         return JsonResponse("Failed to Add",safe=False)
     elif request.method=='PUT':
         user_data=JSONParser().parse(request)
-        user=User.objects.get(UserId=user_data['UserId'])
+        user=User.objects.get(UserID=user_data['UserID'])
         user_serializer=UserSerializer(user,data=user_data)
         if user_serializer.is_valid():
             user_serializer.save()
             return JsonResponse("Updated Successfully",safe=False)
         return JsonResponse("Failed to Update")
     elif request.method=='DELETE':
-        user=User.objects.get(UserId=id)
+        user=User.objects.get(UserID=id)
         user.delete()
         return JsonResponse("Deleted Successfully",safe=False)
 
