@@ -3,8 +3,8 @@ import '../styles/LandingPage.css';
 
 export default function LandingPage() {
   const [formData, setFormData] = useState({
-    Name: '',
-    Email: '',
+    name: '',
+    email: '',
     username: '',
     password: '',
     profilePic: null,
@@ -35,12 +35,38 @@ export default function LandingPage() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!validateEmail(formData.Email)) {
+    if (!validateEmail(formData.email)) {
       setEmailError('Please enter a valid Purdue email address');
       return; 
     }
     setEmailError(''); // Clear error message if email is valid
     // Handle form submission logic here
+    const data = new FormData();
+    data.append('name', formData.name);
+    data.append('email', formData.email);
+    data.append('username', formData.username);
+    data.append('password', formData.password);
+    if (formData.profilePic) {
+        data.append('profile_pic', formData.profilePic);
+    }
+    fetch('/api/user/create/', {
+      method: 'POST',
+      body: data
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.email && data.email[0] === 'user with this email already exists.') {
+        console.log('Setting error');
+        setEmailError('User with this email already exists.');
+      } else {
+        // console.log('Success:', data);
+        console.log('Clearing error');
+        setEmailError('');
+      }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
   }
   
   return (
@@ -51,12 +77,12 @@ export default function LandingPage() {
       <form onSubmit={handleSubmit} className='form'>
         <label className='label'>
           Name
-          <input type="text" name="Name"  className='input input_box' onChange={handleChange}/>
+          <input type="text" name="name"  className='input input_box' onChange={handleChange}/>
         </label>
         <br />
         <label className='label'>
           Email
-          <input type="email" name="Email" className='input input_box' onChange={handleChange}  />
+          <input type="email" name="email" className='input input_box' onChange={handleChange}  />
         </label>
         <br />
         <label className='label'>
@@ -71,7 +97,7 @@ export default function LandingPage() {
         <br />
         <label className='label'>
           Profile Pic
-          <input type="file" onChange={handleFileChange} />
+          <input type="file" name="profile_pic"onChange={handleFileChange} />
         </label>
         <br />
         <button type="submit">Sign up</button>

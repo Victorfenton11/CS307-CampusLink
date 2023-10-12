@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Footer from './Footer'
+import Footer from '../components/Footer'
 import '../styles/DeletingPage.css'
 
 export default function DeletingPage() {
