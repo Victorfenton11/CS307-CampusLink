@@ -7,8 +7,8 @@ import '../styles/LandingPage.css';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-// import CourseList from '../components/CourseList';
-// import ClassList from '../components/ClassList';
+import CourseList from '../components/CourseList';
+import ClassList from '../components/ClassList';
 
 const CourseScheduler = () => {
   const [courses, setCourses] = useState([]);
@@ -27,13 +27,19 @@ const CourseScheduler = () => {
   }, []);
 
   const handleAddClass = (course) => {
+    // Generate new course number
+    const courseNumber = courseNumbers[course.Id] ? courseNumbers[course.Id] + 1 : 1;
     // Add course to class list
-    setClassList([...classList, course]);
+    setClassList([...classList, { ...course, Number: courseNumber }]);
+    // Update course number dictionary
+    setCourseNumbers({ ...courseNumbers, [course.Id]: courseNumber });
   };
 
   const handleDeleteClass = (course) => {
     // Remove course from class list
-    setClassList(classList.filter(c => c !== course));
+    setClassList(classList.filter(c => c.Id !== course.Id));
+    // Remove course number from dictionary
+    setCourseNumbers({ ...courseNumbers, [course.Id]: undefined });
   };
 
   const handleSearch = (term) => {
@@ -50,11 +56,10 @@ const CourseScheduler = () => {
 
   return (
     <div>
-      <Logo />
-      {/* <SearchBar onSearch={handleSearch} /> */}
-      {/* <CourseList courses={filteredCourses} onAddClass={handleAddClass} />
-      <ClassList classList={classList} onDeleteClass={handleDeleteClass} /> */}
-      <Footer />
+      <h1>Course Scheduler</h1>
+      <Link to="/">Back to Landing Page</Link>
+      <CourseList courses={courses} onAddClass={handleAddClass} />
+      <ClassList classes={classList} onDeleteClass={handleDeleteClass} />
     </div>
   );
 };
