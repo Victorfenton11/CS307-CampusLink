@@ -46,8 +46,10 @@ export default function LandingPage() {
     data.append('email', formData.email);
     data.append('username', formData.username);
     data.append('password', formData.password);
+    data.append('Major', null);
+    data.append('Interest', null);
     if (formData.profilePic) {
-        data.append('profile_pic', formData.profilePic);
+        data.append('photoFileName', formData.profilePic);
     }
     fetch('/api/user/create/', {
       method: 'POST',
@@ -58,8 +60,13 @@ export default function LandingPage() {
       if (data.email && data.email[0] === 'user with this email already exists.') {
         console.log('Setting error');
         setEmailError('User with this email already exists.');
-      } else {
-        // console.log('Success:', data);
+      }
+      else if (data.username && data.username[0] === 'user with this username already exists.') {
+        console.log('Setting error');
+        setEmailError('User with this username already exists.');
+      } 
+      else {
+        console.log('Success:', data);
         console.log('Clearing error');
         setEmailError('');
       }

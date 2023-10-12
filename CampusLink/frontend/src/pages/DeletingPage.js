@@ -15,9 +15,20 @@ export default function DeletingPage() {
     e.preventDefault();
     if (isConfirmed) {
       // Call the function to delete the account here
-      console.log('Account Deleted');
-    } else {
-      console.log('Incorrect Confirmation Phrase');
+      fetch('/api/user/delete/chen3288@purdue.edu/', {
+        method: 'DELETE',
+      })
+      .then(response => {
+        if (response.status === 204) {
+          console.log('Account Deleted');
+          //Redirect
+        }
+        else {
+          console.error('Error deleting account');
+        }
+
+      })
+      
     }
   }
 

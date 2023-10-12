@@ -8,7 +8,7 @@ const appDiv = ReactDOM.createRoot(document.getElementById('app'));
 appDiv.render(
   <React.StrictMode>
     <BrowserRouter>
-      <DeletingPage />
+      <LandingPage />
     </BrowserRouter>
   </React.StrictMode>
 );
