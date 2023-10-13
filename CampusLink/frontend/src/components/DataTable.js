@@ -7,16 +7,8 @@ const DataTable = ({userdata}) => {
     const data = React.useMemo(() => userdata, []);
     const columns = React.useMemo(() => [  
         {
-            Header: "Profile Picture",
-            accessor: "profpic",
-        }, 
-        {
-            Header: "First Name",
-            accessor: "first_name"
-        },
-        {
-            Header: "Last Name",
-            accessor: "last_name"
+            Header: "name",
+            accessor: "Name",
         }
 
       ],
