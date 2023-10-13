@@ -32,22 +32,30 @@ export default function Map() {
   }
 
   async function displayClassLocation(building_name, floor, room) {
+    if ((floor) && (room.toString().length > 4 || room.toString().length < 3)) {
+      alert("The entered Class Location or Room number is invalid.");
+      return;
+    }
+
     setDirectionsResponse(null);
     document.getElementById('map').style.height = "58vh";
 
     if (!building_name) {
-      setClassLocation(['', floor, parseInt(room).toString()]);
+      setClassLocation(['', floor, room.toString()]);
       return;
+    } else if (!floor) {
+      setClassLocation([building_name.slice(0, -18), '', ''])
     } else {
-      setClassLocation([building_name.slice(0, -18), floor, parseInt(room).toString()]);
-      const directionsService = new google.maps.DirectionsService();
-      const results = await directionsService.route({
-        origin: userLocation,
-        destination: building_name,
-        travelMode: google.maps.TravelMode.WALKING
-      });
-      setDirectionsResponse(results);
+      setClassLocation([building_name.slice(0, -18), floor, room.toString()]);
     }
+
+    const directionsService = new google.maps.DirectionsService();
+    const results = await directionsService.route({
+      origin: userLocation,
+      destination: building_name,
+      travelMode: google.maps.TravelMode.WALKING
+    });
+    setDirectionsResponse(results);
   }
 
   async function displayLocation(destination) {
