@@ -9,6 +9,7 @@ class User(models.Model):
     Password = models.CharField(max_length=500)
     UserName = models.CharField(max_length=500)
     UserEmail = models.CharField(max_length=500)
-    PhotoFileName = models.CharField(max_length=500, null=True)
+    PhotoFileName =  models.CharField(max_length=500, null=True)
     Major = models.CharField(max_length=500, default = majorValue)
     Interest = models.CharField(max_length=1000, default = interestValue)
+    isPrivate = models.BooleanField(default=False)

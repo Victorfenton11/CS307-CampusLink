@@ -92,9 +92,11 @@ const ProfilePageHC = () => {
 
   function handlePrivate() {
     setIsPrivate(true);
+    setUserData({ ...userData, isPrivate: true});
   }
   function handlePublic() {
     setIsPrivate(false);
+    setUserData({ ...userData, isPrivate: false});
   }
 
 
@@ -139,7 +141,7 @@ const ProfilePageHC = () => {
     );
   }
 
-  if (isPrivate) {
+  if (userData.isPrivate) {
     return (
       <div className='background'>
       <div className='top'>User Profile</div>
