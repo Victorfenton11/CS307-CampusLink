@@ -1,5 +1,9 @@
+:root {
+  --background-color: #2B3947;
+}
+
 .profile-style {
-  background-color: #2B3E4F;
+  background-color: var(--background-color);
   color: #5e7cb9;
   overflow-y: scroll;
   height: 100vh;

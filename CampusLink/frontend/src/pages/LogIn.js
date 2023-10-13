@@ -12,7 +12,7 @@ const LoginPage = () => {
       username: '',
       password: '',
     });
-  const [userID, setUserID] = useState(3);
+  const [userID, setUserID] = useState(1);
   
   // State to track errors
   const [error, setError] = useState(null);
@@ -77,7 +77,7 @@ const LoginPage = () => {
   
   if (credential) {
       console.log("userID", userID);
-      useNavigate('/', {userID: userData.UserID});
+      return navigate('/');
   }
   // Render user profile
   return (
@@ -97,7 +97,7 @@ const LoginPage = () => {
           Forgot your password?
           <Link to='/reset-password'>Reset Password</Link>
         </div>
-        <button className='landing-button' onClick={() => navigate('/')}>Login</button>
+        <button className='landing-button' onClick={handleSubmit}>Login</button>
         <div className="inline-quesiton medium-text">
           Don't have an account yet?
           <Link to='/signup'>Sign Up</Link>

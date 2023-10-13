@@ -115,9 +115,8 @@ const Profile = () => {
         </div>
         <input id="photo-upload" type="file" onChange={imageUpload}/> 
         </label>
-        <label className='label'>Name:
+        <label className='label'>Name:</label>
         <input type="text" value={userData.Name} onChange={(e) => setUserData({ ...userData, Name: e.target.value })} />
-        </label>
         <label className='label'>UserName:</label>
         <input type="text" value={userData.UserName} onChange={(e) => setUserData({ ...userData, UserName: e.target.value })} />
         <label className='label'>Email:</label>

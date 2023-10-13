@@ -1,0 +1,52 @@
+.discover-style {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  
+.discover-style header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+.discover-style nav a {
+    color: #333;
+    text-decoration: none;
+}
+  
+.discover-style nav a:hover {
+    text-decoration: underline;
+}
+  
+.discover-style .main-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .discover-style .course-list {
+    width: 70%;
+    display: inline-block;
+    vertical-align: top;
+  }
+  
+  .discover-style .class-list {
+    width: 30%;
+    display: inline-block;
+    vertical-align: top;
+  }
+  
+  @media (max-width: 600px) {
+    .discover-style .main-container {
+      flex-direction: column;
+    }
+  
+    .discover-style .course-list,
+    .class-list {
+      width: 100%;
+    }
+  }

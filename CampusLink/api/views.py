@@ -3,7 +3,7 @@ from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import ClassLocationSerializer, UserSerializer
-from .models import ClassLocation, User
+from .models import ClassLocation, User, Class
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
@@ -96,6 +96,12 @@ def userApi(request,id=0):
         user.delete()
         return JsonResponse("Deleted Successfully",safe=False)
 
+def userNameApi(request,username):
+    if request.method=='GET' and username !='9999':
+        user = User.objects.get(UserName=username)
+        user_serializer = UserSerializer(user, many=False)
+        return JsonResponse(user_serializer.data, safe=False)
+
 @csrf_exempt
 def SaveFile(request):
     file=request.FILES['file']
@@ -136,3 +142,16 @@ def send_email2(request):
         # In reality we'd use a form class
         # to get proper validation errors.
         return HttpResponse("Make sure all fields are entered and valid.")
+
+# handles POST request to save class list
+@csrf_exempt
+def save_class_list(request):
+    if request.method == 'POST':
+        class_list = request.POST.getlist('classList[]')
+        Class.objects.all().delete()   # Delete all existing classes
+        for class_data in class_list:
+            class_obj = Class(**class_data)
+            class_obj.save()
+        return JsonResponse({'success': True})
+    else:
+        return JsonResponse({'success': False, 'error': 'Invalid request method'})

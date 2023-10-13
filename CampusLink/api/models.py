@@ -16,3 +16,10 @@ class User(models.Model):
     PhotoFileName = models.CharField(max_length=500, null=True)
     Major = models.CharField(max_length=500, default = majorValue)
     Interest = models.CharField(max_length=1000, default = interestValue)
+
+class Class(models.Model):
+    abbreviation = models.CharField(max_length=10)
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f'{self.abbreviation} - {self.name}'
