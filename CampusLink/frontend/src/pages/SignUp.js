@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import './styles/SignUp.css';
+import './styles/SignUp.css'
 import logo from '../../static/images/CampusLink_white_text.png'
+import { Link } from 'react-router-dom';
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -47,8 +48,8 @@ export default function SignUp() {
     data.append('email', formData.email);
     data.append('username', formData.username);
     data.append('password', formData.password);
-    data.append('Major', null);
-    data.append('Interest', null);
+    data.append('Major', '');
+    data.append('Interest', '');
     if (formData.profilePic) {
         data.append('photoFileName', formData.profilePic);
     }
@@ -78,8 +79,8 @@ export default function SignUp() {
   }
   
   return (
-    <div className='background'>
-      <img src={logo} alt='Campus link' className='landinglogo'></img>
+    <div className='signup-style'>
+      <img src={logo} alt='Campus link' className='landing-logo'></img>
       <h1>Register an Account</h1>
       {emailError && <p className="error">{emailError}</p>}
       <form onSubmit={handleSubmit} className='form'>
@@ -105,11 +106,15 @@ export default function SignUp() {
         <br />
         <label className='label'>
           Profile Pic
-          <input type="file" name="profile_pic"onChange={handleFileChange} />
+          <input type="file" className='file-input' name="profile_pic" onChange={handleFileChange} />
         </label>
         <br />
-        <button type="submit">Sign up</button>
+        <button className='landing-button' type="submit">Sign up</button>
       </form>
+      <div className="inline-quesiton medium-text">
+        Already have an account?
+        <Link to='/login'>Log in</Link>
+      </div>
     </div>
   );
 }

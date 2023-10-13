@@ -7,7 +7,7 @@ export default function Navbar() {
   return (
     <div className='navbar'>
         <div className='Home'>
-            <Link to='/forum'><img alt='icon' src={icon} className='icon'/></Link>
+            <Link to='/'><img alt='icon' src={icon} className='icon'/></Link>
         </div>
         <div className='menu'>
           <Link to='/map'><ion-icon name="map-outline"></ion-icon></Link>

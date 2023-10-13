@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+
+BASE_DIR=Path(__file__).resolve(strict=True).parent.parent
+MEDIA_URL='/Photos/'
+MEDIA_ROOT=os.path.join(BASE_DIR,"Photos")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,6 +32,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.office365.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'vfenton@purdue.edu'
+EMAIL_HOST_PASSWORD = 'your password'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 
 # Application definition
 
