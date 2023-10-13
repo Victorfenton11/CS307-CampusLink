@@ -39,7 +39,7 @@ export default function Map() {
       setClassLocation(['', floor, parseInt(room).toString()]);
       return;
     } else {
-      setClassLocation([building_name, floor, parseInt(room).toString()]);
+      setClassLocation([building_name.slice(0, -18), floor, parseInt(room).toString()]);
       const directionsService = new google.maps.DirectionsService();
       const results = await directionsService.route({
         origin: userLocation,

@@ -26,6 +26,7 @@ class GetClassLocation(APIView):
                         building = data['building_name']
                         if '(' in building:
                             data['building_name'] = building[:building.index('(')-1] + building[building.index(')')+1:]
+                        data['building_name'] = data['building_name'] + " Purdue University"
                     elif (word[0] == 'B' or word[0] == 'G' or word[0].isdigit()) and word[1:].isnumeric():
                         if word[0] == 'B':
                             data['floor'] = 'Basement'
