@@ -3,7 +3,7 @@ import '../styles/TextBox.css'
 import dum_pic from '../../static/images/Test.jpg'
 
 
-const UserProfile = () => {
+const ProfilePageHC = () => {
   // State to store user data
   const [userData, setUserData] = useState(null);
   // State to track loading state
@@ -14,6 +14,8 @@ const UserProfile = () => {
   const [imgError, setImgError] = useState(false);
 
   const [isEditMode, setIsEditMode] = useState(false);
+
+  const [isPrivate, setIsPrivate] = useState(false);
 
   // Function to fetch user data from the API
   const fetchUserData = async (userID) => {
@@ -88,6 +90,12 @@ const UserProfile = () => {
     }
   };
 
+  function handlePrivate() {
+    setIsPrivate(true);
+  }
+  function handlePublic() {
+    setIsPrivate(false);
+  }
 
 
   // UseEffect hook to fetch data when the component mounts
@@ -124,9 +132,29 @@ const UserProfile = () => {
         <input type="text" value={userData.UserEmail} onChange={(e) => setUserData({ ...userData, UserEmail: e.target.value })} />
         <label className='label'>Major:</label>
         <input type="text" value={userData.Major} onChange={(e) => setUserData({ ...userData, Major: e.target.value })} />
+        <button onClick={handlePrivate}>I want them to be private</button>
+        <button onClick={handlePublic}>I want them to be public</button>
         <button onClick={handleSaveClick}>Save</button>
       </div>
     );
+  }
+
+  if (isPrivate) {
+    return (
+      <div className='background'>
+      <div className='top'>User Profile</div>
+      <label className="custom-file-upload fas">
+        <div className="img-wrap" >
+            <img htmlFor="photo-upload" src={'../../static/images/' + userData.PhotoFileName} onClick={onClickHandler}/>
+        </div>
+        </label>
+        <div className='name'><label className='label'>Name:</label> {userData.Name}</div>
+        <div className='name'> <label className='label'>
+          UserName: </label>{userData.UserName}</div>
+          <button onClick={handleEditClick}>Edit</button>
+    </div>
+    )
+
   }
 
   // Render user profile
@@ -152,4 +180,4 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default ProfilePageHC;
