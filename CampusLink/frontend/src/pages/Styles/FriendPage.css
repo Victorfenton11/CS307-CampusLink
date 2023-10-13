@@ -1,6 +1,11 @@
 html { overflow-y: scroll; }
 body { position: absolute; }
 
+@font-face {
+  font-family: 'lato';
+  src:url(./Lato-Light.ttf);
+  font-style: normal;
+}
 
 .overlay {
     background-color: rgba(0, 0, 0, 0.678);
@@ -19,12 +24,20 @@ body { position: absolute; }
     display: grid;
     top: 40%;
     left: 40%;
+    
 }
 .page-wrapper {
     position: relative;
     width: 100%;
     height: 100%;
-    background-color: rgb(46, 44, 114);
+    background: linear-gradient(0deg, rgb(72, 71, 88), rgb(57, 56, 109), rgb(49, 47, 110),#242258);
+    background-color: #2e2c72;
+    font-family: lato;
+    letter-spacing: 0.08em;
+}
+
+.List-Wrapper {
+  padding-top: 20px;
 }
 
 .content-wrapper {
@@ -35,8 +48,8 @@ body { position: absolute; }
     margin:auto;
 }
 
-/* Button styles */
-.button {
+   /* Button styles */
+  .button {
     padding: 10px 30px;
     background: #6c5ce7;
     color: #fff;
@@ -44,6 +57,7 @@ body { position: absolute; }
     cursor: pointer;
     border-radius: 4px;
     transition: background 0.3s ease-in-out;
+    font-family: lato;
   }
   
   .button:hover {
@@ -52,30 +66,98 @@ body { position: absolute; }
   
   /* Table styles */
   .table {
-    color: #333; /* Dark text color */
-    background: #fff; /* White background color */
-    border-collapse: collapse;
+    color: rgb(251, 249, 249); /* Dark text color */
     width: 100%;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 20px 20px rgba(0, 0, 0, 0.1);
   }
   
   /* Table header styles */
   .table th {
-    background: #f2e7fe; /* Light purple background */
-    color: #49387c; /* Purple text color */
     text-align: left;
     padding: 12px;
     font-weight: bold;
-    border-bottom: 2px solid #6c5ce7;
-  }
-  
-  /* Table cell styles */
-  .table td {
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
+    border: none;
   }
   
   /* Striped rows */
   .table tr:nth-child(even) {
-    background-color: #f7f3ff; /* Light purple */
+    background-color: #3d2e53fb; /* Light purple */
   }
+
+  .table tr {
+    background-color: rgba(73, 45, 45, 0.246);
+    height:7vh;
+    border: none;
+  }
+  
+  .table td {
+    margin: 0;
+    border: none;
+  }
+
+
+/* CSS for slide button */
+.slide-button {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #18181a;
+  color: #e3e3e9;
+  display: inline-block;
+  font-size: 15px;
+  line-height: 15px;
+  padding: 18px 18px 17px;
+  text-decoration: none;
+  cursor: pointer;
+  background-color: rgba(73, 45, 45, 0.246);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  font-family: lato;
+  
+}
+
+.slide-button span:first-child {
+  position: relative;
+  transition: color 600ms cubic-bezier(0.48, 0, 0.12, 1);
+  z-index: 10;
+}
+
+.slide-button span:last-child {
+  color: white;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  transition: all 500ms cubic-bezier(0.48, 0, 0.12, 1);
+  z-index: 100;
+  opacity: 0;
+  top: 50%;
+  left: 50%;
+  transform: translateY(225%) translateX(-50%);
+  height: 14px;
+  line-height: 13px;
+}
+
+.slide-button:after {
+  content: "";
+  position: absolute;
+  bottom: -50%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  transform-origin: bottom center;
+  transition: transform 600ms cubic-bezier(0.48, 0, 0.12, 1);
+  transform: skewY(9.3deg) scaleY(0);
+  z-index: 50;
+}
+
+.slide-button:hover:after {
+  transform-origin: bottom center;
+  transform: skewY(9.3deg) scaleY(2);
+}
+
+.slide-button:hover span:last-child {
+  transform: translateX(-50%) translateY(-100%);
+  opacity: 1;
+  transition: all 900ms cubic-bezier(0.48, 0, 0.12, 1);
+}

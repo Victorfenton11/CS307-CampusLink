@@ -11,5 +11,5 @@ urlpatterns = [
     re_path(r'^viewfriends/([0-9]+)$',views.getFriends),
     re_path(r'^user/savefile',views.SaveFile),
     re_path('addfriend',views.addFriend.as_view()),
-    re_path('remove_friend/<int:userId>/<int:friendId>/',views.removeFriend)
+    re_path('removefriend',views.removeFriend.as_view())
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

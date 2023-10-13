@@ -62,24 +62,29 @@ def getFriends(request, id):
     
 class addFriend(APIView):
     lookup_ID_kwarg = 'id'
-    lookup_friend_kwarg = 'friendID'
 
     def get(self, request, format=None):
         # fix this, should be able to search by name not ID
-        id = request.GET.get(self.lookup_ID_kwarg)
-        friendID = request.GET.get(self.lookup_friend_kwarg)
-        user = User.objects.get(UserId=1)
-        friend = User.objects.get(UserId=4)
+        id = request.GET.getlist(self.lookup_ID_kwarg)
+        user = User.objects.get(UserId=id[0])
+        friend = User.objects.get(UserName=id[1])
         user.friends.add(friend)
         # user_serializer=UserSerialier(data=user_data)
         return JsonResponse("Friend Added Successfully", safe=False)
 
-def removeFriend(request, id, friendId):
-    user = User.objects.get(UserId=id)
-    friend = User.object.get(UserId=friendId)
-    user.friends.remove(friend)
-    #serializer
-    return JsonResponse("Friend Removed Successfully", safe=False)
+class removeFriend(APIView):
+    lookup_ID_kwarg = 'id'
+
+    def get(self, request, format=None):
+        # fix this, should be able to search by name not ID
+        id = request.GET.getlist(self.lookup_ID_kwarg)
+        #friendID = str(request.GET.get(self.lookup_friend_kwarg))[0]
+        user = User.objects.get(UserId=id[0])
+        friend = User.objects.get(UserName=id[1])
+        user.friends.remove(friend)
+        # user_serializer=UserSerialier(data=user_data)
+        return JsonResponse("Friend Removed Successfully", safe=False)
+        
 @csrf_exempt
 def SaveFile(request):
     file=request.FILES['file']
