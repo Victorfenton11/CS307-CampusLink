@@ -1,0 +1,41 @@
+.searchbar {
+    width: 85%;
+    background: rgba(255, 255, 255, 0.25);
+    display: flex;
+    align-items: center;
+    border: 20%;
+    margin-top: 5%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 2.5em;
+    padding: 0.5em 1em;
+    backdrop-filter: blur(0.2em) saturate(180%);
+}
+
+.searchbar input {
+    background: transparent;
+    flex: 1;
+    border: 0;
+    outline: none;
+    padding: 1.2em 1em;
+    font-size: 1.6vh;
+    color: #DEFFFC;
+}
+
+::placeholder {
+    color: #EEE1B3;
+}
+
+.searchbar button ion-icon {
+    width: 1em;
+    height: 1em;
+}
+
+.searchbar button {
+    border: 0;
+    border-radius: 50%;
+    width: 3.5em;
+    height: 3.5em;
+    background: #002F64;
+    cursor: pointer;
+}
