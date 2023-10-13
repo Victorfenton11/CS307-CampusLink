@@ -1,10 +1,9 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './styles/Map.css'
 import SearchBar from '../components/SearchBar'
 import { GoogleMap, Marker, useLoadScript, DirectionsRenderer } from "@react-google-maps/api"
 import { useMemo } from 'react'
 import ClassLocation from '../components/ClassLocation'
-import { ReactDOM } from 'react'
 
 const libraries = ['places'];
 
@@ -17,6 +16,20 @@ export default function Map() {
 
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const [classLocation, setClassLocation] = useState(null);
+  const [userLocation, setUserLocation] = useState({});
+
+  useEffect(() => {
+    getUserLocation();
+  }, []);
+
+  const getUserLocation = () => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      setUserLocation({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      });
+    }, () => setUserLocation("Purdue University"));
+  }
 
   async function displayClassLocation(building_name, floor, room) {
     setDirectionsResponse(null);
@@ -29,7 +42,7 @@ export default function Map() {
       setClassLocation([building_name, floor, parseInt(room).toString()]);
       const directionsService = new google.maps.DirectionsService();
       const results = await directionsService.route({
-        origin: "Ross-Ade Stadium",
+        origin: userLocation,
         destination: building_name,
         travelMode: google.maps.TravelMode.WALKING
       });
@@ -44,7 +57,7 @@ export default function Map() {
 
     const directionsService = new google.maps.DirectionsService();
     const results = await directionsService.route({
-      origin: "Ross-Ade Stadium",
+      origin: userLocation,
       destination: destination,
       travelMode: google.maps.TravelMode.WALKING
     });

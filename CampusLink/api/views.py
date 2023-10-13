@@ -19,8 +19,8 @@ class GetClassLocation(APIView):
         if location:
             for word in location.split():
                 if len(word) > 1 and len(word) < 5:
-                    word = word.upper()
                     queryResult = ClassLocation.objects.filter(acronym=word)
+                    word = word.upper()
                     if len(queryResult) > 0:
                         data = ClassLocationSerializer(queryResult[0]).data
                         building = data['building_name']
