@@ -1,14 +1,14 @@
 import React from 'react';
 
-const ClassList = ({ classes, onDeleteClass }) => {
+const SubjectClasses = ({ classes, onAddClass }) => {
   return (
     <div>
-      <h2>Your Classes</h2>
+      <h2>Subject Classes</h2>
       <ul>
         {classes.map(course => (
           <li key={course.Id}>
             {course.Title} - {course.Number}
-            <button onClick={() => onDeleteClass(course)}>Delete Class</button>
+            <button onClick={() => onAddClass(course)}>Add Class</button>
           </li>
         ))}
       </ul>
@@ -16,4 +16,4 @@ const ClassList = ({ classes, onDeleteClass }) => {
   );
 };
 
-export default ClassList;
+export default SubjectClasses;

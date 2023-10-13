@@ -20,3 +20,6 @@ def save_class_list(request):
         return JsonResponse({'success': True})
     else:
         return JsonResponse({'success': False, 'error': 'Invalid request method'})
+    
+# handles GET request to get class list
+# TODO: implement this

@@ -1,32 +1,38 @@
-// import Logo from "../components/Logo";
-// import SearchBar from '../components/SearchBar'
-// import '../styles/LandingPage.css';
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import CourseList from '../components/CourseList';
+import SubjectList from '../components/SubjectList';
 import ClassList from '../components/ClassList';
-// import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import '../styles/CourseScheduler.css';
+import SubjectClasses from '../components/SubjectClasses';
 
 const CourseScheduler = () => {
-  const [courses, setCourses] = useState([]);
+  const [subjectList, setSubjects] = useState([]);
+  const [selectedSubject, setSelectedSubject] = useState(null);   // Subject selected from dropdown
+  const [subjectClasses, setSubjectClasses] = useState([]);   // Classes for selected subject
   const [classList, setClassList] = useState([]);
-  const [courseNumbers, setCourseNumbers] = useState({});   // Map course ID to course numbers
 
   useEffect(() => {
-    // Fetch course data from Purdue API
     axios.get('https://api.purdue.io/odata/Subjects?$orderby=Abbreviation asc')
       .then(response => {
-        setCourses(response.data.value);
+        setSubjects(response.data.value);
       })
       .catch(error => {
         console.log(error);
       });
   }, []);
+
+  const handleAddSubject = (subject) => {
+    axios.get(`https://api.purdue.io/odata/Courses?$filter=SubjectId eq ${subject.Id}&$orderby=Number asc`)
+      .then(response => {
+        setSubjectClasses(response.data.value);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    setSelectedSubject({ ...subject });
+  };
 
   const handleAddClass = (course) => {
     // Check if course is already in class list
@@ -36,15 +42,12 @@ const CourseScheduler = () => {
       return;
     }
 
-    // Add course to class list
     setClassList([...classList, { ...course }]);
   };
 
   const handleDeleteClass = (course) => {
     // Remove course from class list
     setClassList(classList.filter(c => c.Id !== course.Id));
-    // Remove course number from dictionary
-    setCourseNumbers({ ...courseNumbers, [course.Id]: undefined });
   };
 
   const handleSave = () => {
@@ -58,7 +61,7 @@ const CourseScheduler = () => {
       });
   };
 
-  const filteredCourses = courses.filter(course => {
+  const filteredSubject = subjectList.filter(course => {
     // Filter courses by abbreviation, number, and title
     const courseInfo = course.Abbreviation + course.Number + course.Title;
     return courseInfo.toLowerCase().includes(courseInfo.toLowerCase());
@@ -74,8 +77,13 @@ const CourseScheduler = () => {
       </nav>
     </header>
     <main className="main-container">
-      <CourseList courses={courses} onAddClass={handleAddClass} />
-      <ClassList classes={classList} onDeleteClass={handleDeleteClass} />
+      <SubjectList subjects={subjectList} onAddSubject={handleAddSubject} />
+      {selectedSubject && (
+        <SubjectClasses classes={subjectClasses} onAddClass={handleAddClass} />
+      )}
+      {classList.length > 0 && (
+         <ClassList classes={classList} onDeleteClass={handleDeleteClass} />
+      )}
     </main>
   </div>
   );
