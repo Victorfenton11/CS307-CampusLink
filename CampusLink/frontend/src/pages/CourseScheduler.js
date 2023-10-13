@@ -47,6 +47,17 @@ const CourseScheduler = () => {
     setCourseNumbers({ ...courseNumbers, [course.Id]: undefined });
   };
 
+  const handleSave = () => {
+    axios.post('/api/save-class-list/', { classList })    // Save class list to database
+      .then(response => {
+        alert('Class list saved successfully!');
+      })
+      .catch(error => {
+        console.log(error);
+        alert('Error saving class list.');
+      });
+  };
+
   const filteredCourses = courses.filter(course => {
     // Filter courses by abbreviation, number, and title
     const courseInfo = course.Abbreviation + course.Number + course.Title;
@@ -57,6 +68,7 @@ const CourseScheduler = () => {
     <div className="container">
     <header>
       <h1>Course Scheduler</h1>
+      <button onClick={handleSave}>Save</button>
       <nav>
         <Link to="/">Back to Landing Page</Link>
       </nav>
