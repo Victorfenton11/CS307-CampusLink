@@ -1,10 +1,17 @@
+:root {
+  --background-color: #2B3947;
+}
+
 .discover-style {
-    max-width: 1200px;
+    max-width: 100%;
     margin: 0 auto;
     padding: 20px;
     box-sizing: border-box;
     height: 100vh;
-    overflow-y: auto;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    background: var(--background-color);
+    color: #DEFFFC;
   }
   
 .discover-style header {
@@ -40,6 +47,18 @@
     vertical-align: top;
   }
   
+  .save-btn {
+    background: #001f51;
+    font-size: 1.2rem;
+    font-weight: 200;
+    margin-top: 1.2em;
+    margin-bottom: 1.2em;
+    padding: 0.4em 1em;
+    border: 1px solid #DEFFFC;
+    border-radius: 0.2em;
+    color: #EEE1B3;
+  }
+
   @media (max-width: 600px) {
     .discover-style .main-container {
       flex-direction: column;

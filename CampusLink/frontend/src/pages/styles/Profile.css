@@ -137,11 +137,20 @@
   width: 8em;
 }
 
+.profile-style .margin-topp {
+  margin-top: 2em;
+}
+
+.profile-style .save-btn {
+  margin-bottom: 10em;
+}
+
 .profile-style button:hover{
   left: 0;
   color: #fff;
   width: 8em;
 }
+
 .profile-style button:focus{
   outline: none;
 }

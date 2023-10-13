@@ -8,7 +8,7 @@ const SubjectList = ({ subjects, onAddSubject }) => {
         <div className="subject-item" key={subject.Id}>
           <h3>{subject.Abbreviation}</h3>
           <p>{subject.Name}</p>
-          <button onClick={() => onAddSubject(subject)}>Add Subject</button>
+          <button className='save-btn' onClick={() => onAddSubject(subject)}>Add Subject</button>
         </div>
       ))}
     </div>

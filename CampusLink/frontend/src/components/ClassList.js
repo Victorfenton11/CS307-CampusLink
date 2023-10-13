@@ -8,7 +8,7 @@ const ClassList = ({ classes, onDeleteClass }) => {
         {classes.map(course => (
           <li key={course.Id}>
             {course.Title} - {course.Number}
-            <button onClick={() => onDeleteClass(course)}>Delete Class</button>
+            <button className='save-btn' onClick={() => onDeleteClass(course)}>Delete Class</button>
           </li>
         ))}
       </ul>

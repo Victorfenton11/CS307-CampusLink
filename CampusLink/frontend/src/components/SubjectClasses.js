@@ -8,7 +8,7 @@ const SubjectClasses = ({ classes, onAddClass }) => {
         {classes.map(course => (
           <li key={course.Id}>
             {course.Title} - {course.Number}
-            <button onClick={() => onAddClass(course)}>Add Class</button>
+            <button className='save-btn' onClick={() => onAddClass(course)}>Add Class</button>
           </li>
         ))}
       </ul>

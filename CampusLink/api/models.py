@@ -16,6 +16,11 @@ class User(models.Model):
     PhotoFileName = models.CharField(max_length=500, null=True)
     Major = models.CharField(max_length=500, default = majorValue)
     Interest = models.CharField(max_length=1000, default = interestValue)
+    friends = models.ManyToManyField("User", blank=True)
+    isPrivate = models.BooleanField(default=False)
+
+    def str(self):
+        return self.UserName
 
 class Class(models.Model):
     abbreviation = models.CharField(max_length=10)

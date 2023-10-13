@@ -15,6 +15,8 @@ const Profile = () => {
 
   const [isEditMode, setIsEditMode] = useState(false);
 
+  const [isPrivate, setIsPrivate] = useState(false);
+
   // Function to fetch user data from the API
   const fetchUserData = async (userID) => {
     try {
@@ -88,7 +90,14 @@ const Profile = () => {
     }
   };
 
-
+  function handlePrivate() {
+    setIsPrivate(true);
+    setUserData({ ...userData, isPrivate: true});
+  }
+  function handlePublic() {
+    setIsPrivate(false);
+    setUserData({ ...userData, isPrivate: false});
+  }
 
   // UseEffect hook to fetch data when the component mounts
   useEffect(() => {
@@ -123,9 +132,28 @@ const Profile = () => {
         <input type="text" value={userData.UserEmail} onChange={(e) => setUserData({ ...userData, UserEmail: e.target.value })} />
         <label className='label'>Major:</label>
         <input type="text" value={userData.Major} onChange={(e) => setUserData({ ...userData, Major: e.target.value })} />
-        <button onClick={handleSaveClick}>Save</button>
+        <button className='margin-topp' onClick={handlePrivate}>I want my information to be private</button>
+        <button onClick={handlePublic}>I want my information to be public</button>
+        <button className='save-btn' onClick={handleSaveClick}>Save</button>
       </div>
     );
+  }
+
+  if (userData.isPrivate) {
+    return (
+      <div className='profile-style'>
+      <div className='top'>User Profile</div>
+      <label className="custom-file-upload fas">
+        <div className="img-wrap" >
+            <img htmlFor="photo-upload" src={'../../static/images/' + userData.PhotoFileName} onClick={onClickHandler}/>
+        </div>
+        </label>
+        <div className='name'><label className='label'>Name:</label> {userData.Name}</div>
+        <div className='name'> <label className='label'>
+          UserName: </label>{userData.UserName}</div>
+          <button onClick={handleEditClick}>Edit</button>
+    </div>
+    )
   }
 
   // Render user profile

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import ClassLocationSerializer, UserSerializer
+from .serializers import ClassLocationSerializer, UserSerializer, FriendSerializer
 from .models import ClassLocation, User, Class
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -155,3 +155,35 @@ def save_class_list(request):
         return JsonResponse({'success': True})
     else:
         return JsonResponse({'success': False, 'error': 'Invalid request method'})
+
+
+def getFriends(request, id): 
+    if request.method=='GET' and id !=0:
+        user = User.objects.get(UserID=id)
+        friend_serializer = FriendSerializer(user, many=False)
+        return JsonResponse(friend_serializer.data, safe=False)
+
+class addFriend(APIView):
+    lookup_ID_kwarg = 'id'
+
+    def get(self, request, format=None):
+        # fix this, should be able to search by name not ID
+        id = request.GET.getlist(self.lookup_ID_kwarg)
+        user = User.objects.get(UserID=id[0])
+        friend = User.objects.get(UserName=id[1])
+        user.friends.add(friend)
+        # user_serializer=UserSerialier(data=user_data)
+        return JsonResponse("Friend Added Successfully", safe=False)
+
+class removeFriend(APIView):
+    lookup_ID_kwarg = 'id'
+
+    def get(self, request, format=None):
+        # fix this, should be able to search by name not ID
+        id = request.GET.getlist(self.lookup_ID_kwarg)
+        #friendID = str(request.GET.get(self.lookup_friend_kwarg))[0]
+        user = User.objects.get(UserID=id[0])
+        friend = User.objects.get(UserName=id[1])
+        user.friends.remove(friend)
+        # user_serializer=UserSerialier(data=user_data)
+        return JsonResponse("Friend Removed Successfully", safe=False)
