@@ -1,19 +1,21 @@
-// page on course scheduler
-import Footer from "../components/Footer";
-import Logo from "../components/Logo";
+// import Logo from "../components/Logo";
 // import SearchBar from '../components/SearchBar'
-import '../styles/LandingPage.css';
+// import '../styles/LandingPage.css';
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+
 import CourseList from '../components/CourseList';
 import ClassList from '../components/ClassList';
+// import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import '../styles/CourseScheduler.css';
 
 const CourseScheduler = () => {
   const [courses, setCourses] = useState([]);
   const [classList, setClassList] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [courseNumbers, setCourseNumbers] = useState({});   // Map course ID to course numbers
 
   useEffect(() => {
     // Fetch course data from Purdue API
@@ -27,12 +29,15 @@ const CourseScheduler = () => {
   }, []);
 
   const handleAddClass = (course) => {
-    // Generate new course number
-    const courseNumber = courseNumbers[course.Id] ? courseNumbers[course.Id] + 1 : 1;
+    // Check if course is already in class list
+    const existingClass = classList.find(c => c.Id === course.Id);
+    if (existingClass) {
+      alert('This course is already in your class list.');
+      return;
+    }
+
     // Add course to class list
-    setClassList([...classList, { ...course, Number: courseNumber }]);
-    // Update course number dictionary
-    setCourseNumbers({ ...courseNumbers, [course.Id]: courseNumber });
+    setClassList([...classList, { ...course }]);
   };
 
   const handleDeleteClass = (course) => {
@@ -42,25 +47,25 @@ const CourseScheduler = () => {
     setCourseNumbers({ ...courseNumbers, [course.Id]: undefined });
   };
 
-  const handleSearch = (term) => {
-    // Update search term
-    setSearchTerm(term);
-  };
-
   const filteredCourses = courses.filter(course => {
-    // Filter courses by search term
-    return course.Subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
-           course.Number.toLowerCase().includes(searchTerm.toLowerCase()) ||
-           course.Title.toLowerCase().includes(searchTerm.toLowerCase());
+    // Filter courses by abbreviation, number, and title
+    const courseInfo = course.Abbreviation + course.Number + course.Title;
+    return courseInfo.toLowerCase().includes(courseInfo.toLowerCase());
   });
 
   return (
-    <div>
+    <div className="container">
+    <header>
       <h1>Course Scheduler</h1>
-      <Link to="/">Back to Landing Page</Link>
+      <nav>
+        <Link to="/">Back to Landing Page</Link>
+      </nav>
+    </header>
+    <main className="main-container">
       <CourseList courses={courses} onAddClass={handleAddClass} />
       <ClassList classes={classList} onDeleteClass={handleDeleteClass} />
-    </div>
+    </main>
+  </div>
   );
 };
 

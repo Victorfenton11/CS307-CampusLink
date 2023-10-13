@@ -1,0 +1,26 @@
+.course-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .course-item {
+    width: calc(33.33% - 10px);
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  .course-item h3 {
+    margin-top: 0;
+  }
+  
+  .course-item p {
+    margin-bottom: 0;
+  }
+  
+  .course-item button {
+    margin-top: 10px;
+  }
