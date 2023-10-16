@@ -8,7 +8,19 @@ export default function ResetPassword() {
 
   const [email, setEmail] = useState('');
 
-  function handleSendEmail() {
+  function handleSendEmail(e) {
+    e.preventDefault();
+    if (email === '') return;
+
+    fetch('/api/get-user-by-email' + '?email=' + email).then((response) => 
+      response.json()
+    ).then((data) => {
+      if (JSON.stringify(data) === '{}') {
+        alert("The provided email is not associated with any existing accounts.");
+      }
+    });
+
+    setEmail('');
     return;
   }
 
@@ -16,11 +28,13 @@ export default function ResetPassword() {
     <div className='login-style'>
       <div className='container'>
         <img src={logo} alt='Campuslink logo' className='landing-logo' />
-        <label className='label'>
-          Purdue Email
-          <input type="text" name="Email-reset"  className='input input_box' onChange={(e) => setEmail(event.target.value)}/>
-        </label>
-        <button className='landing-button' onSubmit={handleSendEmail}>Send Email</button>
+        <form action='' onSubmit={handleSendEmail}>
+          <label className='label'>
+            Purdue Email
+            <input type="text" name="Email-reset" value={email} className='input input_box' onChange={(e) => setEmail(e.target.value)}/>
+          </label>
+          <button type="submit" className='landing-button'>Send Email</button>
+        </form>
         <button className='landing-button' onClick={() => navigate('/login')}>Back</button>
       </div>
     </div>

@@ -187,3 +187,17 @@ class removeFriend(APIView):
         user.friends.remove(friend)
         # user_serializer=UserSerialier(data=user_data)
         return JsonResponse("Friend Removed Successfully", safe=False)
+    
+class GetUserbyEmail(APIView):
+    serializer_class = UserSerializer
+    lookup_url_kwarg = 'email'
+
+    def get(self, request, format=None):
+        email = request.GET.get(self.lookup_url_kwarg)
+        data = {}
+        if email:
+            queryResult = User.objects.filter(UserEmail=email)
+            if len(queryResult) > 0:
+                data = UserSerializer(queryResult[0]).data
+                return Response(data, status=status.HTTP_200_OK)
+        return Response(data, status=status.HTTP_200_OK)

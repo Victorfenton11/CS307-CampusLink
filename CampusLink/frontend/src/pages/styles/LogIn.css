@@ -103,6 +103,16 @@
   color: #EEE1B3;
 }
 
+.login-style form {
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
 @media screen and (min-width: 50em)  {
     .landing-logo {
         width: 32em;
