@@ -15,7 +15,7 @@ export default function DeletingPage() {
     e.preventDefault();
     if (isConfirmed) {
       // Call the function to delete the account here
-      fetch('/api/user/delete/chen3288@purdue.edu/', {
+      fetch('/api/user/delete/chen3284@purdue.edu/', {
         method: 'DELETE',
       })
       .then(response => {

@@ -13,4 +13,6 @@ class User(models.Model):
     photoFileName = models.ImageField(upload_to='profile_pics/')
     Major = models.CharField(max_length=500, default = majorValue)
     Interest = models.CharField(max_length=1000, default = interestValue)
+    securityQuestion = models.CharField(max_length=500, blank=True, null=True)
+    securityAnswer = models.CharField(max_length=500, blank=True, null=True)
     
