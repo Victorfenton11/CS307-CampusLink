@@ -1,0 +1,62 @@
+/* UserList.css */
+
+/* Container styles */
+div {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  /* Header styles */
+  h1 {
+    font-size: 24px;
+    color: #333;
+  }
+  
+  /* User list styles */
+  ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  li {
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 15px;
+    text-align: center;
+    width: 250px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Profile picture styles */
+  img {
+    max-width: 100%;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  
+  /* Button styles */
+  button {
+    background-color: #0074d9;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  /* User details styles (hidden by default) */
+  .user-details {
+    display: none;
+  }
+  
+  /* Show details button styles */
+  button:hover {
+    background-color: #0056b3;
+  }
+  
