@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import './styles/Map.css'
 import SearchBar from '../components/SearchBar'
+import TripleToggleSwitch from '../components/TripleToggleSwitch'
 import { GoogleMap, Marker, useLoadScript, DirectionsRenderer } from "@react-google-maps/api"
 import { useMemo } from 'react'
 import ClassLocation from '../components/ClassLocation'
+import EstTime from '../components/EstTime'
 
 const libraries = ['places'];
 
@@ -17,6 +19,7 @@ export default function Map() {
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const [classLocation, setClassLocation] = useState(null);
   const [userLocation, setUserLocation] = useState({});
+  const [estTime, setEstTime] = useState(null);
 
   useEffect(() => {
     getUserLocation();
@@ -38,7 +41,7 @@ export default function Map() {
     }
 
     setDirectionsResponse(null);
-    document.getElementById('map').style.height = "58vh";
+    document.getElementById('map').style.height = "54vh";
 
     if (!building_name) {
       setClassLocation(['', floor, room.toString()]);
@@ -79,6 +82,7 @@ export default function Map() {
       <SearchBar placeholder="Lookup a Campus Location..." displayClass={displayClassLocation} displayLocation={displayLocation}/>
       <div className='location-container'>
         {classLocation && <ClassLocation className='class-location' building={classLocation[0]} floor={classLocation[1]} room={classLocation[2]}/>}
+        {classLocation && <div className='travel-options'><TripleToggleSwitch option1="Walk" option2="Drive" option3="Cycle" className='travel-method-btn'/><EstTime estTime={estTime}></EstTime></div>}
         {!isLoaded ? (
           <h1>Loading...</h1>
         ) : (

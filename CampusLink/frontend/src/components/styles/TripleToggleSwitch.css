@@ -1,0 +1,212 @@
+.main-container input[type="radio"] {
+display: none;
+}
+
+.main-container label {
+color: white;
+z-index: 10;
+cursor: pointer;
+}
+
+.main-container h4 {
+margin: 0;
+padding: 0;
+font-weight: 500;
+}
+
+.black-font {
+color: black !important;
+}
+
+.main-container {
+order: 1;
+margin-top: 1em;
+margin-left: auto;
+margin-right: auto;
+align-items: center;
+width: 12rem;
+height: 2.8rem;
+border-radius: 6.25rem;
+background-color: #4d4d4d;
+position: relative;
+box-shadow: 0.05rem 0.05rem 0.5rem 0.05rem rgba(0, 0, 0, 0.5);
+font-size: 0.8rem;
+}
+
+.switch {
+height: 2.8rem;
+width: 4rem;
+background-color: white;
+border-radius: 6.25rem;
+position: absolute;
+transition: ease-in;
+margin: 0;
+padding: 0;
+}
+
+/*---------------- LEFT ------------------- */
+.switch.left-to-center {
+animation-name: leftToCenter;
+animation-duration: 0.5s;
+}
+
+.switch.left-to-right {
+animation-name: leftToRight;
+animation-duration: 0.5s;
+}
+
+.switch.left-position {
+left: 0.1rem;
+}
+
+.left-label {
+position: absolute;
+}
+
+#left + label {
+display: flex;
+align-items: center;
+justify-content: center;
+height: 2.8rem;
+width: 4rem;
+border-radius: 6.25rem;
+}
+
+#left:checked + label {
+display: flex;
+align-items: center;
+justify-content: center;
+height: 2.8rem;
+width: 4rem;
+border-radius: 6.25rem;
+}
+
+@keyframes leftToCenter {
+from {
+    left: 0.1rem;
+}
+to {
+    left: 4rem;
+}
+}
+
+@keyframes leftToRight {
+from {
+    left: 0.1rem;
+}
+to {
+    left: 8rem;
+}
+}
+
+/* -------------------- center ------------------ */
+.switch.center-to-left {
+animation-name: centerToLeft;
+animation-duration: 0.5s;
+}
+
+.switch.center-to-right {
+animation-name: centerToRight;
+animation-duration: 0.5s;
+}
+
+.switch.center-position {
+left: 4rem;
+}
+
+.center-label {
+position: absolute;
+left: 4rem;
+}
+
+#center + label {
+display: flex;
+align-items: center;
+justify-content: center;
+height: 2.8rem;
+width: 4rem;
+border-radius: 6.25rem;
+}
+
+#center:checked + label {
+display: flex;
+align-items: center;
+justify-content: center;
+height: 2.8rem;
+width: 4rem;
+border-radius: 6.25rem;
+}
+
+@keyframes centerToLeft {
+from {
+    left: 4.1rem;
+}
+to {
+    left: 0.1rem;
+}
+}
+
+@keyframes centerToRight {
+from {
+    left: 4rem;
+}
+to {
+    right: 0.1rem;
+}
+}
+
+/* ------------------- RIGHT ------------------- */
+.switch.right-to-left {
+animation-name: rightToLeft;
+animation-duration: 0.5s;
+}
+
+.switch.right-to-center {
+animation-name: rightToCenter;
+animation-duration: 0.5s;
+}
+
+.switch.right-position {
+left: 8rem;
+}
+
+.right-label {
+position: absolute;
+right: 0.1rem;
+}
+
+#right + label {
+display: flex;
+align-items: center;
+justify-content: center;
+height: 2.8rem;
+width: 4rem;
+border-radius: 6.25rem;
+}
+
+#right:checked + label {
+display: flex;
+align-items: center;
+justify-content: center;
+height: 2.8rem;
+width: 4rem;
+border-radius: 6.25rem;
+}
+
+@keyframes rightToLeft {
+from {
+    left: 8rem;
+}
+to {
+    left: 0.1rem;
+}
+}
+
+@keyframes rightToCenter {
+from {
+    left: 8rem;
+}
+to {
+    right: 4rem;
+}
+}
