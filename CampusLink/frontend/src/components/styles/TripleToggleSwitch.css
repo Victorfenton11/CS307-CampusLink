@@ -1,24 +1,24 @@
-.main-container input[type="radio"] {
+.triple-toggle-switch input[type="radio"] {
 display: none;
 }
 
-.main-container label {
+.triple-toggle-switch label {
 color: white;
 z-index: 10;
 cursor: pointer;
 }
 
-.main-container h4 {
+.triple-toggle-switch h4 {
 margin: 0;
 padding: 0;
 font-weight: 500;
 }
 
-.black-font {
+.triple-toggle-switch .black-font {
 color: black !important;
 }
 
-.main-container {
+.triple-toggle-switch {
 order: 1;
 margin-top: 1em;
 margin-left: auto;
@@ -27,13 +27,13 @@ align-items: center;
 width: 12rem;
 height: 2.8rem;
 border-radius: 6.25rem;
-background-color: #4d4d4d;
+background-color: #001f51;
 position: relative;
-box-shadow: 0.05rem 0.05rem 0.5rem 0.05rem rgba(0, 0, 0, 0.5);
+box-shadow: 0.05rem 0.05rem 0.2rem 0.05rem #EEE1B3;
 font-size: 0.8rem;
 }
 
-.switch {
+.triple-toggle-switch .switch {
 height: 2.8rem;
 width: 4rem;
 background-color: white;
@@ -45,21 +45,21 @@ padding: 0;
 }
 
 /*---------------- LEFT ------------------- */
-.switch.left-to-center {
+.triple-toggle-switch .switch.left-to-center {
 animation-name: leftToCenter;
 animation-duration: 0.5s;
 }
 
-.switch.left-to-right {
+.triple-toggle-switch .switch.left-to-right {
 animation-name: leftToRight;
 animation-duration: 0.5s;
 }
 
-.switch.left-position {
-left: 0.1rem;
+.triple-toggle-switch .switch.left-position {
+left: 0;
 }
 
-.left-label {
+.triple-toggle-switch .left-label {
 position: absolute;
 }
 
@@ -100,21 +100,21 @@ to {
 }
 
 /* -------------------- center ------------------ */
-.switch.center-to-left {
+.triple-toggle-switch .switch.center-to-left {
 animation-name: centerToLeft;
 animation-duration: 0.5s;
 }
 
-.switch.center-to-right {
+.triple-toggle-switch .triple-toggle-switch.switch.center-to-right {
 animation-name: centerToRight;
 animation-duration: 0.5s;
 }
 
-.switch.center-position {
+.triple-toggle-switch .switch.center-position {
 left: 4rem;
 }
 
-.center-label {
+.triple-toggle-switch .center-label {
 position: absolute;
 left: 4rem;
 }
@@ -156,21 +156,21 @@ to {
 }
 
 /* ------------------- RIGHT ------------------- */
-.switch.right-to-left {
+.triple-toggle-switch .switch.right-to-left {
 animation-name: rightToLeft;
 animation-duration: 0.5s;
 }
 
-.switch.right-to-center {
+.triple-toggle-switch .switch.right-to-center {
 animation-name: rightToCenter;
 animation-duration: 0.5s;
 }
 
-.switch.right-position {
+.triple-toggle-switch .switch.right-position {
 left: 8rem;
 }
 
-.right-label {
+.triple-toggle-switch .right-label {
 position: absolute;
 right: 0.1rem;
 }

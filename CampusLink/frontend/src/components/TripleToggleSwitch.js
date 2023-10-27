@@ -7,25 +7,25 @@ export default function TripleToggleSwitch(props) {
 
     function getSwitchAnimation(value) {
         let animation = null;
-        if (value === "center" && switchPosition === "left") {
-            animation = "left-to-center";
-        } else if (value === "right" && switchPosition === "center") {
-            animation = "center-to-right";
-        } else if (value === "center" && switchPosition === "right") {
-            animation = "right-to-center";
-        } else if (value === "left" && switchPosition === "center") {
-            animation = "center-to-left";
-        } else if (value === "right" && switchPosition === "left") {
-            animation = "left-to-right";
-        } else if (value === "left" && switchPosition === "right") {
-            animation = "right-to-left";
+        if (value === "center") {
+            props.change("DRIVING");
+            if (switchPosition === "left") animation = "left-to-center";
+            else if (switchPosition === "right") animation = "right-to-center";
+        } else if (value === "right") {
+            props.change("BICYCLING");
+            if (switchPosition === "center") animation = "center-to-right";
+            else if (switchPosition === "left") animation = "left-to-right";
+        } else if (value === "left") {
+            props.change("WALKING");
+            if (switchPosition === "center") animation = "center-to-left";
+            else if (switchPosition === "right") animation = "right-to-left";
         }
         setAnimation(animation);
         setSwitchPosition(value);
     };
 
     return (
-    <div className="main-container">
+    <div className="triple-toggle-switch">
         <div
             className={`switch ${animation} ${switchPosition}-position`}
         ></div>

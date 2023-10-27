@@ -73,7 +73,7 @@ const Discover = () => {
         <h1>Course Scheduler</h1>
         <button class='save-btn' onClick={handleSave}>Save</button>
       </header>
-      <main className="main-container">
+      <main className="container">
         <SubjectList subjects={subjectList} onAddSubject={handleAddSubject} />
         {selectedSubject && (
           <SubjectClasses classes={subjectClasses} onAddClass={handleAddClass} />

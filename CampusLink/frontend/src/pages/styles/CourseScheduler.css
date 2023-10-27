@@ -30,7 +30,7 @@
     text-decoration: underline;
 }
   
-.discover-style .main-container {
+.discover-style .container {
     display: flex;
     justify-content: space-between;
   }
@@ -60,7 +60,7 @@
   }
 
   @media (max-width: 600px) {
-    .discover-style .main-container {
+    .discover-style .container {
       flex-direction: column;
     }
   

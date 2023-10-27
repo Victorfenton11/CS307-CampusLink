@@ -15,21 +15,21 @@
 
 .signup-style .form {
   text-align: center;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .signup-style .label {
   display: block;
   margin: 10px 0;
-  left: 0;
 }
 
 .signup-style .input {
-  margin-left: 20px;
+  margin-left: 3em;
   border-radius:10px;
   border: 2px solid #2B3E4F;
   padding: 8px;
   transition: all 0.3s ease-in-out;
-  right: 0;
 }
 
 .signup-style .input:focus {
@@ -49,6 +49,8 @@
   padding: 10px;
   font-size: 16px;
   margin-bottom: 10px;
+  right: 0;
+  order: 2;
 }
 
 .signup-style .file-input {
