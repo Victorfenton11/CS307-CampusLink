@@ -1,72 +1,52 @@
-:root {
-  --background-color: #2B3947;
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+  height: 100vh;
+  overflow-y: auto;
 }
 
-.discover-style {
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 20px;
-    box-sizing: border-box;
-    height: 100vh;
-    overflow-y: scroll;
-    overflow-x: scroll;
-    background: var(--background-color);
-    color: #DEFFFC;
-  }
-  
-.discover-style header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-
-.discover-style nav a {
-    color: #333;
-    text-decoration: none;
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
-  
-.discover-style nav a:hover {
-    text-decoration: underline;
+
+nav a {
+  color: #333;
+  text-decoration: none;
 }
-  
-.discover-style .main-container {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .discover-style .course-list {
-    width: 70%;
-    display: inline-block;
-    vertical-align: top;
-  }
-  
-  .discover-style .class-list {
-    width: 30%;
-    display: inline-block;
-    vertical-align: top;
-  }
-  
-  .save-btn {
-    background: #001f51;
-    font-size: 1.2rem;
-    font-weight: 200;
-    margin-top: 1.2em;
-    margin-bottom: 1.2em;
-    padding: 0.4em 1em;
-    border: 1px solid #DEFFFC;
-    border-radius: 0.2em;
-    color: #EEE1B3;
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+.main-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.course-list {
+  width: 70%;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.class-list {
+  width: 30%;
+  display: inline-block;
+  vertical-align: top;
+}
+
+@media (max-width: 600px) {
+  .main-container {
+    flex-direction: column;
   }
 
-  @media (max-width: 600px) {
-    .discover-style .main-container {
-      flex-direction: column;
-    }
-  
-    .discover-style .course-list,
-    .class-list {
-      width: 100%;
-    }
+  .course-list,
+  .class-list {
+    width: 100%;
   }
-
+}

@@ -1,0 +1,50 @@
+// where all the data is going to go
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// model for our post
+model Post {
+  id String @id @default(uuid())
+  title String
+  body String
+  comments Comment[]  // each post has comments
+}
+
+// model for comments that are in those posts
+model User {
+  id String @id @default(uuid())
+  name String
+  comments Comment[]  // each user has comments
+  Like Like[]
+}
+
+model Comment {
+  id String @id @default(uuid())
+  message String  // what our comment is
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt   // auto update the time whenever we update the comment
+  user User @relation(fields: [userID], references: [id], onDelete: Cascade) // relating each comment to a user
+  userID String
+  post Post @relation(fields: [postID], references: [id], onDelete: Cascade) // relating each comment to a post
+  postID String
+  parent Comment? @relation("ParentChild", fields: [parentID], references: [id], onDelete: Cascade) // pointing to the children comment below
+  children Comment[] @relation("ParentChild") 
+  parentID String?
+  Like Like[]
+}
+
+model Like {
+  user User @relation(fields: [userID], references: [id], onDelete: Cascade)
+  comment Comment @relation(fields: [commentID], references: [id], onDelete: Cascade)
+  userID String
+  commentID String
+
+  @@id([userID, commentID]) // user can only like a comment 1 time, will never leave 2 likes on the same comment
+}
