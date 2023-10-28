@@ -29,6 +29,8 @@ class GetClassLocation(APIView):
         campus = False
         if location:
             words = location.split()
+            if len(words) > 3:
+                return Response(data, status=status.HTTP_200_OK)
             for i in range(len(words)):
                 queryResult = ClassLocation.objects.filter(acronym=words[i])
                 word = words[i].upper()
@@ -38,8 +40,7 @@ class GetClassLocation(APIView):
                     building = data['building_name']
                     if '(' in building and ')' in building:
                         data['building_name'] = building[:building.index('(')-1] + building[building.index(')')+1:]
-                    data['building_name'] = data['building_name'] + " Purdue University"
-                elif campus and i + 1 != len(words) and len(word) == 1 and words[i+1].isnumeric():
+                elif i + 1 != len(words) and len(word) == 1 and words[i+1].isnumeric():
                     word = word.upper()
                     if word == 'B':
                         data['floor'] = 'Basement'
@@ -47,17 +48,21 @@ class GetClassLocation(APIView):
                         data['floor'] = 'Ground Floor'
                     else:
                         data['floor'] = word[0]
-                    data['room'] = words[i+1]
-                    break
-                elif campus and (word[0] == 'B' or word[0] == 'G' or word[0].isdigit()):
-                    if word[0] == 'B':
-                        data['floor'] = 'Basement'
-                    elif word[0] == 'G':
-                        data['floor'] = 'Ground Floor'
-                    else:
-                        data['floor'] = word[0]
+                elif (word[0] == 'B' or word[0] == 'G' or word[0].isdigit()):
+                    try:
+                        # if the floor was already set by another word
+                        data['floor']
+                        continue
+                    except:
+                        if word[0] == 'B':
+                            data['floor'] = 'Basement'
+                        elif word[0] == 'G':
+                            data['floor'] = 'Ground Floor'
+                        else:
+                            data['floor'] = word[0]
                     data['room'] = word
-                    break
+            if not campus:
+                return Response({}, status=status.HTTP_200_OK)
         return Response(data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
