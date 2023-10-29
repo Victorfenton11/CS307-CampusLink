@@ -10,7 +10,15 @@ export default function SignUp() {
     username: '',
     password: '',
     profilePic: null,
+    securityQuestion: '', // New field for security question
+    securityAnswer: '',   // New field for security answer
   });
+
+  const predefinedSecurityQuestions = [
+    'What is your mother\'s maiden name?',
+    'What is the name of your first pet?',
+    'What is your favorite movie?',
+  ];
 
   //this will handle the non-purdue email
   const [emailError, setEmailError] = useState('');
@@ -44,12 +52,14 @@ export default function SignUp() {
     setEmailError(''); // Clear error message if email is valid
     // Handle form submission logic here
     const data = new FormData();
-    data.append('name', formData.name);
-    data.append('email', formData.email);
-    data.append('username', formData.username);
-    data.append('password', formData.password);
+    data.append('Name', formData.name);
+    data.append('UserEmail', formData.email);
+    data.append('UserName', formData.username);
+    data.append('Password', formData.password);
     data.append('Major', '');
     data.append('Interest', '');
+    data.append('securityQuestion', formData.securityQuestion);
+    data.append('securityAnswer', formData.securityAnswer);
     if (formData.profilePic) {
         data.append('photoFileName', formData.profilePic);
     }
@@ -59,11 +69,11 @@ export default function SignUp() {
     })
     .then(response => response.json())
     .then(data => {
-      if (data.email && data.email[0] === 'user with this email already exists.') {
+      if (data.UserEmail && data.UserEmail[0] === 'user with this UserEmail already exists.') {
         console.log('Setting error');
         setEmailError('User with this email already exists.');
       }
-      else if (data.username && data.username[0] === 'user with this username already exists.') {
+      else if (data.UserName && data.UserName[0] === "user with this UserName already exists.") {
         console.log('Setting error');
         setEmailError('User with this username already exists.');
       } 
@@ -107,6 +117,23 @@ export default function SignUp() {
         <label className='label'>
           Profile Pic
           <input type="file" className='file-input' name="profile_pic" onChange={handleFileChange} />
+        </label>
+        <br />
+        <label className='label'>
+          Security Question
+          <select name="securityQuestion" className='input' onChange={handleChange}>
+            <option value="">Select a security question</option>
+            {predefinedSecurityQuestions.map((question, index) => (
+              <option key={index} value={question}>
+                {question}
+              </option>
+            ))}
+          </select>
+        </label>
+        <br />
+        <label className='label'>
+          Security Answer
+          <input type="text" name="securityAnswer" className='input input_box' onChange={handleChange} />
         </label>
         <br />
         <button className='landing-button' type="submit">Sign up</button>

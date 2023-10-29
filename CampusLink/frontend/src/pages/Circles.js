@@ -5,9 +5,14 @@ export default function Circles() {
 
   const [userData, setUserData] = useState([]);
   const [isAddMode, setIsAddMode] = useState(false)
+  const [isIncomingMode, setIsIncomingMode] = useState(false);
 
   const handleAddClick = () => {
     setIsAddMode(!isAddMode);
+  };
+
+  const handleIncomingRequestsClick = () => {
+    setIsIncomingMode(!isIncomingMode);
   };
 
   const addFriend = async (userID) => {
@@ -21,7 +26,7 @@ export default function Circles() {
     }
 
     // Notify the user that the data was saved successfully
-    alert('Successfully added friend profile');
+    alert('Friend request sent');
 
     // Exit edit mode
     setIsAddMode(false);
@@ -136,11 +141,46 @@ export default function Circles() {
     )
   }
 
+  if (isIncomingMode) {
+    return (
+      <div className="circles-style">
+        <div className="overlay">
+          <div className="overlay-content-wrapper">
+            <h2>Incoming Friend Requests</h2>
+            {/* Add your dummy content for incoming requests here */}
+            <p>Request from JohnDoe</p>
+            <p>Request from JaneSmith</p>
+            {/* Add more dummy content if needed */}
+            <button className="button" onClick={handleIncomingRequestsClick}>Back</button>
+          </div>
+        </div>
+        <div className="content-wrapper">
+            <div className="button-container">
+              <button className="button" onClick={handleAddClick}>Add Friend</button>
+              <button className="button" onClick={handleIncomingRequestsClick}>Incoming Requests </button>
+            </div>
+            <div className="List-Wrapper" >
+              <table className="table table-striped">
+                <thead>
+                  <th>Username</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th></th>
+                </thead>
+                <tbody className="table-body">{userData}</tbody>
+              </table>
+            </div>
+        </div>        
+      </div>
+    );
+  }
+
   return (
     <div className="circles-style">
         <div className="content-wrapper">
             <div className="button-container">
               <button className="button" onClick={handleAddClick}>Add Friend</button>
+              <button className="button" onClick={handleIncomingRequestsClick}>Incoming Requests </button>
             </div>
             <div className="List-Wrapper" >
               <table className="table table-striped">
@@ -157,3 +197,4 @@ export default function Circles() {
     </div>
   )
 }
+

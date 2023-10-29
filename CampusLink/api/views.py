@@ -13,8 +13,8 @@ from rest_framework.decorators import api_view
 from rest_framework.decorators import permission_classes
 from django.core.files.storage import default_storage
 from django.core.mail import BadHeaderError, send_mail
-from django.http import HttpResponse, HttpResponseRedirect
-
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+    
 class ClassLocationView(generics.ListAPIView):
     queryset = ClassLocation.objects.all()
     serializer_class = ClassLocationSerializer
