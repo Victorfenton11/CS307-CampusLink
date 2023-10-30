@@ -1,0 +1,19 @@
+.profilecard-container {
+    color:antiquewhite;
+    background-color:rgba(106, 58, 155, 0.54);
+    border-style:ridge;
+    overflow:hidden;
+    height: 250px;
+    width: 200px;
+}
+
+.name-container {
+    height: 40%;
+    font-size:70%;
+    display: grid;
+    background-color:rgba(0, 0, 0, 0.261);
+}
+
+.bio {
+    text-decoration-line:underline;
+}

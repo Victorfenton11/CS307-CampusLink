@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './styles/Circles.css'
+import ProfileCard from '../components/ProfileCard';
+import ClickableProfile from '../components/ClickableProfile'
 
 export default function Circles() {
 
@@ -83,7 +85,9 @@ export default function Circles() {
           };
           return(
             <tr>
-              <td key="{user.UserName}">{user.UserName}</td>
+              <td key="{user.UserName}">
+                <ClickableProfile username={user.UserName}></ClickableProfile>
+              </td>
               <td>{user.Name}</td>
               <td>{user.UserEmail}</td>
               <button class="slide-button" role="button" onClick={removeFriend}><span class="text">Remove Friend</span><span>are you sure?</span></button>
@@ -153,7 +157,8 @@ export default function Circles() {
                 <tbody className="table-body">{userData}</tbody>
               </table>
             </div>
-        </div>        
+        </div>   
+        <ProfileCard name="Phillip Bernwanger" username="pbostic" userbio="yeah!"></ProfileCard>
     </div>
   )
 }
