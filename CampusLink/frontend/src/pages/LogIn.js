@@ -52,7 +52,6 @@ const LoginPage = () => {
   function checkCredentials(passwordInput, passwordStored, ID) {
     if (passwordInput === passwordStored) {
         setCredential(true);
-        console.log("ahhhhhh", ID);
         setUserID(userData.UserID);
     }
   }

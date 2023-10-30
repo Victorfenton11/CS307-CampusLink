@@ -2,11 +2,15 @@ import React, { useState } from 'react'
 import './styles/LogIn.css'
 import { useNavigate,} from 'react-router-dom';
 import logo from '../../static/images/CampusLink_white_text.png'
+import swal from 'sweetalert'
+import { reset_password } from '../actions/auth';
+import { connect } from 'react-redux'
 
-export default function ResetPassword() {
+const ResetPassword = ({ reset_password }) => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
+  const [requestSent, setRequestSent] = useState(false);
 
   function handleSendEmail(e) {
     e.preventDefault();
@@ -16,12 +20,20 @@ export default function ResetPassword() {
       response.json()
     ).then((data) => {
       if (JSON.stringify(data) === '{}') {
-        alert("The provided email is not associated with any existing accounts.");
+        swal("Error!", "The provided email is not associated with any existing accounts.", "error");
+        return;
       }
     });
 
+    reset_password(email);
+    //setRequestSent(true);
+
     setEmail('');
     return;
+  }
+
+  if (requestSent) {
+    return navigate('/');
   }
 
   return (
@@ -38,5 +50,7 @@ export default function ResetPassword() {
         <button className='landing-button' onClick={() => navigate('/login')}>Back</button>
       </div>
     </div>
-  )
-}
+  );
+};
+
+export default connect(null, { reset_password })(ResetPassword);
