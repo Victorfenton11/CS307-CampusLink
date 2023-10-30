@@ -3,6 +3,7 @@ import './styles/FriendPage.css'
 import Footer from "../components/Footer"
 import DataTable from "../components/DataTable"
 import MockData from "../components/MOCK_DATA.json"
+import ProfileCard from "../components/ProfileCard"
 import Navbar from "../components/Navbar"
 
 export default function FriendPage() {
@@ -141,6 +142,7 @@ export default function FriendPage() {
     )
   }
 
+  //make add friend button a little icon
   return (
     <div className="page-wrapper">
         <Navbar></Navbar>
@@ -159,8 +161,11 @@ export default function FriendPage() {
                 <tbody className="table-body">{userData}</tbody>
               </table>
             </div>
-        </div>        
+        </div>   
+        <ProfileCard username="phillbost" name="phillip B" userbio="that's me baby" friendstatus={true}></ProfileCard>     
     </div>
+    
+    
   )
 
 
