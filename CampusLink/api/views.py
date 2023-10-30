@@ -3,7 +3,7 @@ from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import ClassLocationSerializer, UserSerializer, FriendSerializer
-from .models import ClassLocation, User, Class
+from .models import ClassLocation, User, Class, FriendRequest
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
@@ -168,11 +168,20 @@ class addFriend(APIView):
 
     def get(self, request, format=None):
         # fix this, should be able to search by name not ID
+        # print("lookup_ID_kwarg:", self.lookup_ID_kwarg)
         id = request.GET.getlist(self.lookup_ID_kwarg)
+        # print("id:", id[0])
         user = User.objects.get(UserID=id[0])
         friend = User.objects.get(UserName=id[1])
-        user.friends.add(friend)
-        # user_serializer=UserSerialier(data=user_data)
+        # user.friends.add(friend)
+        if FriendRequest.objects.filter(from_user=user, to_user=friend).exists():
+            print("Friend request already sent")
+            return JsonResponse("Friend request already sent", safe=False)
+        
+        # Create a new friend request
+        friend_request = FriendRequest(from_user=user, to_user=friend, status='Pending')
+        friend_request.save()
+        print("Friend Request Sent")
         return JsonResponse("Friend Added Successfully", safe=False)
 
 class removeFriend(APIView):

@@ -24,6 +24,12 @@ class User(models.Model):
     def str(self):
         return self.UserName
 
+class FriendRequest(models.Model):
+    from_user = models.ForeignKey(User, related_name='sent_requests', on_delete=models.CASCADE)
+    to_user = models.ForeignKey(User, related_name='received_requests', on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=10, choices=[('PENDING', 'Pending'), ('ACCEPTED', 'Accepted')])
+    
 class Class(models.Model):
     abbreviation = models.CharField(max_length=10)
     name = models.CharField(max_length=100)
