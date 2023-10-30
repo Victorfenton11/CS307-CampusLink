@@ -324,3 +324,61 @@ h1{
     cursor: pointer;
     float: right;
 }
+
+/* Comments */
+.comment-area{
+    margin-top: 50px;
+}
+
+.comment-area textarea{     /* do not have to use . for textarea cuz it's not a class */
+    width: 100%;
+    min-height: 100px;
+    padding: 10px;
+    margin-block: 10px;
+    border-radius: 5px;
+    border-radius: 3px;
+}
+
+.comment-area input{
+    float: right;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.comment-area input:hover{
+    border: solid 1px #000000;
+}
+
+.comments-container{
+    margin-top: 20px;
+}
+
+/* Reply */
+.reply-area{
+    margin-top: 50px;
+}
+
+.reply-area textarea{     /* do not have to use . for textarea cuz it's not a class */
+    width: 100%;
+    min-height: 100px;
+    padding: 10px;
+    margin-block: 10px;
+    border-radius: 5px;
+    border-radius: 3px;
+}
+
+.reply-area input{
+    float: right;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.reply-area input:hover{
+    border: solid 1px #000000;
+}
+
+.reply-container{
+    margin-top: 20px;
+}

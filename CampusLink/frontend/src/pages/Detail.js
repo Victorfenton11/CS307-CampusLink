@@ -3,8 +3,18 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/Forum.css';
 
-const Posts = () => {
+const Detail = () => {
 
+    const showComment = () => {
+        document.getElementById("comment-area").classList.remove("hide");
+        console.log("show comment");
+    };
+
+    const showReply = () => {
+        document.getElementById("reply-area").classList.remove("hide");
+        console.log("show reply");
+    };
+    
   return (
     <div>
         <header>
@@ -65,14 +75,49 @@ const Posts = () => {
                         Regards: Username
 
                         <div class="comment">
-                            <button>Comment</button>
+                            <button onClick={showComment}>Comment</button>
+
                         </div>
                     </div>
                 </div>
+            </div>
 
-                {/* Comment Section */}
-                
+            {/* Comment Section */}
+            <div class="comment-area hide" id="comment-area">
+                <textarea name="comment" id="" placeholder="comment here ....."></textarea>
+                <input type="submit" name="" id="" value="submit"></input>  {/* type of a button */}
+            </div>
 
+            {/* Show Comments */}
+            <div class="comments-container">
+                <div class="head">
+                    <div class="authors">Author: Lil Asian</div>
+                    <div class="content">Comments</div>
+                </div>
+                <div class="body">
+                    <div class="authors">
+                        <div class="AnotherUser"><a href="#"></a>Username</div> {/* who published the post */}
+                        <div>Role</div>
+                    </div>
+
+                    <div class="content">
+                        A random comment about how to abduct children.
+                        <br></br>
+                        Nothing else...
+                        <hr></hr>
+                        Regards: Username
+
+                        <div class="comment">
+                            <button onClick={showReply}>Reply</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Reply Section */}
+            <div class="reply-area hide" id="reply-area">
+                <textarea name="comment" id="" placeholder="Reply here ....."></textarea>
+                <input type="submit" name="" id="" value="submit"></input>  {/* type of a button */}
             </div>
 
         </div>
@@ -81,4 +126,4 @@ const Posts = () => {
   )
 }
 
-export default Posts;
+export default Detail;
