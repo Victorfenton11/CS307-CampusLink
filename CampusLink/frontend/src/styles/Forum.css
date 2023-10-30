@@ -208,3 +208,119 @@ h1{
     font-weight: bold;
     border-radius: 5px;
 }
+
+.table-head .status{
+    flex: 5%;
+}
+
+.table-head .subjects{
+    flex: 65%;
+}
+
+.table-head .replies{
+    flex: 15%;
+}
+
+.table-head .last-reply{
+    flex: 20%;
+}
+
+/* Table Body*/
+.table-row{
+    display: flex;
+}
+
+.table-row .subjects, .table-row .replies, .table-row .last-reply{
+    padding: 5px;
+    margin: 1px;
+    background-color: #131415;
+}
+
+.table-row .subjects{
+    flex: 5%;
+    font-size: 20px;
+    text-align: left;
+}
+
+.table-row .subjects{
+    flex: 65%;
+}
+
+.table-row .replies{
+    flex: 15%;
+}
+
+.table-row .last-reply{
+    flex: 20%;
+}
+
+.pagination{
+    padding: 20px;
+    font-size: 15px;
+}
+
+.pagination a{
+    color: #fff;
+    margin-inline: 5px;
+    padding: 5px 10px;
+    border: solid 0.5px #fff;
+}
+
+.pagination a:hover{
+    opacity: 0.5;
+}
+
+/* Navigation Bar */
+.navigate{
+    margin-block: 20px;
+    font-weight: lighter;
+    font-size: 24px;
+}
+
+.navigate a{
+    color: #fff;
+}
+
+.navigate a:hover{
+    color: #ff0042;
+    font-weight: bolder;
+    opacity: 0.5;
+}
+
+/* Details.js */
+.head{
+    display: flex;
+    background-color: #2C2C2C;
+    padding: 5px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.authors{
+    flex: 20%;
+}
+
+.content{
+    flex: 80%;
+}
+
+.body{
+    display: flex;
+    background-color: #131415;
+    padding: 10px;
+    margin-top: 5px;
+
+}
+
+.body.authors .username{
+    font-size: 20px;
+}
+
+.body .content .comment button{
+    border: None;
+    padding: 10px;
+    font-weight: bolder;
+    /*box-shadow: 4px 6px #fff;*/
+    cursor: pointer;
+    float: right;
+}
