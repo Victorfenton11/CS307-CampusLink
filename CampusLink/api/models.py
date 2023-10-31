@@ -1,4 +1,7 @@
 from django.db import models
+from django.utils.text import slugify
+from django.db.models import HTMLField
+from taggit.managers import TaggableManager
 
 # Create your models here.
 class ClassLocation(models.Model):
@@ -29,3 +32,37 @@ class Class(models.Model):
     def __str__(self):
         return f'{self.abbreviation} - {self.name}'
     
+# Posts and related models
+class Category(models.Model):
+    title = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50, unique=True, blank=True)
+
+    class Meta:
+        verbose_name_plural = 'categories'
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super(Post, self).save(*args, **kwargs)
+
+class Post(models.Model):
+    title = models.CharField(max_length=400)
+    slug = models.SlugField(max_length=400, unique=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = HTMLField()
+    categories = models.ManyToManyField(Category)
+    date = models.DateTimeField(auto_now_add=True)
+    approved = models.BooleanField(default=False)
+    # leave on number of views for now
+
+    tags = TaggableManager()
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super(Post, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
