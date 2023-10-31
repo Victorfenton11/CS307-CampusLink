@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -8,12 +8,9 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from django.http.response import JsonResponse
-import json
 from rest_framework.decorators import api_view
-from rest_framework.decorators import permission_classes
 from django.core.files.storage import default_storage
 from django.core.mail import BadHeaderError, send_mail
-from django.http import HttpResponse, HttpResponseRedirect
 
 class ClassLocationView(generics.ListAPIView):
     queryset = ClassLocation.objects.all()
@@ -133,21 +130,6 @@ def delete_user(request, user_email):
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-def send_email2(request):
-    subject = "Subject here"
-    message =  "Here is the message."
-    from_email = settings.EMAIL_HOST_USER
-    if subject and message and from_email:
-        try:
-            send_mail(subject, message, from_email, ["your_email@purdue.edu"])
-        except BadHeaderError:
-            return HttpResponse("Invalid header found.")
-        return HttpResponseRedirect("/contact/thanks/")
-    else:
-        # In reality we'd use a form class
-        # to get proper validation errors.
-        return HttpResponse("Make sure all fields are entered and valid.")
-
 # handles POST request to save class list
 @csrf_exempt
 def save_class_list(request):
@@ -193,7 +175,7 @@ class removeFriend(APIView):
         # user_serializer=UserSerialier(data=user_data)
         return JsonResponse("Friend Removed Successfully", safe=False)
     
-class GetUserbyEmail(APIView):
+class ResetPassword(APIView):
     serializer_class = UserSerializer
     lookup_url_kwarg = 'email'
 
@@ -204,5 +186,15 @@ class GetUserbyEmail(APIView):
             queryResult = User.objects.filter(UserEmail=email)
             if len(queryResult) > 0:
                 data = UserSerializer(queryResult[0]).data
+                try:
+                    send_mail(
+                        'Password Reset',
+                        'Click the link to reset your password.',
+                        'campuslinkhelp@gmail.com',
+                        [email],
+                        fail_silently=False,
+                    )
+                except Exception:
+                    return JsonResponse("Error sending email")
                 return Response(data, status=status.HTTP_200_OK)
         return Response(data, status=status.HTTP_200_OK)

@@ -3,37 +3,29 @@ import './styles/LogIn.css'
 import { useNavigate,} from 'react-router-dom';
 import logo from '../../static/images/CampusLink_white_text.png'
 import swal from 'sweetalert'
-import { reset_password } from '../actions/auth';
-import { connect } from 'react-redux'
+import axios from 'axios';
 
-const ResetPassword = ({ reset_password }) => {
+const ResetPassword = () => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
-  const [requestSent, setRequestSent] = useState(false);
 
   function handleSendEmail(e) {
     e.preventDefault();
     if (email === '') return;
 
-    fetch('/api/get-user-by-email' + '?email=' + email).then((response) => 
+    fetch('/api/reset-password' + '?email=' + email).then((response) => 
       response.json()
     ).then((data) => {
       if (JSON.stringify(data) === '{}') {
         swal("Error!", "The provided email is not associated with any existing accounts.", "error");
-        return;
+      } else {
+        console.log(data);
       }
     });
 
-    reset_password(email);
-    //setRequestSent(true);
-
     setEmail('');
     return;
-  }
-
-  if (requestSent) {
-    return navigate('/');
   }
 
   return (
@@ -53,4 +45,4 @@ const ResetPassword = ({ reset_password }) => {
   );
 };
 
-export default connect(null, { reset_password })(ResetPassword);
+export default ResetPassword;
