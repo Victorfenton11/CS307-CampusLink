@@ -1,5 +1,6 @@
 import React from "react";
-import small_logo from "../../static/logo_small.png"
+import small_logo from "../../static/images/logo_small.png"
+import { render } from "react-dom";
 
 const Logo = ({style}) => (
     

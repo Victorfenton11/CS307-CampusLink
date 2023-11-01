@@ -1,0 +1,160 @@
+:root {
+  --background-color: #2B3947;
+}
+
+.profile-style {
+  background-color: var(--background-color);
+  color: #5e7cb9;
+  overflow-y: scroll;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Hind Guntur', sans-serif;
+  line-height: 2em;
+  color: #054231;
+  justify-content: center;
+}
+
+.top {
+  font-size: 1.5em;
+  padding: 1em;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #87ced6;
+  max-width: 20em;
+  overflow-wrap: break-word;
+}
+
+.profile-style form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+  
+.field {
+  margin: 0.1em;
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #676767;
+}
+
+.name{ 
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 300;
+  color: #735b84;
+  max-width: 20em;
+}
+.profile-style input{
+  font-family: Georgia, serif;
+  border-radius: 1.5em;
+  border: 0.05em solid #b7b7b7;
+  padding: 0.5em 0.5em 0.5em 1em;
+  font-size: 1em;
+  transition: 0.2s;
+}
+.profile-style input[type="file"] {
+  display: none;
+}
+.custom-file-upload {
+  border-radius: 50%;
+  position: relative;
+  display: inline-block;
+  padding: 0.5em;
+  cursor: pointer;
+  background: linear-gradient(270deg, #440c5a, #0912b7);
+  margin-bottom: 2em;
+}
+.img-wrap{
+  position: relative;
+  width: 8em;
+  height: 8em;
+  overflow: hidden;
+  border-radius: 50%;
+}
+.profile-style img {
+  width: auto;
+  height: 100%;
+}
+.img-upload:hover:before{
+  opacity: 1;
+}
+.profile-style input:focus{
+  outline: none;
+  border: 0.05em solid #2b18a4;
+}
+.profile-style input::placeholder{
+  color: #bebebe;
+}
+.big{
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #161212;
+  max-width: 20em;
+  overflow-wrap: break-word;
+}
+.inline { 
+  display: inline-block; 
+  border: 1px solid #2B3E4F;; 
+  margin:0.001em;
+  }
+  
+.profile-style button{
+  position: relative;
+  color: #054231;
+  letter-spacing: 0.05em;
+  margin: 1em;
+  font-size: 1em;
+  padding: 0.5em;
+  text-align: center;
+  transition: 0.5s;
+  border-radius: 0.5em;
+  cursor: pointer;
+  border-radius: 1.5em;
+  border: none;
+  background: #dfdee6;
+}
+.save{
+  font-weight: 600;
+  left: -1em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  width: 1em;
+  box-shadow: 1em 0em 2em 0em  #2912bd;
+}
+.edit{
+  color: #fff;
+  width: 8em;
+}
+
+.profile-style .margin-topp {
+  margin-top: 2em;
+}
+
+.profile-style .save-btn {
+  margin-bottom: 10em;
+}
+
+.profile-style button:hover{
+  left: 0;
+  color: #fff;
+  width: 8em;
+}
+
+.profile-style button:focus{
+  outline: none;
+}
+
+@media screen and (min-width: 50em)  {
+
+}  

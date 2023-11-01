@@ -1,0 +1,33 @@
+:root {
+    --background-color: #2B3947;
+}
+
+.container {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--background-color);
+    display: flex;
+    flex-direction: column;
+}
+
+.page {
+    height: 92%;
+    order: 1;
+}
+
+.navbar {
+    position: relative;
+    order: 2;
+}
+
+@media screen and (min-width: 50em)  {
+    .page {
+        order: 2;
+    }
+
+    .navbar {
+        order: 1;
+    }
+}

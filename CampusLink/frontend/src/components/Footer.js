@@ -1,10 +1,11 @@
 import React from "react";
 import Logo from "./Logo"
-import "../styles/Footer.css";
+import "./styles/Footer.css";
+import { render } from "react-dom";
 
 const Footer = () => (
     <div className="footerWrapper"> 
-        <div classname="logo">
+        <div>
             <Logo style={{height: "30%", width: "30%"}}></Logo>
         </div>
         <div className="contentWrapper">
@@ -25,8 +26,6 @@ const Footer = () => (
             </div>
         </div>
     </div>
-
-
 );
 
 export default Footer;
