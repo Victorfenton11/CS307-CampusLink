@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
-from django.db.models import HTMLField
+from django.db.models import URLField
 from taggit.managers import TaggableManager
 
 # Create your models here.
@@ -45,13 +45,13 @@ class Category(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
-        super(Post, self).save(*args, **kwargs)
+        super(Category, self).save(*args, **kwargs)
 
 class Post(models.Model):
     title = models.CharField(max_length=400)
     slug = models.SlugField(max_length=400, unique=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    content = HTMLField()
+    content = URLField()
     categories = models.ManyToManyField(Category)
     date = models.DateTimeField(auto_now_add=True)
     approved = models.BooleanField(default=False)

@@ -1,8 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from api.models import Class
+from django.views.static import serve
+
+from .models import Post, Category, User
 
 # Create your views here.
 def main(request):
@@ -23,3 +26,19 @@ def save_class_list(request):
     
 # handles GET request to get class list
 # TODO: implement this
+
+
+# for the POST pages
+def forum(request):
+    return serve(request, 'Forum.js', '/static/js')
+
+def detail(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    context = {
+        "post": post,
+    }
+
+    return serve(request, 'Detail.js', '/static/js')
+
+def posts(request):
+    return serve(request, 'Posts.js', '/static/js')

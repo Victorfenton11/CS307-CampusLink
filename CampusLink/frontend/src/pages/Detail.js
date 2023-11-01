@@ -59,20 +59,16 @@ const Detail = () => {
             <div class="topic-container">
                 <div class="head">
                     <div class="authors">Author: Lil Asian</div>
-                    <div class="content">Topic: post's title (Read 69 Times)</div>
+                    <div class="content">Topic: {post.title}</div>
                 </div>
                 <div class="body">
                     <div class="authors">
-                        <div class="username"><a href="#"></a>Username</div> {/* who published the post */}
+                        <div class="username"><a href="#">{post.user.name}</a></div> {/* who published the post */}
                         <div>Role</div>
                     </div>
 
                     <div class="content">
-                        A random content about how to abduct children.
-                        <br></br>
-                        Nothing else...
-                        <hr></hr>
-                        Regards: Username
+                        {post.content|safe} {/* does not require |safe ? */}
 
                         <div class="comment">
                             <button onClick={showComment}>Comment</button>

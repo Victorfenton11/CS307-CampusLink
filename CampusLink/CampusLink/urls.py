@@ -15,9 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from api.views import detail, posts, forum
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
-    path('', include('frontend.urls'))
-]
+    path('', include('frontend.urls')),
+
+    # add the paths here
+    path('forum/', forum, name='forum'),
+    path('detail/<slug>/', detail, name='detail'),
+    path('posts/', posts, name='posts'),
+] + staticfiles_urlpatterns()
