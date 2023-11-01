@@ -162,6 +162,16 @@ def getFriends(request, id):
         user = User.objects.get(UserID=id)
         friend_serializer = FriendSerializer(user, many=False)
         return JsonResponse(friend_serializer.data, safe=False)
+    
+@csrf_exempt
+def incoming_requests(request, user_id):
+    try:
+        user = User.objects.get(UserID=user_id)
+        incoming = FriendRequest.objects.filter(to_user=user)
+        requests_data = [{"from_user": {"UserName": req.from_user.UserName}, "timestamp": req.timestamp.strftime("%Y-%m-%d %H:%M:%S")} for req in incoming]
+        return JsonResponse(requests_data, safe=False)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
 
 class addFriend(APIView):
     lookup_ID_kwarg = 'id'
@@ -179,7 +189,7 @@ class addFriend(APIView):
             return JsonResponse("Friend request already sent", safe=False)
         
         # Create a new friend request
-        friend_request = FriendRequest(from_user=user, to_user=friend, status='Pending')
+        friend_request = FriendRequest(from_user=friend, to_user=user, status='Pending')
         friend_request.save()
         print("Friend Request Sent")
         return JsonResponse("Friend Added Successfully", safe=False)
@@ -210,3 +220,54 @@ class GetUserbyEmail(APIView):
                 data = UserSerializer(queryResult[0]).data
                 return Response(data, status=status.HTTP_200_OK)
         return Response(data, status=status.HTTP_200_OK)
+    
+@csrf_exempt
+def accept_friend_request(request, user_id, user_name):
+    try:
+        print(user_id)
+        print(user_name)
+        current_user = User.objects.get(UserID=user_id)
+        friend_requesting_user = User.objects.get(UserName=user_name)
+        friend_request = FriendRequest.objects.get(from_user=friend_requesting_user, to_user=current_user)
+        
+        if friend_request:
+            current_user.friends.add(friend_request.from_user)
+            current_user.save()
+            friend_request.delete()
+
+            return JsonResponse({"message": "Friend request accepted."}, status=200)
+        else:
+            return JsonResponse({"error": "Request not found."}, status=404)
+    
+    except User.DoesNotExist:
+        return JsonResponse({"error": "User not found."}, status=404)
+    except FriendRequest.DoesNotExist:
+        return JsonResponse({"error": "Friend request not found."}, status=404)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+    
+@csrf_exempt
+def decline_friend_request(request, user_id, user_name):
+    try:
+        print(user_id)
+        print(user_name)
+        current_user = User.objects.get(UserID=user_id)
+        friend_requesting_user = User.objects.get(UserName=user_name)
+        friend_request = FriendRequest.objects.get(from_user=friend_requesting_user, to_user=current_user)
+        
+        if friend_request:
+            friend_request.delete()
+
+            return JsonResponse({"message": "Friend request declined."}, status=200)
+        else:
+            return JsonResponse({"error": "Request not found."}, status=404)
+    
+    except User.DoesNotExist:
+        return JsonResponse({"error": "User not found."}, status=404)
+    except FriendRequest.DoesNotExist:
+        return JsonResponse({"error": "Friend request not found."}, status=404)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+
+
