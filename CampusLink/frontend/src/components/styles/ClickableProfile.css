@@ -1,0 +1,4 @@
+.viewable-name:hover {
+    text-decoration: underline 2px white;
+    cursor: pointer;
+}

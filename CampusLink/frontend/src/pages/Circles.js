@@ -34,25 +34,7 @@ export default function Circles() {
     fetchFriendData();
   };
 
-  const removeFriend = async (userID) => {
-    // Perform logic to save the modified data to the API
-   try{
-     var friendid = document.getElementById("inputBox").value;
-     const fetchString = 'api/removefriend' + '?id=1' + '&id=' + friendid; 
-     const response = await fetch(fetchString);
-   if (!response.ok) {
-     throw new Error('User Not Found');
-   }
 
-   // Notify the user that the data was saved successfully
-   alert('Successfully changed the profile');
-
-   // Exit edit mode
-   setIsAddMode(false);
-   } catch (error) {
-     console.error('Error saving user data:', error.message);
-   }
- };
 
   const fetchFriendData = async (userID) => {
     try {
@@ -66,6 +48,7 @@ export default function Circles() {
         (user)=>{
           const removeFriend = async (userID) => {
             // Perform logic to save the modified data to the API
+            //change id 1 to active user id
            try{
              const fetchString = 'api/removefriend' + '?id=1' + '&id=' + user.UserName; 
              const response = await fetch(fetchString);
@@ -86,7 +69,7 @@ export default function Circles() {
           return(
             <tr>
               <td key="{user.UserName}">
-                <ClickableProfile username={user.UserName}></ClickableProfile>
+                <ClickableProfile username={user.UserName} userID={user.UserID}></ClickableProfile>
               </td>
               <td>{user.Name}</td>
               <td>{user.UserEmail}</td>
@@ -158,7 +141,6 @@ export default function Circles() {
               </table>
             </div>
         </div>   
-        <ProfileCard name="Phillip Bernwanger" username="pbostic" userbio="yeah!"></ProfileCard>
     </div>
   )
 }

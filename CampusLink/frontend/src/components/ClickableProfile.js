@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import './styles/ClickableProfile.css'
 import ProfileCard from "./ProfileCard";
 
@@ -6,27 +6,48 @@ class ClickableProfile extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { isClicked: false };
+        //add userbio and name
+        this.state = { isClicked: false, username: "", name: ""};
     }
 
     render() {
         const fetchProfileData = async (userID) => {
-            
+            try {
+                //change to fetch userID prop
+                const fetchString = '/api/user/' + this.props.userID;
+                const response = await fetch(fetchString);
+                if (!response.ok) {
+                    //change to alerts library
+                    throw new Error('Failed to fetch user data');
+                }
+                //parse
+                const data = await response.json();
+                //set data state
+                this.setState({username: data.UserName, name: data.Name});
+            } catch (error) {
+                //change to fetch userID
+                throw new Error('Failed to fetch user data');
+            }
         }
+
         if (!this.state.isClicked) {
             return (
                 <div className="clickableprofile-container">
-                    <div onClick={() => this.setState({ isClicked: true })}>
-                        {this.props.username}
+                    <div onClick={() => {fetchProfileData(); this.setState({ isClicked: true })}}>
+                        <div className="viewable-name">
+                            {this.props.username}
+                        </div>
                     </div>
                 </div>
             )
         } else {
             return (
                 <div className="clickableprofile-container">
-                    <p>{this.props.username}</p>
+                    <div className="viewable-name">
+                        {this.props.username}
+                    </div>
                     <div className="miniprofile-container">
-                        <ProfileCard username={this.props.username}></ProfileCard>
+                        <ProfileCard username={this.state.username} name={this.state.name}></ProfileCard>
                     </div>
                 </div>
             )
