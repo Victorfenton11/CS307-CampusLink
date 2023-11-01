@@ -1,19 +1,37 @@
 .profilecard-container {
     color:antiquewhite;
-    background-color:rgba(106, 58, 155, 0.54);
+    background-color:rgba(58, 77, 155, 0.54);
     border-style:ridge;
+    border-width: 1px;
+    border-color: rgba(13, 17, 36, 0.892);
+    border-radius: 5px;
     overflow:hidden;
     height: 250px;
     width: 200px;
 }
 
 .name-container {
-    height: 40%;
+    position: relative;
+    height: auto;
     font-size:70%;
     display: grid;
     background-color:rgba(0, 0, 0, 0.261);
 }
 
+.profilecard-exit {
+    transition: 0.25s;
+    color:black;
+    border-color:rgba(240, 248, 255, 0);
+    background-color:rgba(240, 248, 255, 0);
+    position: absolute;
+    right: 0;
+}
+
+.profilecard-exit:hover {
+    transition: 0.25s;
+    color:rgba(240, 248, 255, 0.304);
+    cursor:pointer;
+}
 .bio {
     text-decoration-line:underline;
 }

@@ -50,7 +50,7 @@ export default function Circles() {
             // Perform logic to save the modified data to the API
             //change id 1 to active user id
            try{
-             const fetchString = 'api/removefriend' + '?id=1' + '&id=' + user.UserName; 
+             const fetchString = 'api/removefriend' + '?id=1' + '&id=' + user.UserID; 
              const response = await fetch(fetchString);
            if (!response.ok) {
              throw new Error('User Not Found');

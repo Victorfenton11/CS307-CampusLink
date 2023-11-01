@@ -1,4 +1,20 @@
+.clickableprofile-container {
+    position:relative;
+}
+
+.viewable-name {
+    text-decoration: none;
+
+}
+
 .viewable-name:hover {
+    transition: 0.5s;
     text-decoration: underline 2px white;
     cursor: pointer;
+}
+
+.miniprofile-container {
+    position: absolute;
+    right: 5vw;
+    top: -200%;
 }

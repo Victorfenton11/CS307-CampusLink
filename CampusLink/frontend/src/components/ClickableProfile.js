@@ -2,6 +2,14 @@ import React, { useState, useEffect } from "react";
 import './styles/ClickableProfile.css'
 import ProfileCard from "./ProfileCard";
 
+//TODO
+/**
+ * add public profile page that can be viewed from mini profile button
+ * be able to add people who aren't already your friends from mini profile AND from public profile
+ * make public profile "aesthetically pleasing"
+ * testing
+ */
+
 class ClickableProfile extends React.Component {
 
     constructor(props) {
@@ -32,26 +40,39 @@ class ClickableProfile extends React.Component {
 
         if (!this.state.isClicked) {
             return (
-                <div className="clickableprofile-container">
-                    <div onClick={() => {fetchProfileData(); this.setState({ isClicked: true })}}>
-                        <div className="viewable-name">
-                            {this.props.username}
+                <div className="clickbox">
+
+                    <div className="clickableprofile-container">
+                        <div onClick={() => {fetchProfileData(); this.setState({ isClicked: true })}}>
+                            <div className="viewable-name">
+                                {this.props.username}
+                            </div>
                         </div>
                     </div>
+
                 </div>
             )
         } else {
             return (
-                <div className="clickableprofile-container">
-                    <div className="viewable-name">
-                        {this.props.username}
+                <div className="clickbox">
+    
+                    <div className="clickableprofile-container">
+                        <div className="viewable-name">
+                            {this.props.username}
+                        </div>
+                        <div className="miniprofile-container" id="miniprofile-container">
+                            <ProfileCard 
+                                onExitClick={() => this.setState({ isClicked: false})} 
+                                username={this.state.username} 
+                                name={this.state.name}>
+                            </ProfileCard>
+                        </div>
                     </div>
-                    <div className="miniprofile-container">
-                        <ProfileCard username={this.state.username} name={this.state.name}></ProfileCard>
-                    </div>
+                                    
                 </div>
             )
         }
+        
       
     }
 
