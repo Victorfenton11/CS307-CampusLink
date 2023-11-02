@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './styles/Profile.css'
 import './styles/Discovery.css'
+import swal from 'sweetalert'
 
 function Recommendation() {
   const [data, setData] = useState([]);
@@ -9,6 +10,14 @@ function Recommendation() {
 
   const handleRefreshClick = () => {
     setRefresh(refresh + 1);
+    if (refresh > 1) {
+        swal({
+            title: "Be careful!",
+            text: "You might start seeing users you have seen before or that don't share similarities with you!",
+            icon: "warning",
+            button: "OK",
+          });
+    }
   }
 
   useEffect(() => {
