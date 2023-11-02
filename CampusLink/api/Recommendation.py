@@ -22,15 +22,20 @@ def recommend(request, id):
     print(df[df['UserID'] == int(id)])
     index_of_User = df[df['UserID'] == int(id)].index.tolist()[0]
     print("Index", index_of_User)
-    return userNameToID(df, index_of_User)
+    return userNameToID(df, index_of_User, id)
 
-def userNameToID(df, id):
-    userName = df.at[df.index[id],'Recommended Users'].split(",")
+def userNameToID(df, index_of_user, id):
+    userName = df.at[df.index[index_of_user],'Recommended Users'].split(",")
     idList = []
     for i in userName:
         userID = User.objects.get(UserName__iexact=i).UserID
         idList.append(userID)
     print(idList)
+    if id in idList:
+        print(id)
+        idList.remove(id)
+    else:
+        idList.pop()
     return printUsers(idList)
 
 def printUsers(list):
@@ -40,11 +45,11 @@ def printUsers(list):
 
 
 def refresh_post(df, x, i):
-    if 1 + i * 5 <= len(df.index) - 5:
+    if i * 5 <= len(df.index) - 6 and i != 0:
         print("!!!!!!", i)
-        return ",".join(df["UserName"].loc[x.argsort()[-6-i*5:-1-i*5]])
+        return ",".join(df["UserName"].loc[x.argsort()[-6-i*5:-i*5]])
     print("Yahhh", i)
-    return ",".join(df["UserName"].loc[x.argsort()[-6:-1]])
+    return ",".join(df["UserName"].loc[x.argsort()[-6:]])
 
 def refresh(request, id, i):
     df = pd.DataFrame(list(User.objects.all().values()))
@@ -57,6 +62,6 @@ def refresh(request, id, i):
     print(df[df['UserID'] == int(id)])
     index_of_User = df[df['UserID'] == int(id)].index.tolist()[0]
     print("Index", index_of_User)
-    return userNameToID(df, index_of_User)
+    return userNameToID(df, index_of_User, int(id))
 
 

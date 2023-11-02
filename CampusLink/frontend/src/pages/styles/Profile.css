@@ -1,7 +1,11 @@
 :root {
   --background-color: #2B3947;
 }
-
+@font-face {
+  font-family: 'lato';
+  src:url(./Lato-Light.ttf);
+  font-style: normal;
+}
 .profile-style {
   background-color: var(--background-color);
   color: #5e7cb9;
@@ -11,9 +15,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: 'Hind Guntur', sans-serif;
+  font-family: lato;
   line-height: 2em;
-  color: #054231;
   justify-content: center;
 }
 
@@ -44,14 +47,14 @@
 .label {
   text-transform: uppercase;
   font-weight: 700;
-  color: #676767;
+  color: #e9c7c7;
 }
 
 .name{ 
   text-align: center;
   text-transform: uppercase;
   font-weight: 300;
-  color: #735b84;
+  color: #b388d2;
   max-width: 20em;
 }
 .profile-style input{
@@ -78,6 +81,7 @@
   position: relative;
   width: 8em;
   height: 8em;
+  object-fit: contain;
   overflow: hidden;
   border-radius: 50%;
 }
