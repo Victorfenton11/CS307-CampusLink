@@ -1,0 +1,81 @@
+:root {
+    --background-color: #2B3947;
+  }
+  @font-face {
+    font-family: 'lato';
+    src:url(./Lato-Light.ttf);
+    font-style: normal;
+  }
+  .discovery-style {
+    background-color: var(--background-color);
+    color: #e5e7ea;
+    overflow-y: scroll;
+    height: 90vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-family: lato;
+    line-height: 2em;
+  }
+  .user-style {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .user-details {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  .custom-file-upload {
+    border-radius: 50%;
+    position: relative;
+    display: inline-block;
+    padding: 0.5em;
+    cursor: pointer;
+    background: linear-gradient(270deg, #440c5a, #0912b7);
+    margin-bottom: 2em;
+  }
+  .img-wrap{
+    position: relative;
+    width: 8em;
+    height: 8em;
+    object-fit: contain;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+  .discovery-style img {
+    width: auto;
+    height: 100%;
+  }
+  .discovery-style button{
+    position: relative;
+    color: #22115f;
+    letter-spacing: 0.05em;
+    margin: 1em;
+    font-family: lato;
+    font-size: 1em;
+    padding: 0.5em;
+    text-align: center;
+    transition: 0.5s;
+    border-radius: 0.5em;
+    cursor: pointer;
+    border-radius: 1.5em;
+    border: none;
+    background: #dfdee6;
+  }
+  .discovery-style button:hover{
+    left: 0;
+    color: #d22d98;
+    width: 8em;
+  }
+  
+  .discovery-style button:focus{
+    outline: none;
+  }
+
+  
+  @media screen and (min-width: 50em)  {
+  
+  }  
