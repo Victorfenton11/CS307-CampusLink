@@ -22,10 +22,10 @@
   .user-style {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 1em;
   }
   .user-details {
-    margin-left: 20px;
+    margin-left: 1em;
     display: flex;
     flex-direction: column;
   }
@@ -34,7 +34,7 @@
   }
   
   .user-details-visible {
-    margin-left: 20px;
+    margin-left: 1em;
     display: flex;
     flex-direction: column;
   }
