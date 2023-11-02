@@ -14,6 +14,7 @@ class User(models.Model):
     UserName = models.CharField(max_length=500,unique=True)
     UserEmail = models.CharField(max_length=500,unique=True)
     PhotoFileName = models.CharField(max_length=500, null=True)
+    PhoneNumber = models.CharField(max_length=15, blank=True, null=True)
     Major = models.CharField(max_length=500, default = majorValue)
     Interest = models.CharField(max_length=1000, default = interestValue)
     securityQuestion = models.CharField(max_length=500, blank=True, null=True)

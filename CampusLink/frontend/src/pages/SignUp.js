@@ -10,6 +10,7 @@ export default function SignUp() {
     username: '',
     password: '',
     profilePic: null,
+    phoneNumber: '',
     securityQuestion: '', // New field for security question
     securityAnswer: '',   // New field for security answer
   });
@@ -27,6 +28,7 @@ export default function SignUp() {
     const re = /^[^\s@]+@purdue\.edu$/;
     return re.test(String(email).toLowerCase());
   }
+
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -49,13 +51,19 @@ export default function SignUp() {
       setEmailError('Please enter a valid Purdue email address');
       return; 
     }
+    const phoneNumberPattern = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+    if (!phoneNumberPattern.test(formData.phoneNumber)) {
+        setEmailError('Please enter a valid phone number.'); 
+        return;
+    }
     setEmailError(''); // Clear error message if email is valid
-    // Handle form submission logic here
+    
     const data = new FormData();
     data.append('Name', formData.name);
     data.append('UserEmail', formData.email);
     data.append('UserName', formData.username);
     data.append('Password', formData.password);
+    data.append('PhoneNumber', formData.phoneNumber);
     data.append('Major', '');
     data.append('Interest', '');
     data.append('securityQuestion', formData.securityQuestion);
@@ -102,6 +110,19 @@ export default function SignUp() {
         <label className='label'>
           Email
           <input type="email" name="email" className='input input_box' onChange={handleChange}  />
+        </label>
+        <br />
+        <label className='label'>
+          Phone Number
+          <input
+            type="tel"
+            name="phoneNumber"
+            className='input input_box'
+            onChange={handleChange}
+            placeholder="Enter your phone number"
+            pattern="^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$"
+            required
+          />
         </label>
         <br />
         <label className='label'>

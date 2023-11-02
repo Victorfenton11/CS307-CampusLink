@@ -65,9 +65,9 @@ export default function Circles() {
            }
         
            // Notify the user that the data was saved successfully
-           alert('User ' + user.UserName + ' successfully removed');
+          //  alert('User ' + user.UserName + ' successfully removed');
           //  problem here
-          //  swal("Removed!", `User ${user.UserName} successfully removed.`, "success");
+           swal("Removed!", `User ${user.UserName} successfully removed.`, "success");
            // Exit edit mode
            setIsAddMode(false);
            } catch (error) {
