@@ -11,6 +11,9 @@ from django.http.response import JsonResponse
 from rest_framework.decorators import api_view
 from django.core.files.storage import default_storage
 from django.core.mail import BadHeaderError, send_mail
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_str, force_bytes
 
 class ClassLocationView(generics.ListAPIView):
     queryset = ClassLocation.objects.all()
@@ -92,7 +95,7 @@ def userApi(request,id=0):
         if user_serializer.is_valid():
             user_serializer.save()
             return JsonResponse("Updated Successfully",safe=False)
-        return JsonResponse("Failed to Update")
+        return JsonResponse("Failed to Update", safe=False)
     elif request.method=='DELETE':
         user=User.objects.get(UserID=id)
         user.delete()
@@ -174,7 +177,20 @@ class removeFriend(APIView):
         user.friends.remove(friend)
         # user_serializer=UserSerialier(data=user_data)
         return JsonResponse("Friend Removed Successfully", safe=False)
-    
+
+@api_view(['POST'])
+def get_security_question(request):
+    uid = request.data.get('uid')
+    token = request.data.get('token')
+    data = {}
+    if uid:
+        uid = urlsafe_base64_decode(uid)
+        user = User.objects.get(UserID=uid)
+        if user and default_token_generator.check_token(user, token):
+            data = UserSerializer(user).data
+            return Response(data, status=status.HTTP_200_OK)
+    return Response(data, status=status.HTTP_200_OK)
+
 class ResetPassword(APIView):
     serializer_class = UserSerializer
     lookup_url_kwarg = 'email'
@@ -183,18 +199,17 @@ class ResetPassword(APIView):
         email = request.GET.get(self.lookup_url_kwarg)
         data = {}
         if email:
-            queryResult = User.objects.filter(UserEmail=email)
-            if len(queryResult) > 0:
-                data = UserSerializer(queryResult[0]).data
-                try:
-                    send_mail(
-                        'Password Reset',
-                        'Click the link to reset your password.',
-                        'campuslinkhelp@gmail.com',
-                        [email],
-                        fail_silently=False,
-                    )
-                except Exception:
-                    return JsonResponse("Error sending email")
+            queryResult = User.objects.get(UserEmail=email)
+            if queryResult:
+                token = default_token_generator.make_token(queryResult)
+                uid = urlsafe_base64_encode(force_bytes(queryResult.UserID))
+                send_mail(
+                    'Password Reset',
+                    f'Click the link to reset your password:\n http://localhost:8080/password-reset-confirm/{uid}/{token}',
+                    'campuslinkhelp@gmail.com',
+                    [email],
+                    fail_silently=False,
+                )
+                data = UserSerializer(queryResult).data
                 return Response(data, status=status.HTTP_200_OK)
         return Response(data, status=status.HTTP_200_OK)

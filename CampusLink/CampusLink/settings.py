@@ -14,11 +14,13 @@ from pathlib import Path
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR=Path(__file__).resolve(strict=True).parent.parent
 MEDIA_URL='/Photos/'
 MEDIA_ROOT=os.path.join(BASE_DIR,"Photos")
 
+BASE_DIR = Path(__file__).resolve().parent.parent
 
+AUTH_USER_MODEL = 'api.User'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
@@ -39,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'api.apps.ApiConfig',
+    'api',
     'rest_framework',
     'frontend.apps.FrontendConfig'
 ]

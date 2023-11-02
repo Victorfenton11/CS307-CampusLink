@@ -59,12 +59,12 @@ const LoginPage = () => {
   function handleSubmit() {
     fetchData(formData.username);
     console.log(userData);
-    //checkCredentials(formData.password, userData.Password);
+    //checkCredentials(formData.password, userData.password);
   }
 
   useEffect(()=>{
       if (userData != null) {
-          checkCredentials(formData.password, userData.Password, userData.UserID);
+          checkCredentials(formData.password, userData.password, userData.UserID);
       }
   },[userData])
 

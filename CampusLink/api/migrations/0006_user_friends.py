@@ -11,8 +11,8 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name='user',
+            model_name='User',
             name='friends',
-            field=models.ManyToManyField(blank=True, to='api.user'),
+            field=models.ManyToManyField(blank=True, to='api.User'),
         ),
     ]
