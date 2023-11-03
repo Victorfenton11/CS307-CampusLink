@@ -11,7 +11,14 @@ export default function LandingPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigate('/login');
+    try {
+      const loggedUserID = sessionStorage.getItem('userID');
+      if (!loggedUserID) {
+        navigate('/login');
+      }
+    } catch (e) {
+      navigate('/login');
+    }
   }, []);
 
   return (

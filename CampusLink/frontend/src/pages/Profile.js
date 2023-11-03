@@ -87,6 +87,7 @@ const Profile = () => {
 
     // Exit edit mode
     setIsEditMode(false);
+    setImgError(false);
     } catch (error) {
       console.error('Error saving user data:', error.message);
     }
