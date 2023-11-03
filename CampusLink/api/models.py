@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 from django.db.models import URLField
-from taggit.managers import TaggableManager
+from django.shortcuts import reverse
 
 # Create your models here.
 class ClassLocation(models.Model):
@@ -33,36 +33,36 @@ class Class(models.Model):
         return f'{self.abbreviation} - {self.name}'
     
 # Posts and related models
-class Category(models.Model):
-    title = models.CharField(max_length=50)
-    slug = models.SlugField(max_length=50, unique=True, blank=True)
+class Thread(models.Model):
+    TOPIC_CHOICES = (
+    ("1", "Entertainment"),
+    ("2", "Sports"),
+    ("3", "Gaming"),
+    ("4", "Music"),
+    ("5", "Technology"),
+    ("6", "News"),
+    ("7", "Anime"),
+    ("8", "Drama & Movie"),
+)
+    subject = models.CharField(max_length=128)
+    content = models.TextField()
+    creator = models.ForeignKey('User', on_delete=models.CASCADE, related_name='creator_threads')
+    topic = models.CharField(max_length=32, choices=TOPIC_CHOICES, default=1)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    replyCount = models.IntegerField(default=0)
 
-    class Meta:
-        verbose_name_plural = 'categories'
     def __str__(self):
-        return self.title
+        return f'Thread {self.subject}  is created by {self.creator.username}.'
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.title)
-        super(Category, self).save(*args, **kwargs)
 
 class Post(models.Model):
-    title = models.CharField(max_length=400)
-    slug = models.SlugField(max_length=400, unique=True, blank=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    content = URLField()
-    categories = models.ManyToManyField(Category)
-    date = models.DateTimeField(auto_now_add=True)
-    approved = models.BooleanField(default=False)
-    # leave on number of views for now
-
-    tags = TaggableManager()
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.title)
-        super(Post, self).save(*args, **kwargs)
+    content = models.TextField()
+    thread = models.ForeignKey('Thread', on_delete=models.CASCADE, related_name='thread_posts')
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    creator = models.ForeignKey('User', on_delete=models.CASCADE, related_name='creator_posts')
 
     def __str__(self):
-        return self.title
+        return f'Post of {self.thread.subject} is posted by {self.creator.username}.'
+

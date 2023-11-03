@@ -106,3 +106,11 @@ webcolors==1.13
 webencodings==0.5.1
 websocket-client==1.6.4
 # wordcloud==1.9.2
+dj-database-url==0.5.0
+django-cors-headers==3.13.0
+django-on-heroku==1.1.2
+djangorestframework-simplejwt==5.2.0
+gunicorn==20.1.0
+PyJWT==2.4.0
+whitenoise==6.2.0
+wincertstore==0.2
