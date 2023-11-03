@@ -13,18 +13,14 @@ const LoginPage = () => {
       username: '',
       password: '',
     });
-  const [userID, setUserID] = useState(1);
   
   // State to track errors
   const [error, setError] = useState(null);
-
-  const [credential, setCredential] = useState(false);
   
   // Function to fetch user data from the API
   console.log(formData)
   async function fetchData(username){
     try {
-      console.log(username);
       // Make API request
       const response = await fetch('/api/users/' + username);
       
@@ -39,7 +35,6 @@ const LoginPage = () => {
       // Check if username password matches
       //const parseTheData = JSON.parse(data);
       //console.log(parseTheData);
-      console.log("Data", data);
       setUserData(data);
 
     } catch (error) {
@@ -52,8 +47,6 @@ const LoginPage = () => {
 
   function checkCredentials(passwordInput, passwordStored, ID) {
     if (passwordInput === passwordStored) {
-        setCredential(true);
-        setUserID(userData.UserID);
         return true;
     }
     return false;
@@ -61,13 +54,12 @@ const LoginPage = () => {
 
   function handleSubmit() {
     fetchData(formData.username);
-    console.log(userData);
-    
   }
 
   useEffect(()=>{
       if (userData != null) {
           if (checkCredentials(formData.password, userData.password, userData.UserID)) {
+            sessionStorage.setItem('userID', userData.UserID);
             return navigate('/');
           } else {
             swal("Error!", "Incorrect password", "error");

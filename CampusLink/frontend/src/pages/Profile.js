@@ -21,7 +21,8 @@ const Profile = () => {
   const fetchUserData = async (userID) => {
     try {
       // Make API request
-      const response = await fetch('/api/user/1');
+      const userID = sessionStorage.getItem('userID');
+      const response = await fetch(`/api/user/${userID}`);
       
       // Check if the request was successful
       if (!response.ok) {
@@ -69,7 +70,8 @@ const Profile = () => {
   const handleSaveClick = async (userID) => {
     // Perform logic to save the modified data to the API
     try{
-      const response = await fetch('/api/user/1', {
+      const userID = sessionStorage.getItem('userID');
+      const response = await fetch(`/api/user/${userID}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

@@ -1,12 +1,19 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import SignUp from './SignUp'
 import LogIn from './LogIn'
 import HomePage from './HomePage'
 import ResetPassword from './ResetPassword'
 import ResetPasswordConfirm from './ResetPasswordConfirm'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
+
 
 export default function LandingPage() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate('/login');
+  }, []);
+
   return (
     <Routes>
       <Route path='/login' element={<LogIn />}/>
