@@ -77,6 +77,7 @@ const LoginPage = () => {
   
   if (credential) {
       console.log("userID", userID);
+      sessionStorage.setItem('userID', userID);
       return navigate('/');
   }
   // Render user profile

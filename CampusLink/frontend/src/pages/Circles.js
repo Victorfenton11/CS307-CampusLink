@@ -24,8 +24,8 @@ export default function Circles() {
      // Perform logic to save the modified data to the API
     try{
       var friendid = document.getElementById("inputBox").value;
-      // console.log(friendid)
-      const fetchString = 'api/addfriend' + '?id=1' + '&id=' + friendid; 
+      const userID = sessionStorage.getItem('userID');
+      const fetchString = 'api/addfriend' + '?id='+ userID + '&id=' + friendid; 
       // console.log(fetchString)
       const response = await fetch(fetchString);
     if (!response.ok) {
@@ -47,7 +47,8 @@ export default function Circles() {
 
   const fetchFriendData = async (userID) => {
     try {
-      const response = await fetch('/api/viewfriends/1');
+      const userID = sessionStorage.getItem('userID');
+      const response = await fetch(`/api/viewfriends/${userID}`);
       if (!response.ok) {
         throw new Error('Failed to fetch user data');
       }
@@ -58,7 +59,8 @@ export default function Circles() {
           const removeFriend = async (userID) => {
             // Perform logic to save the modified data to the API
            try{
-             const fetchString = 'api/removefriend' + '?id=1' + '&id=' + user.UserName; 
+             const userID = sessionStorage.getItem('userID');
+             const fetchString = 'api/removefriend' + `?id=${userID}` + '&id=' + user.UserName; 
              const response = await fetch(fetchString);
            if (!response.ok) {
              throw new Error('User Not Found');
@@ -96,7 +98,8 @@ export default function Circles() {
 
   const fetchIncomingRequests = async () => {
     try {
-        const response = await fetch('/api/incoming-requests/1'); // Adjust the API endpoint as necessary
+        const userID = sessionStorage.getItem('userID');
+        const response = await fetch(`/api/incoming-requests/${userID}`); // Adjust the API endpoint as necessary
         if (!response.ok) {
             throw new Error('Failed to fetch incoming friend requests');
         }
@@ -110,7 +113,8 @@ export default function Circles() {
   const acceptRequest = async (userName) => {
     try {
         const encodedUserName = encodeURIComponent(userName);
-        const response = await fetch(`/api/accept-friend-request/1/${encodedUserName}`, {
+        const userID = sessionStorage.getItem('userID');
+        const response = await fetch(`/api/accept-friend-request/${userID}/${encodedUserName}`, {
         method: 'POST',
         });
 
@@ -131,7 +135,8 @@ export default function Circles() {
   const declineRequest = async (userName) => {
     try {
         const encodedUserName = encodeURIComponent(userName);
-        const response = await fetch(`/api/decline-friend-request/1/${encodedUserName}`, {
+        const userID = sessionStorage.getItem('userID');
+        const response = await fetch(`/api/decline-friend-request/${userID}/${encodedUserName}`, {
             method: 'POST',
         });
 

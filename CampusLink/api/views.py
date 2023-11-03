@@ -189,7 +189,7 @@ class addFriend(APIView):
             return JsonResponse("Friend request already sent", safe=False)
         
         # Create a new friend request
-        friend_request = FriendRequest(from_user=friend, to_user=user, status='Pending')
+        friend_request = FriendRequest(from_user=user, to_user=friend, status='Pending')
         friend_request.save()
         print("Friend Request Sent")
         return JsonResponse("Friend Added Successfully", safe=False)
@@ -232,6 +232,7 @@ def accept_friend_request(request, user_id, user_name):
         
         if friend_request:
             current_user.friends.add(friend_request.from_user)
+            friend_requesting_user.friends.add(friend_request.to_user)
             current_user.save()
             friend_request.delete()
 
