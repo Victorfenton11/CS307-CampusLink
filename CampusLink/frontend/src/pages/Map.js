@@ -6,6 +6,7 @@ import { GoogleMap, Marker, useLoadScript, DirectionsRenderer } from "@react-goo
 import { useMemo } from 'react'
 import ClassLocation from '../components/ClassLocation'
 import EstTime from '../components/EstTime'
+import swal from 'sweetalert'
 
 const libraries = ['places'];
 
@@ -26,6 +27,12 @@ export default function Map() {
     getUserLocation();
   }, []);
 
+  useEffect(() => {
+    if (!classLocation) return;
+    if (classLocation[0]) displayClassLocation(classLocation[1], classLocation[2], classLocation[3]);
+    else displayLocation(classLocation[1]);
+  }, [travelMethod]);
+
   const getUserLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
       setUserLocation({
@@ -35,70 +42,96 @@ export default function Map() {
     }, () => setUserLocation("Purdue University"));
   }
 
+  function searchLocation(query) {
+    fetch('/api/get-class-location' + '?location=' + query).then((response) => 
+      response.json()
+    ).then((data) => {
+      if (JSON.stringify(data) === '{}') {
+        displayLocation(query);
+      } else {
+        displayClassLocation(data.building_name, data.floor, data.room);
+      }
+    });
+    return;
+  }
+
   function changeTravelMethod(selection) {
+    console.log(classLocation);
+    console.log(travelMethod);
     if (!classLocation) return;
 
     if (selection !== travelMethod) {
       setTravelMethod(selection);
-      if (classLocation[0]) displayClassLocation(classLocation[1], classLocation[2], classLocation[3]);
-      else displayLocation(classLocation[1]);
     }
     return;
   }
 
   async function displayClassLocation(building_name, floor, room) {
     if ((floor) && (room.toString().length > 4 || room.toString().length < 3)) {
-      alert("The entered Class Location or Room number is invalid.");
+      swal("Error", "The entered Class Location or Room number is invalid.", "error");
       return;
     }
 
     setDirectionsResponse(null);
-    document.getElementById('map').style.height = "54vh";
+    document.getElementById('map').style.height = "52vh";
 
-    if (!building_name) {
-      setClassLocation([true, '', floor, room.toString()]);
-      return;
-    } else if (!floor) {
-      setClassLocation([true, building_name.slice(0, -18), '', ''])
+    if (!floor) {
+      setClassLocation([true, building_name, '', ''])
     } else {
-      setClassLocation([true, building_name.slice(0, -18), floor, room.toString()]);
+      setClassLocation([true, building_name, floor, room.toString()]);
     }
 
-    const directionsService = new google.maps.DirectionsService();
-    getUserLocation();
-    console.log(travelMethod);
-    const results = await directionsService.route({
-      origin: userLocation,
-      destination: building_name,
-      travelMode: google.maps.TravelMode[travelMethod]
-    });
-    setDirectionsResponse(results);
+    try {
+      const directionsService = new google.maps.DirectionsService();
+      getUserLocation();
+      console.log(travelMethod);
+      const results = await directionsService.route({
+        origin: userLocation,
+        destination: building_name + "Purdue University",
+        travelMode: google.maps.TravelMode[travelMethod]
+      });
+      setDirectionsResponse(results);
+      setEstTime(results.routes[0].legs[0].duration.text);
+    } catch (e) {
+      swal("Error", "Could not find directions to the entered destination.", "error");
+      setEstTime(null);
+    }
+    return;
   }
 
   async function displayLocation(destination) {
     setClassLocation([false, destination]);
     setDirectionsResponse(null);
-    document.getElementById('map').style.height = "64vh";
+    document.getElementById('map').style.height = "62vh";
 
-    const directionsService = new google.maps.DirectionsService();
-    getUserLocation();
-    console.log(travelMethod);
-    const results = await directionsService.route({
-      origin: userLocation,
-      destination: destination,
-      travelMode: google.maps.TravelMode[travelMethod]
-    });
-    setDirectionsResponse(results);
-
+    try {
+      const directionsService = new google.maps.DirectionsService();
+      getUserLocation();
+      console.log(travelMethod);
+      const results = await directionsService.route({
+        origin: userLocation,
+        destination: destination,
+        travelMode: google.maps.TravelMode[travelMethod]
+      });
+      setDirectionsResponse(results);
+      setEstTime(results.routes[0].legs[0].duration.text);
+    } catch (e) {
+      swal("Error", "Could not find directions to the entered destination.", "error");
+      setEstTime(null);
+    }
     return;
   }
 
   return (
     <>
-      <SearchBar placeholder="Lookup a Campus Location..." displayClass={displayClassLocation} displayLocation={displayLocation}/>
+      <SearchBar placeholder="Lookup a Campus Location..." handleSearch={searchLocation}/>
       <div className='location-container'>
         {classLocation && classLocation[0] && <ClassLocation className='class-location' building={classLocation[1]} floor={classLocation[2]} room={classLocation[3]}/>}
-        {classLocation && <div className='travel-options'><TripleToggleSwitch change={changeTravelMethod} option1="Walk" option2="Drive" option3="Cycle" className='travel-method-btn'/><EstTime estTime={estTime}></EstTime></div>}
+        {classLocation && 
+          <div className='travel-options'>
+            <TripleToggleSwitch change={changeTravelMethod} text1="Walk" text2="Drive" text3="Cycle" value1="WALKING" value2="DRIVING" value3="BICYCLING" className='travel-method-btn'/>
+            <EstTime estTime={estTime}></EstTime>
+          </div>}
         {!isLoaded ? (
           <h1>Loading...</h1>
         ) : (

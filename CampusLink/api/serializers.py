@@ -9,7 +9,7 @@ class ClassLocationSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model=User
-        fields=('UserID','Name', 'Password', 'UserName', 'UserEmail', 'Interest', 'Major', 'PhotoFileName', 'isPrivate')
+        fields = '__all__'
 
 class FriendSerializer(serializers.ModelSerializer):
     friends = UserSerializer(many=True, read_only=True)

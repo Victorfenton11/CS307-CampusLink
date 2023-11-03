@@ -1,27 +1,33 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react'
 import './styles/Circles.css'
 import ProfileCard from '../components/ProfileCard';
 import ClickableProfile from '../components/ClickableProfile'
+=======
+import React, { useState } from 'react'
+import Friends from '../components/Friends'
+import Groups from '../components/Groups'
+import SwitchSelector from 'react-switch-selector'
+import "./styles/Circles.css"
+>>>>>>> Vic
 
 export default function Circles() {
+  const [switchPosition, setSwitchPosition] = useState(true);
 
-  const [userData, setUserData] = useState([]);
-  const [isAddMode, setIsAddMode] = useState(false)
-
-  const handleAddClick = () => {
-    setIsAddMode(!isAddMode);
-  };
-
-  const addFriend = async (userID) => {
-     // Perform logic to save the modified data to the API
-    try{
-      var friendid = document.getElementById("inputBox").value;
-      const fetchString = 'api/addfriend' + '?id=1' + '&id=' + friendid; 
-      const response = await fetch(fetchString);
-    if (!response.ok) {
-      throw new Error('User Not Found');
+  const options = [
+    {
+      label: "Friends",
+      value: "friends",
+      selectedBackgroundColor: "white"
+    },
+    {
+      label: "Circles",
+      value: "circles",
+      selectedBackgroundColor: "white"
     }
+  ];
 
+<<<<<<< HEAD
     // Notify the user that the data was saved successfully
     alert('Successfully added friend profile');
 
@@ -141,6 +147,13 @@ export default function Circles() {
               </table>
             </div>
         </div>   
+=======
+  const initialSelectedIndex = options.findIndex(({value}) => value === "friends");
+
+  return (
+    <div className='circles-page'>
+      <Friends />
+>>>>>>> Vic
     </div>
   )
 }
