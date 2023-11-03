@@ -41,15 +41,19 @@ const ResetPasswordConfirm = () => {
   const handleResetPassword = async (event) => {
     event.preventDefault();
     //TODO password requirements validation
+    if (sqa !== userData.securityAnswer) {
+      swal("Error!", "Incorrect answer to security question.", "error");
+      return;
+    }
+
+    if (newPassword === "") {
+      swal("Error!", "New Password cannot be empty", "error");
+      return;
+    }
 
     if (newPassword !== reNewPassword) {
         swal("Error!", "Passwords do not match", "error");
         return;
-    }
-
-    if (sqa !== userData.securityAnswer) {
-      swal("Error!", "Incorrect answer to security question.", "error");
-      return;
     }
 
     userData.password = newPassword;

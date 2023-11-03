@@ -3,6 +3,7 @@ import Profile from './Profile'
 import './styles/LogIn.css';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../static/images/CampusLink_white_text.png'
+import swal from 'sweetalert';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -53,18 +54,24 @@ const LoginPage = () => {
     if (passwordInput === passwordStored) {
         setCredential(true);
         setUserID(userData.UserID);
+        return true;
     }
+    return false;
   }
 
   function handleSubmit() {
     fetchData(formData.username);
     console.log(userData);
-    //checkCredentials(formData.password, userData.password);
+    
   }
 
   useEffect(()=>{
       if (userData != null) {
-          checkCredentials(formData.password, userData.password, userData.UserID);
+          if (checkCredentials(formData.password, userData.password, userData.UserID)) {
+            return navigate('/');
+          } else {
+            swal("Error!", "Incorrect password", "error");
+          }
       }
   },[userData])
 
@@ -73,11 +80,7 @@ const LoginPage = () => {
   if (error) {
     return <div>Error: {error}</div>;
   }
-  
-  if (credential) {
-      console.log("userID", userID);
-      return navigate('/');
-  }
+
   // Render user profile
   return (
     <div className='login-style'>
