@@ -6,7 +6,7 @@
     src:url(./Lato-Light.ttf);
     font-style: normal;
   }
-  .discovery-style {
+  .rec-style {
     background-color: hsla(289, 35%, 67%, 0.62);
     background-image: url('https://cdn.pixabay.com/photo/2016/11/29/02/20/cosmos-1866820_1280.jpg');
     color: #e5e7ea;
@@ -55,11 +55,11 @@
     overflow: hidden;
     border-radius: 50%;
   }
-  .discovery-style img {
+  .rec-style img {
     width: auto;
     height: 100%;
   }
-  .discovery-style button{
+  .rec-style button{
     position: relative;
     color: #22115f;
     letter-spacing: 0.05em;
@@ -75,13 +75,13 @@
     border: none;
     background: #dfdee6;
   }
-  .discovery-style button:hover{
+  .rec-style button:hover{
     left: 0;
     color: #d22d98;
     width: 8em;
   }
   
-  .discovery-style button:focus{
+  .rec-style button:focus{
     outline: none;
   }
 

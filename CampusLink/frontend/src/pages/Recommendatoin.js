@@ -36,7 +36,7 @@ function Recommendation() {
   }, [refresh]);
 
   return (
-    <div className='discovery-style'>
+    <div className='rec-style'>
       <h1>Users that share similar interests with you</h1>
       {data.map(item => (
         <div key={item.UserID} className='user-style'
