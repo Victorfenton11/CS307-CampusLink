@@ -15,7 +15,7 @@ class ClickableProfile extends React.Component {
     constructor(props) {
         super(props);
         //add userbio and name
-        this.state = { isClicked: false, username: "", name: ""};
+        this.state = { isClicked: false, username: "", name: "", userID: 0, parsedData: ""};
     }
 
     render() {
@@ -31,7 +31,7 @@ class ClickableProfile extends React.Component {
                 //parse
                 const data = await response.json();
                 //set data state
-                this.setState({username: data.UserName, name: data.Name});
+                this.setState({parsedData: data, username: data.UserName, name: data.Name, userID: data.UserID});
             } catch (error) {
                 //change to fetch userID
                 throw new Error('Failed to fetch user data');
@@ -64,7 +64,9 @@ class ClickableProfile extends React.Component {
                             <ProfileCard 
                                 onExitClick={() => this.setState({ isClicked: false})} 
                                 username={this.state.username} 
-                                name={this.state.name}>
+                                name={this.state.name}
+                                userID={this.state.userID}
+                                userdata={this.state.parsedData}>
                             </ProfileCard>
                         </div>
                     </div>
