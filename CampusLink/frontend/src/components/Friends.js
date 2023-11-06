@@ -80,7 +80,9 @@ export default function Friends() {
           };
           return(
             <tr>
-              <td key="{user.UserName}">{user.UserName}</td>
+              <td key="{user.UserName}">
+                <ClickableProfile username={user.UserName} userID={user.userID}></ClickableProfile>
+              </td>
               <td>{user.Name}</td>
               <td>{user.UserEmail}</td>
               <button className="slide-button" role="button" onClick={removeFriend}><span class="text">Remove Friend</span><span>are you sure?</span></button>
