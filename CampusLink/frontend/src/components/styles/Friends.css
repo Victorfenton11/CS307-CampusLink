@@ -17,6 +17,10 @@
       height:100%;
       z-index: 1;
   }
+
+  .circles-style ::placeholder {
+    color: gray;
+  }
   
   .circles-style .overlay-content-wrapper {
       width: 20vw;
@@ -35,6 +39,19 @@
       font-family: lato;
       letter-spacing: 0.08em;
       overflow-y: scroll;
+  }
+
+  .circles-style .add-users {
+    color: white;
+    font-weight: 200;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .circles-style .createButton {
+    margin-top: 2em;
   }
   
   .circles-style .List-Wrapper {

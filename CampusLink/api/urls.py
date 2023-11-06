@@ -16,6 +16,9 @@ from .views import (
     incoming_requests,
     accept_friend_request,
     decline_friend_request,
+    getCircles,
+    create_circle,
+    deleteCircle,
 )
 from django.conf.urls.static import static
 from django.conf import settings
@@ -29,9 +32,11 @@ urlpatterns = [
     re_path(r"^user/savefile", SaveFile),
     re_path(r"^users/([a-zA-Z0-9]+)$", userNameApi),
     path("user/create/", create_user, name="create-user"),
+    path("circle/create/", create_circle),
     path("user/delete/<str:user_email>/", delete_user, name="delete-user"),
     path("save-class-list/", save_class_list, name="save_class_list"),
     re_path(r"^viewfriends/([0-9]+)$", getFriends),
+    re_path(r"^viewcircles/([0-9]+)$", getCircles),
     re_path(
         r"^incoming-requests/([0-9]+)/$", incoming_requests, name="incoming_requests"
     ),
@@ -43,5 +48,6 @@ urlpatterns = [
     ),
     re_path("addfriend", addFriend.as_view()),
     re_path("removefriend", removeFriend.as_view()),
+    re_path("deletecircle", deleteCircle.as_view()),
     path("get-security-question", get_security_question),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

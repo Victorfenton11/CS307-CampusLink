@@ -1,30 +1,25 @@
 import React, { useState } from 'react'
 import Friends from '../components/Friends'
 import Groups from '../components/Groups'
-import SwitchSelector from 'react-switch-selector'
+import CustomSwitchSelector from '../components/CustomSwitchSelector'
 import "./styles/Circles.css"
 
 export default function Circles() {
-  const [switchPosition, setSwitchPosition] = useState(true);
-
   const options = [
-    {
-      label: "Friends",
-      value: "friends",
-      selectedBackgroundColor: "white"
-    },
-    {
-      label: "Circles",
-      value: "circles",
-      selectedBackgroundColor: "white"
-    }
+    { label: 'Friends', value: 'friends' },
+    { label: 'Circles', value: 'circles' },
   ];
 
-  const initialSelectedIndex = options.findIndex(({value}) => value === "friends");
+  const [selectedOption, setSelectedOption] = useState(options[0].value);;
+
+  const handleOptionChange = (value) => {
+    setSelectedOption(value);
+  };
 
   return (
     <div className='circles-page'>
-      <Friends />
+      <CustomSwitchSelector className="switch-selector" options={options} onChange={handleOptionChange} />
+      {selectedOption === 'friends' ? <Friends /> : <Groups />}
     </div>
   )
 }

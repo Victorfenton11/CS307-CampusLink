@@ -12,10 +12,13 @@ export default function LandingPage() {
 
   useEffect(() => {
     try {
-      const loggedUserID = sessionStorage.getItem('userID');
-      if (!loggedUserID) {
-        navigate('/login');
-      }
+      if (window.location) {
+        const pathname = window.location.pathname;
+        if (pathname !== "/login" && pathname !== "/signup" && pathname !== "/reset-password" && pathname.substring(0, 8) !== "password") {
+          const loggedUserID = sessionStorage.getItem('userID');
+          if (!loggedUserID) navigate('/login');
+        }
+      };
     } catch (e) {
       navigate('/login');
     }

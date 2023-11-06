@@ -51,6 +51,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     securityAnswer = models.CharField(max_length=500, blank=True, null=True)
     isPrivate = models.BooleanField(default=False)
     last_login = models.DateTimeField(null=True, blank=True)
+    Circles = models.ManyToManyField("Circle", blank=True)
 
     password = models.CharField(max_length=128, default="")
 
@@ -64,6 +65,28 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def str(self):
         return self.UserName
+
+
+class Circle(models.Model):
+    Name = models.CharField(max_length=100)
+    Description = models.CharField(max_length=1000, default="")
+    users = models.ManyToManyField("User", blank=True)
+
+    def __str__(self):
+        return self.Name
+
+
+class CircleJoinRequest(models.Model):
+    from_circle = models.ForeignKey(
+        Circle, related_name="circle_join", on_delete=models.CASCADE
+    )
+    to_user = models.ForeignKey(
+        User, related_name="received_invitations", on_delete=models.CASCADE
+    )
+    timestamp = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(
+        max_length=10, choices=[("PENDING", "Pending"), ("ACCEPTED", "Accepted")]
+    )
 
 
 class FriendRequest(models.Model):

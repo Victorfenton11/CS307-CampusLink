@@ -2,8 +2,13 @@ from django.shortcuts import render, redirect
 from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import ClassLocationSerializer, UserSerializer, FriendSerializer
-from .models import ClassLocation, User, Class, FriendRequest
+from .serializers import (
+    ClassLocationSerializer,
+    UserSerializer,
+    FriendSerializer,
+    CircleSerializer,
+)
+from .models import ClassLocation, User, Class, FriendRequest, Circle
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
@@ -134,6 +139,28 @@ def create_user(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(["POST"])
+def create_circle(request):
+    members = request.data.get("users").split(",")
+    userObjs = []
+    for user in members:
+        obj = User.objects.get(UserName=user)
+        userObjs.append(obj)
+    circle = {
+        "Name": request.data.get("Name"),
+        "Description": request.data.get("Description"),
+        "users": userObjs,
+    }
+    serializer = CircleSerializer(data=circle)
+    if serializer.is_valid():
+        created_circle = serializer.save()
+        for user in userObjs:
+            user.Circles.add(created_circle)
+            user.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_401_UNAUTHORIZED)
+
+
 @api_view(["DELETE"])
 def delete_user(request, user_email):
     try:
@@ -165,6 +192,13 @@ def getFriends(request, id):
         user = User.objects.get(UserID=id)
         friend_serializer = FriendSerializer(user, many=False)
         return JsonResponse(friend_serializer.data, safe=False)
+
+
+def getCircles(request, id):
+    if request.method == "GET" and id != 0:
+        user = User.objects.get(UserID=id)
+        circle_serializer = CircleSerializer(user.Circles.all(), many=True)
+        return JsonResponse(circle_serializer.data, safe=False)
 
 
 @csrf_exempt
@@ -219,6 +253,26 @@ class removeFriend(APIView):
         friend.friends.remove(user)
         # user_serializer=UserSerialier(data=user_data)
         return JsonResponse("Friend Removed Successfully", safe=False)
+
+
+class deleteCircle(APIView):
+    lookup_ID_kwarg = "id"
+
+    def get(self, request, format=None):
+        try:
+            id = request.GET.getlist(self.lookup_ID_kwarg)
+            user = User.objects.get(UserID=id[0])
+            circle = Circle.objects.get(id=id[1])
+            # Todo add owner/admin field to circles and check only owner can delete
+            for member in circle.users:
+                member.Circles.remove(circle)
+            circle.delete()
+            return JsonResponse("Circle Deleted Successfully", safe=False)
+        except:
+            return Response(
+                {"message": "Circle could not be deleted."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
 
 
 class GetUserbyEmail(APIView):

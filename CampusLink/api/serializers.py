@@ -1,19 +1,28 @@
 from rest_framework import serializers
-from .models import ClassLocation, User
+from .models import ClassLocation, User, Circle
+
 
 class ClassLocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = ClassLocation
-        fields = ('acronym', 'building_name')
+        fields = ("acronym", "building_name")
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model=User
-        fields = '__all__'
+        model = User
+        fields = "__all__"
+
 
 class FriendSerializer(serializers.ModelSerializer):
     friends = UserSerializer(many=True, read_only=True)
 
     class Meta:
         model = User
-        fields=('UserID', 'Name', 'friends')
+        fields = ("UserID", "Name", "friends")
+
+
+class CircleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Circle
+        fields = ("id", "Name", "Description")
