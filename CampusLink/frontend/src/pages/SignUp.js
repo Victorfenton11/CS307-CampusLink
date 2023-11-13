@@ -24,6 +24,14 @@ export default function SignUp() {
   //this will handle the non-purdue email
   const [emailError, setEmailError] = useState('');
 
+  async function sha1(message) {
+    const msgBuffer = new TextEncoder().encode(message); // Encode as UTF-8
+    const hashBuffer = await crypto.subtle.digest('SHA-1', msgBuffer); // Hash the message
+    const hashArray = Array.from(new Uint8Array(hashBuffer)); // Convert buffer to byte array
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); // Convert bytes to hex string
+    return hashHex;
+  }
+
   function validateEmail(email) {
     const re = /^[^\s@]+@purdue\.edu$/;
     return re.test(String(email).toLowerCase());
@@ -45,7 +53,7 @@ export default function SignUp() {
     });
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     if (!validateEmail(formData.email)) {
       setEmailError('Please enter a valid Purdue email address');
@@ -58,11 +66,14 @@ export default function SignUp() {
     }
     setEmailError(''); // Clear error message if email is valid
     
+    const hashedPassword = await sha1(formData.password);
+    console.log(hashedPassword)
     const data = new FormData();
     data.append('Name', formData.name);
     data.append('UserEmail', formData.email);
     data.append('UserName', formData.username);
-    data.append('Password', formData.password);
+    // data.append('Password', formData.password);
+    data.append('Password', hashedPassword)
     data.append('PhoneNumber', formData.phoneNumber);
     data.append('Major', '');
     data.append('Interest', '');

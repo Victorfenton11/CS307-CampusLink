@@ -48,8 +48,17 @@ const LoginPage = () => {
     }
   };
 
-
-  function checkCredentials(passwordInput, passwordStored, ID) {
+  async function sha1(message) {
+    const msgBuffer = new TextEncoder().encode(message); // Encode as UTF-8
+    const hashBuffer = await crypto.subtle.digest('SHA-1', msgBuffer); // Hash the message
+    const hashArray = Array.from(new Uint8Array(hashBuffer)); // Convert buffer to byte array
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); // Convert bytes to hex string
+    return hashHex;
+  }
+  
+  async function checkCredentials(passwordInput, passwordStored, ID) {
+    passwordInput = await sha1(passwordInput)
+    console.log(passwordInput)
     if (passwordInput === passwordStored) {
         setCredential(true);
         console.log("ahhhhhh", ID);
