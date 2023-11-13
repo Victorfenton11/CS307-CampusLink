@@ -23,6 +23,10 @@ export default function Groups() {
    }
   };
 
+  const createGroupChat = async () => {
+    return;
+  }
+
   const createCircle = async () => {
     try {
       var name = document.getElementById("newCircleName").value;
@@ -37,6 +41,7 @@ export default function Groups() {
       data.append('Name', name);
       data.append('Description', description);
       data.append('users', usersList);
+      data.append('ownerID', sessionStorage.getItem('userID'));
       const response = await fetch('/api/circle/create/', {
         method: 'POST',
         body: data
@@ -89,7 +94,7 @@ export default function Groups() {
           const deleteCircle = async (userID) => {
            try{
              const userID = sessionStorage.getItem('userID');
-             const fetchString = 'api/deletecircle' + `?id=${userID}` + '&id=' + circle.id; 
+             const fetchString = 'api/deletecircle' + `?id=${userID}` + '&id=' + circle.id;
              const response = await fetch(fetchString);
            if (!response.ok) {
              swal("Error!", "Could not delete the Circle", "error");
@@ -103,12 +108,13 @@ export default function Groups() {
            }
            fetchCircleData();
           };
+          console.log(circle);
           return(
             <tr>
               <td key="{user.UserName}">{circle.Name}</td>
               <td>{circle.Description}</td>
+              <button className="slide-button" role="button" onClick={createGroupChat}><span class="text">Create Group Chat</span><span>Create Group Chat</span></button>
               <button className="slide-button" role="button" onClick={deleteCircle}><span class="text">Delete Circle</span><span>are you sure?</span></button>
-             
             </tr>
           )
          

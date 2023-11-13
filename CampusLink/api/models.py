@@ -70,6 +70,14 @@ class User(AbstractBaseUser, PermissionsMixin):
 class Circle(models.Model):
     Name = models.CharField(max_length=100)
     Description = models.CharField(max_length=1000, default="")
+    owner = models.ForeignKey(
+        User,
+        related_name="owner",
+        on_delete=models.CASCADE,
+        default=None,
+        null=True,
+        blank=True,
+    )
     users = models.ManyToManyField("User", blank=True)
 
     def __str__(self):

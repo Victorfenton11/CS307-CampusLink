@@ -24,10 +24,8 @@ export default function Friends() {
      // Perform logic to save the modified data to the API
     try{
       var friendid = document.getElementById("inputBox").value;
-      // console.log(friendid)
       const userID = sessionStorage.getItem('userID');
       const fetchString = 'api/addfriend' + '?id=' + userID + '&id=' + friendid; 
-      // console.log(fetchString)
       const response = await fetch(fetchString);
     if (!response.ok) {
       throw new Error('User Not Found');
@@ -61,7 +59,7 @@ export default function Friends() {
             // Perform logic to save the modified data to the API
            try{
              const userID = sessionStorage.getItem('userID');
-             const fetchString = 'api/removefriend' + `?id=${userID}` + '&id=' + user.UserName; 
+             const fetchString = 'api/removefriend' + `?id=${userID}` + '&id=' + user.UserName;
              const response = await fetch(fetchString);
            if (!response.ok) {
              throw new Error('User Not Found');
@@ -80,9 +78,7 @@ export default function Friends() {
           };
           return(
             <tr>
-              <td key="{user.UserName}">
-                <ClickableProfile username={user.UserName} userID={user.userID}></ClickableProfile>
-              </td>
+              <td key="{user.UserName}">{user.UserName}</td>
               <td>{user.Name}</td>
               <td>{user.UserEmail}</td>
               <button className="slide-button" role="button" onClick={removeFriend}><span class="text">Remove Friend</span><span>are you sure?</span></button>

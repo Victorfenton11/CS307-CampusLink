@@ -23,6 +23,9 @@ class FriendSerializer(serializers.ModelSerializer):
 
 
 class CircleSerializer(serializers.ModelSerializer):
+    owner = UserSerializer(many=False, read_only=True)
+    users = UserSerializer(many=True, read_only=True)
+
     class Meta:
         model = Circle
-        fields = ("id", "Name", "Description")
+        fields = ("id", "Name", "Description", "owner", "users")
