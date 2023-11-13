@@ -153,16 +153,20 @@ def create_circle(request):
     circle = {
         "Name": request.data.get("Name"),
         "Description": request.data.get("Description"),
-        "owner": owner,
-        "users": userObjs,
+        "owner": None,
+        "users": None,
     }
     serializer = CircleSerializer(data=circle)
     if serializer.is_valid():
         created_circle = serializer.save()
+        created_circle.owner = owner
+        created_circle.users.set(userObjs)
+        created_circle.save()
         for user in userObjs:
             user.Circles.add(created_circle)
             user.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    print(serializer.errors)
     return Response(serializer.errors, status=status.HTTP_401_UNAUTHORIZED)
 
 
@@ -267,7 +271,7 @@ class deleteCircle(APIView):
         try:
             id = request.GET.getlist(self.lookup_ID_kwarg)
             user = User.objects.get(UserID=id[0])
-            circle = Circle.objects.get(id=int(id[1]))
+            circle = Circle.objects.get(id=id[1])
             # Todo add owner/admin field to circles and check only owner can delete
             for member in circle.users.all():
                 member.Circles.remove(circle)

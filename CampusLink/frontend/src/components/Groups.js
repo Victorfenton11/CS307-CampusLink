@@ -110,11 +110,11 @@ export default function Groups() {
           };
           console.log(circle);
           return(
-            <tr>
+            <tr key={circle.id}>
               <td key="{user.UserName}">{circle.Name}</td>
               <td>{circle.Description}</td>
               <button className="slide-button" role="button" onClick={createGroupChat}><span class="text">Create Group Chat</span><span>Create Group Chat</span></button>
-              <button className="slide-button" role="button" onClick={deleteCircle}><span class="text">Delete Circle</span><span>are you sure?</span></button>
+              {circle.owner.UserID == userID && <button className="slide-button" role="button" onClick={deleteCircle}><span class="text">Delete Circle</span><span>are you sure?</span></button>}
             </tr>
           )
          
