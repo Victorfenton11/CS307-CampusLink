@@ -263,7 +263,7 @@ def getThreads(request):
 
 @api_view(["GET"])
 def getThread(request, thread_id):
-    print("getThread")
+    print("get Threads")
     try:
         thread = Thread.objects.get(pk=thread_id)
     except thread.DoesNotExist:
@@ -295,6 +295,7 @@ def getPosts(request, thread_id):
 
 @api_view(["POST"])
 def createThread(request):
+    print("Ni Hao")
     print(request)
     data = json.loads(request.body)
     print(data)
@@ -325,12 +326,13 @@ def createThread(request):
 
 @api_view(["POST"])
 def createPost(request):
+    print("Hello from create post")
     # get the data
     data = json.loads(request.body)
 
     # handle unauthenticated user or invalid user
     try:
-        userID = data["creator"]["user"]["user_id"]
+        userID = data["creator"]["UserID"]
     except TypeError:
         return Response(
             {"res": "Unauthenticated user"}, status=status.HTTP_401_UNAUTHORIZED

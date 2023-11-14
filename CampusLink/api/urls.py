@@ -18,10 +18,11 @@ urlpatterns = [
     re_path(r"^viewfriends/([0-9]+)$", views.getFriends),
     re_path("addfriend", views.addFriend.as_view()),
     re_path("removefriend", views.removeFriend.as_view()),
+    # THREADS
     path('threads/', views.getThreads, name='threads'),
     path("threads/<int:thread_id>", views.getThread, name="thread"),
     path('threads/<int:thread_id>/posts', views.getPosts, name='posts'),
     # path('threads/topic/<int:topic_id>', views.getThreadsTopic, name='getThreadsTopic'),
     path('createThread/', views.createThread, name='createThread'),
-    # path('createPost/', views.createPost, name='createPost'),
+    path('createPost/', views.createPost, name='createPost'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
