@@ -8,7 +8,7 @@ import Discover from './Discover'
 import Circles from './Circles'
 import Profile from './Profile'
 import LandingPage from './LandingPage'
-
+import Thread from './Thread';
 
 export default function HomePage() {
   return (
@@ -22,6 +22,7 @@ export default function HomePage() {
           <Route path='/discover' element={<Discover />}/>
           <Route path='/circles' element={<Circles />}/>
           <Route path='/profile' element={<Profile />}/>
+          <Route path='/threads/:id' element={<Thread />} />
         </Routes>
       </div>
       <Navbar className='navbar'/>

@@ -71,7 +71,7 @@ const Discover = () => {
     <div className="discover-style">
       <header>
         <h1>Course Scheduler</h1>
-        <button class='save-btn' onClick={handleSave}>Save</button>
+        <button className='save-btn' onClick={handleSave}>Save</button>
       </header>
       <main className="container">
         <SubjectList subjects={subjectList} onAddSubject={handleAddSubject} />

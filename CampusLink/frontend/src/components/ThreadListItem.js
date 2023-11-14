@@ -24,7 +24,7 @@ const ThreadListItem = ({thread}, {index}) => {
                     variant="body2"
                     color="text.secondary"
                   >
-                    {thread?.creator_id}
+                    {thread?.creator_id} 
                   </Typography>
                    <span> - updated <Moment fromNow>{thread?.updated}</Moment></span>
                 </React.Fragment>

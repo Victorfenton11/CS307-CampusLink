@@ -5,8 +5,6 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import PostCardItem from '../components/PostCardItem'
-import ReplyForm from '../components/ReplyForm'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Grid from '@mui/material/Grid';
 {/*import AuthContext from '../context/AuthContext'*/}
@@ -155,24 +153,6 @@ const Thread = () => {
           </CardContent>  
 
           
-          <CardActions sx={{ marginBottom: 2, marginRight: 3}}>
-          <Grid container justifyContent="flex-end">
-            {userData? <>
-              {pin && 
-                (<IconButton aria-label="bookmark"  sx={{  marginRight: 2 }}  color="secondary" onClick={handleBookmark}>
-                <BookmarkAddedRoundedIcon /> 
-              </IconButton >)}
-            {!pin && 
-              (<IconButton aria-label="bookmark"  sx={{  marginRight: 2 }} onClick={handleBookmark}>
-              <BookmarkAddIcon/>
-            </IconButton>)}
-            </> : <div></div>}      
-
-             <IconButton aria-label="share">
-              <ShareIcon />
-            </IconButton>
-            </Grid>
-          </CardActions>
           
           
         </Card>
@@ -198,7 +178,7 @@ const Thread = () => {
 
       </Container>
 
-      <ReplyForm thread = {thread}/>    
+      {/*<ReplyForm thread = {thread}/>*/} {/*Have to Import to Above*/}
     </div>
   )
 }
