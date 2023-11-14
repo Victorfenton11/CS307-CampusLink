@@ -9,12 +9,10 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import Grid from '@mui/material/Grid';
 {/*import AuthContext from '../context/AuthContext'*/}
 import { Link } from 'react-router-dom'
-import BookmarkAddedRoundedIcon from '@mui/icons-material/BookmarkAddedRounded';
-import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import ShareIcon from '@mui/icons-material/Share';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-
+import ReplyForm from '../components/ReplyForm'
 
 const Thread = () => {
   // get the user first
@@ -178,7 +176,10 @@ const Thread = () => {
 
       </Container>
 
-      {/*<ReplyForm thread = {thread}/>*/} {/*Have to Import to Above*/}
+      {/*}
+      <ReplyForm thread = {thread}/>
+      {*/}
+      <ReplyForm thread = {thread}/>
     </div>
   )
 }
