@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './styles/Profile.css'
 import dum_pic from '../../static/images/Test.jpg'
+import { Link, useNavigate } from 'react-router-dom';
 
 
 const Profile = () => {
@@ -17,6 +18,17 @@ const Profile = () => {
 
   const [isPrivate, setIsPrivate] = useState(false);
 
+  const navigate = useNavigate();
+  const handleSignOut = () => {
+
+    sessionStorage.removeItem('userID');
+
+    navigate('/login');
+  };
+  
+  const redirectToDeletingPage = () => {
+    navigate('/deletingpage'); 
+  };
   
 
   // Function to fetch user data from the API
@@ -181,6 +193,8 @@ const Profile = () => {
           <div className='name'><label className='label'>
           Interest:</label>{userData.Interest}</div>
         <button onClick={handleEditClick}>Edit</button>
+        <button onClick={handleSignOut}>Sign Out</button>
+        <button onClick={redirectToDeletingPage}>Delete Account</button>
     </div>
   );
 };

@@ -118,9 +118,9 @@ def create_user(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 @api_view(['DELETE'])
-def delete_user(request, user_email):
+def delete_user(request, user_id):
     try:
-        user = User.objects.get(email=user_email)
+        user = User.objects.get(UserID=user_id)
     except User.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 

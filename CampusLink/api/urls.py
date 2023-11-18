@@ -12,7 +12,7 @@ urlpatterns = [
     re_path(r'^user/savefile', SaveFile),
     re_path(r'^users/([a-zA-Z0-9]+)$', userNameApi),
     path('user/create/', create_user, name='create-user'),
-    path('user/delete/<str:user_email>/', delete_user, name='delete-user'),
+    path('user/delete/<int:user_id>/', delete_user, name='delete-user'),
     re_path(r'^email$', send_email2),
     path('save-class-list/', save_class_list, name='save_class_list'),
     re_path(r'^viewfriends/([0-9]+)$', getFriends),
