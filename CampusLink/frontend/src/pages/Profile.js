@@ -142,15 +142,13 @@ const Profile = () => {
   if (userData.isPrivate) {
     return (
       <div className='profile-style'>
-      <div className='top'>User Profile</div>
       <label className="custom-file-upload fas">
         <div className="img-wrap" >
             <img htmlFor="photo-upload" src={'../../static/images/' + userData.PhotoFileName} onClick={onClickHandler}/>
         </div>
         </label>
-        <div className='name'><label className='label'>Name:</label> {userData.Name}</div>
-        <div className='name'> <label className='label'>
-          UserName: </label>{userData.UserName}</div>
+        <div className='name'>{userData.Name}</div>
+        <div className='name'>{userData.UserName}</div>
           <button onClick={handleEditClick}>Edit</button>
     </div>
     )
@@ -159,15 +157,13 @@ const Profile = () => {
   // Render user profile
   return (
     <div className='profile-style'>
-      <div className='top'>User Profile</div>
       <label className="custom-file-upload fas">
         <div className="img-wrap" >
             <img htmlFor="photo-upload" src={'../../static/images/' + userData.PhotoFileName} onClick={onClickHandler}/>
         </div>
         </label>
-        <div className='name'><label className='label'>Name:</label> {userData.Name}</div>
-        <div className='name'> <label className='label'>
-          UserName: </label>{userData.UserName}</div>
+        <div className='name'><label className='label'></label> {userData.Name}</div>
+        <div className='name'>{userData.UserName}</div>
         <div className='name'><label className='label'>
           Email:</label>{userData.UserEmail}</div>
         <div className='name'><label className='label'>
