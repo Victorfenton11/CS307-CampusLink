@@ -9,15 +9,7 @@ export default function SearchBar(props) {
     event.preventDefault();
     if (searchQuery === '') return;
 
-    fetch('/api/get-class-location' + '?location=' + searchQuery).then((response) => 
-      response.json()
-    ).then((data) => {
-      if (JSON.stringify(data) === '{}') {
-        props.displayLocation(searchQuery);
-      } else {
-        props.displayClass(data.building_name, data.floor, data.room);
-      }
-    });
+    props.handleSearch(searchQuery);
 
     setSearchQuery('');
   }

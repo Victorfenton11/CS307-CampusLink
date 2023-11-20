@@ -15,7 +15,6 @@ class Migration(migrations.Migration):
             fields=[
                 ('UserID', models.AutoField(primary_key=True, serialize=False)),
                 ('Name', models.CharField(max_length=500)),
-                ('Password', models.CharField(max_length=500)),
                 ('UserName', models.CharField(max_length=500)),
                 ('UserEmail', models.CharField(max_length=500)),
                 ('PhotoFileName', models.CharField(max_length=500, null=True)),

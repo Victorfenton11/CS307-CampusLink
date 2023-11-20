@@ -7,10 +7,8 @@ import Map from './Map'
 import Discover from './Discover'
 import Circles from './Circles'
 import Profile from './Profile'
-import LandingPage from './LandingPage'
 
-
-export default function HomePage() {
+export default function HomePage({}) {
   return (
     <div className='container'>
       <div className='page'>

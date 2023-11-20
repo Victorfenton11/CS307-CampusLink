@@ -35,3 +35,21 @@
 .bio {
     text-decoration-line:underline;
 }
+
+.full-profile-view-button {
+    transition: 0.75s;
+    position:absolute;
+    bottom:0%;
+    width: 100%;
+    color: white;
+    background-color: rgba(54, 54, 129, 0.226);
+    border-color: rgba(41, 41, 95, 0.226);
+    border-bottom-color: rgba(255, 0, 0, 0);
+}
+
+.full-profile-view-button:hover {
+    transition: 0.75s;
+    color: white;
+    background-color: rgba(89, 89, 160, 0.226);
+    border-color: rgba(41, 41, 95, 0.226);
+}

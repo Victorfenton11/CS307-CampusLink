@@ -11,17 +11,26 @@
 .map-container {
     width: 80%;
     height: 70vh;
-    margin-top: 1em;
+    margin-top: 0;
     margin-left: auto;
     margin-right: auto;
     order: 2;
+    border: 0.005em inset #DEFFFC;
 }
 
 .travel-options {
     width: 80%;
+    margin-top: 1em;
+    height: 2.5em;
+    margin-left: auto;
+    margin-right: auto;
+    background: #001f51;
+    border: 0.005em inset #DEFFFC;
+    border-bottom: hidden;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
+
 }
 
 @media screen and (min-width: 50em)  {

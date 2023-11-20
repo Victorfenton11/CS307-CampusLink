@@ -8,15 +8,15 @@ export default function TripleToggleSwitch(props) {
     function getSwitchAnimation(value) {
         let animation = null;
         if (value === "center") {
-            props.change("DRIVING");
+            props.change(props.value2);
             if (switchPosition === "left") animation = "left-to-center";
             else if (switchPosition === "right") animation = "right-to-center";
         } else if (value === "right") {
-            props.change("BICYCLING");
+            props.change(props.value3);
             if (switchPosition === "center") animation = "center-to-right";
             else if (switchPosition === "left") animation = "left-to-right";
         } else if (value === "left") {
-            props.change("WALKING");
+            props.change(props.value1);
             if (switchPosition === "center") animation = "center-to-left";
             else if (switchPosition === "right") animation = "right-to-left";
         }
@@ -43,7 +43,7 @@ export default function TripleToggleSwitch(props) {
             }`}
             htmlFor="left"
         >
-            <h4>{props.option1}</h4>
+            <h4>{props.text1}</h4>
         </label>
 
         <input
@@ -59,7 +59,7 @@ export default function TripleToggleSwitch(props) {
             }`}
             htmlFor="center"
         >
-            <h4>{props.option2}</h4>
+            <h4>{props.text2}</h4>
         </label>
 
         <input
@@ -75,7 +75,7 @@ export default function TripleToggleSwitch(props) {
             }`}
             htmlFor="right"
         >
-            <h4>{props.option3}</h4>
+            <h4>{props.text3}</h4>
         </label>
     </div>
     )
