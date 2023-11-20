@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './styles/Circles.css'
+import ProfileCard from '../components/ProfileCard';
+import ClickableProfile from '../components/ClickableProfile'
 
 export default function Circles() {
 
@@ -32,25 +34,7 @@ export default function Circles() {
     fetchFriendData();
   };
 
-  const removeFriend = async (userID) => {
-    // Perform logic to save the modified data to the API
-   try{
-     var friendid = document.getElementById("inputBox").value;
-     const fetchString = 'api/removefriend' + '?id=1' + '&id=' + friendid; 
-     const response = await fetch(fetchString);
-   if (!response.ok) {
-     throw new Error('User Not Found');
-   }
 
-   // Notify the user that the data was saved successfully
-   alert('Successfully changed the profile');
-
-   // Exit edit mode
-   setIsAddMode(false);
-   } catch (error) {
-     console.error('Error saving user data:', error.message);
-   }
- };
 
   const fetchFriendData = async (userID) => {
     try {
@@ -64,8 +48,9 @@ export default function Circles() {
         (user)=>{
           const removeFriend = async (userID) => {
             // Perform logic to save the modified data to the API
+            //change id 1 to active user id
            try{
-             const fetchString = 'api/removefriend' + '?id=1' + '&id=' + user.UserName; 
+             const fetchString = 'api/removefriend' + '?id=1' + '&id=' + user.UserID; 
              const response = await fetch(fetchString);
            if (!response.ok) {
              throw new Error('User Not Found');
@@ -83,7 +68,9 @@ export default function Circles() {
           };
           return(
             <tr>
-              <td key="{user.UserName}">{user.UserName}</td>
+              <td key="{user.UserName}">
+                <ClickableProfile username={user.UserName} userID={user.UserID}></ClickableProfile>
+              </td>
               <td>{user.Name}</td>
               <td>{user.UserEmail}</td>
               <button class="slide-button" role="button" onClick={removeFriend}><span class="text">Remove Friend</span><span>are you sure?</span></button>
@@ -153,7 +140,7 @@ export default function Circles() {
                 <tbody className="table-body">{userData}</tbody>
               </table>
             </div>
-        </div>        
+        </div>   
     </div>
   )
 }

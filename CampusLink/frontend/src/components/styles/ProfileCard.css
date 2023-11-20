@@ -1,0 +1,55 @@
+.profilecard-container {
+    color:antiquewhite;
+    background-color:rgba(58, 77, 155, 0.54);
+    border-style:ridge;
+    border-width: 1px;
+    border-color: rgba(13, 17, 36, 0.892);
+    border-radius: 5px;
+    overflow:hidden;
+    height: 250px;
+    width: 200px;
+}
+
+.name-container {
+    position: relative;
+    height: auto;
+    font-size:70%;
+    display: grid;
+    background-color:rgba(0, 0, 0, 0.261);
+}
+
+.profilecard-exit {
+    transition: 0.25s;
+    color:black;
+    border-color:rgba(240, 248, 255, 0);
+    background-color:rgba(240, 248, 255, 0);
+    position: absolute;
+    right: 0;
+}
+
+.profilecard-exit:hover {
+    transition: 0.25s;
+    color:rgba(240, 248, 255, 0.304);
+    cursor:pointer;
+}
+.bio {
+    text-decoration-line:underline;
+}
+
+.full-profile-view-button {
+    transition: 0.75s;
+    position:absolute;
+    bottom:0%;
+    width: 100%;
+    color: white;
+    background-color: rgba(54, 54, 129, 0.226);
+    border-color: rgba(41, 41, 95, 0.226);
+    border-bottom-color: rgba(255, 0, 0, 0);
+}
+
+.full-profile-view-button:hover {
+    transition: 0.75s;
+    color: white;
+    background-color: rgba(89, 89, 160, 0.226);
+    border-color: rgba(41, 41, 95, 0.226);
+}
