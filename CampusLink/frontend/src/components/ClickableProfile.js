@@ -2,14 +2,9 @@ import React, { useState, useEffect } from "react";
 import './styles/ClickableProfile.css'
 import ProfileCard from "./ProfileCard";
 
-//TODO
 /**
- * add public profile page that can be viewed from mini profile button
- * be able to add people who aren't already your friends from mini profile AND from public profile
- * make public profile "aesthetically pleasing"
- * testing
+ * Clickable profile wraps around profile component and expands into a profilecard
  */
-
 class ClickableProfile extends React.Component {
 
     constructor(props) {
