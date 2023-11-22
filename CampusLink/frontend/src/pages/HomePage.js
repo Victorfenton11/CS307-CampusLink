@@ -17,7 +17,7 @@ export default function HomePage() {
         <Routes>
           <Route path='/' element={<Forum />}/>
           {/* Prolly have to modify detail and posts because they have special ID */}
-          
+          <Route path='/threads' element={<Forum />}/>
           <Route path='/map' element={<Map />}/>
           <Route path='/discover' element={<Discover />}/>
           <Route path='/circles' element={<Circles />}/>

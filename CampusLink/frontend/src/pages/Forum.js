@@ -40,7 +40,7 @@ const Forum = () => {
     8: 'Drama & Moive' 
   }
   
-
+  // threads are all the posts
   useEffect(() => {
       const getThreads = async () => {
           // fetch the threads from api endpoint
@@ -63,6 +63,8 @@ const Forum = () => {
 
   // fetch next page threads
   const getMoreThreads = async () => {
+      // console.log(page)
+
       // fetch the threads from api endpoint
       const response = await fetch(`/api/threads/?page=${page}`)
       // parse the data in json
@@ -90,7 +92,7 @@ const Forum = () => {
 
   // style the paper component
   const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : 'blueviolet',
     ...theme.typography.body2,
     padding: theme.spacing(),
     textAlign: 'left',
@@ -110,17 +112,19 @@ const Forum = () => {
       
         }}>
           <div className='d-flex mb-3'> 
-            <Typography variant="h5" >Topics </Typography>
+            <Typography variant="h5" sx={{ color: 'white' }}>
+              Topics
+            </Typography>
           </div>
       
 
           <List
-                sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+                sx={{ width: '100%', maxWidth: 360, bgcolor: '#2B3947' }}
                 aria-label="topics"
               >
                 {Object.keys(topics).map((key, index) => (
                 <div key={index}>
-                <Link style={{textDecoration:"none", color:'black', textTransform: 'capitalize'}} 
+                <Link style={{textDecoration:"none", color:'white', textTransform: 'capitalize'}} 
                   to={`/topic/${key}`}>
                    
                 <ListItem key={index}>
@@ -139,7 +143,10 @@ const Forum = () => {
 
         <Grid item xs={12} md={10} >
           <div className='d-flex justify-content-between mb-3'>
-          <Typography variant="h5" >Latest Thread</Typography>
+          <Typography variant="h5" sx={{ color: 'white' }}>
+            Latest Thread
+          </Typography>
+
           <ThreadForm />
           </div>
           <Item >    
@@ -150,12 +157,13 @@ const Forum = () => {
             loader={<h4 style={{ textAlign: 'center', marginTop: 20}}>Loading...</h4>}
             endMessage={
                 <p style={{ textAlign: 'center', marginTop: 20}}>
-                <span>You have seen all the threads.</span>
+                <span style={{ color: 'white'}}>You have seen all the threads.</span>
                 </p>
             }>
               {threads.map((thread, index) => (
                 <ThreadListItem key={index} thread={thread}/>
               ))}
+
             </InfiniteScroll>
           </Item>
         </Grid>

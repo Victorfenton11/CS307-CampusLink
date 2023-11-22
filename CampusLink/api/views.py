@@ -263,7 +263,6 @@ def getThreads(request):
 
 @api_view(["GET"])
 def getThread(request, thread_id):
-    print("get Threads")
     try:
         thread = Thread.objects.get(pk=thread_id)
     except thread.DoesNotExist:
@@ -295,7 +294,6 @@ def getPosts(request, thread_id):
 
 @api_view(["POST"])
 def createThread(request):
-    print("Ni Hao")
     print(request)
     data = json.loads(request.body)
     print(data)
@@ -320,16 +318,13 @@ def createThread(request):
     new_thread.save()
 
     serializer = ThreadSerializer(new_thread, many=False)
-    print(serializer.data)
     return Response(serializer.data)
 
-
+# THE PROBLEM HAPPENS HERE
 @api_view(["POST"])
 def createPost(request):
-    print("Hello from create post")
-    # get the data
     data = json.loads(request.body)
-
+    print(data)
     # handle unauthenticated user or invalid user
     try:
         userID = data["creator"]["UserID"]
@@ -337,7 +332,7 @@ def createPost(request):
         return Response(
             {"res": "Unauthenticated user"}, status=status.HTTP_401_UNAUTHORIZED
         )
-    print(data)
+
     content = data["content"]
     threadID = data["thread"]
 
@@ -345,10 +340,14 @@ def createPost(request):
     thread = Thread.objects.get(pk=threadID)
     thread.replyCount += 1
     thread.save()
+    print(thread.replyCount)
 
     # create new post object
     new_post = Post(content=content, creator=User.objects.get(pk=userID), thread=thread)
+    print(new_post)
     new_post.save()
+    print("Save post successfully")
 
     serializer = PostSerializer(new_post, many=False)
+    print(serializer.data)
     return Response(serializer.data)

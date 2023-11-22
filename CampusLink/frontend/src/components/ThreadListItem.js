@@ -11,22 +11,25 @@ import Moment from 'react-moment';
 const ThreadListItem = ({thread}, {index}) => {
   return (
     <div className="thread-list-item">
-      <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+      <List sx={{ width: '100%', bgcolor: 'blueviolet' }}>
         <ListItem alignItems="flex-start" key={{index}} className="thread-list">
-          <Link to = {`/threads/${thread.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+          {/* This Link needs some fixing. */}
+          <Link to = {`/threads/${thread.id}`} style={{ textDecoration: 'none', color: 'white' }}>  
             <ListItemText 
               primary={thread?.subject} 
               secondary={
                 <React.Fragment>
                   <Typography
-                    sx={{ display: 'inline' }}
+                    sx={{ color: 'white', display: 'inline' }}
                     component="span"
                     variant="body2"
                     color="text.secondary"
                   >
-                    {thread?.creator_id} 
+                    Created by {thread?.creator_id}
                   </Typography>
-                   <span> - updated <Moment fromNow>{thread?.updated}</Moment></span>
+                  <span style={{ color: 'lavender' }}> 
+                    - updated <Moment fromNow>{thread?.updated}</Moment>
+                  </span>
                 </React.Fragment>
               }
             />

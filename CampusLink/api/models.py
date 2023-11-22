@@ -53,7 +53,7 @@ class Thread(models.Model):
     replyCount = models.IntegerField(default=0)
 
     def __str__(self):
-        return f'Thread {self.subject}  is created by {self.creator.username}.'
+        return f'Thread {self.subject}  is created by {self.creator.UserName}.'
 
 
 class Post(models.Model):
@@ -64,5 +64,5 @@ class Post(models.Model):
     creator = models.ForeignKey('User', on_delete=models.CASCADE, related_name='creator_posts')
 
     def __str__(self):
-        return f'Post of {self.thread.subject} is posted by {self.creator.username}.'
+        return f'Post of {self.thread.subject} is posted by {self.creator.UserName}.'   # this is now modified
 

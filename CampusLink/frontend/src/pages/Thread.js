@@ -13,6 +13,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ReplyForm from '../components/ReplyForm'
+import PostCardItem from '../components/PostCardItem'
 
 const Thread = () => {
   // get the user first
@@ -41,7 +42,6 @@ const Thread = () => {
 
   // UseEffect hook to fetch data when the component mounts
   useEffect(() => {
-    console.log("fetching user")
     fetchUserData();
   }, []);
 
@@ -57,7 +57,6 @@ const Thread = () => {
 
   // trigger thread update
   useEffect(() => {
-    console.log(threadID)
     let getThread = async () => {
         let response = await fetch(`/api/threads/${threadID}`)
         let data = await response.json()
@@ -143,6 +142,7 @@ const Thread = () => {
             </Typography>
 
             <Typography sx={{ m: 1, p: 1 }} color="text.secondary">
+              {/* Link to the user profile */}
             <Link to={`/profile/${thread?.creator_id}`} style={{  color: "grey"}}>
               {thread?.creator}
               </Link> posted on {thread?.created}
@@ -161,24 +161,23 @@ const Thread = () => {
             hasMore={hasMore}
             loader={<h4 style={{ textAlign: 'center', marginTop: 20}}>Loading...</h4>}
             endMessage={
-                <p style={{ textAlign: 'center', marginTop: 40}} className="text-muted">
+                <p style={{ textAlign: 'center', marginTop: 40, color: 'white'}} className="text-muted">
                 You have seen all the posts.
                 </p>
                 
             }>
 
+            {/* lists of posts (PostCardItem) */}
             <div style={{padding: 1}}>
               {posts.map((post, index) => (
                 <PostCardItem key={index} post={post}/>
             ))}
             </div>     
+
           </InfiniteScroll>    
 
       </Container>
 
-      {/*}
-      <ReplyForm thread = {thread}/>
-      {*/}
       <ReplyForm thread = {thread}/>
     </div>
   )

@@ -19,8 +19,13 @@ import Container from '@mui/material/Container';
 
 
 const ReplyForm = ({thread}) => {
-  console.log("HELLLLLLLOOOOOOOOOOOOOO")
   const [userData, setUserData] = useState(null);
+  const [alertShow, setAlertShow] = useState(false)
+  const [open, setOpen] = React.useState(false);
+
+  // extract thread id
+  let params = useParams()
+  let threadID = params.id
 
   // Function to fetch user data from the API
   const fetchUserData = async () => {
@@ -34,10 +39,8 @@ const ReplyForm = ({thread}) => {
       const data = await response.json();
       
       setUserData(data);
-      setIsLoading(false);
     } catch (error) {
       setError(error.message);
-      setIsLoading(false);
     }
   };
 
@@ -45,12 +48,10 @@ const ReplyForm = ({thread}) => {
     fetchUserData();
   }, []);
 
-  // extract thread id
-  let params = useParams()
-  let threadID = params.id
+  useEffect(() => {
+    setPost({...post, creator: userData})
+  }, [userData])
 
-  const [alertShow, setAlertShow] = useState(false)
-  const [open, setOpen] = React.useState(false);
   const [post, setPost] = useState({
     content: "",
     thread: "",

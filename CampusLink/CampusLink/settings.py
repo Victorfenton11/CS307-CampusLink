@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'api.apps.ApiConfig',
     'rest_framework',
     'frontend.apps.FrontendConfig',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [
@@ -59,7 +60,7 @@ ROOT_URLCONF = 'CampusLink.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'frontend' / 'templates' / 'frontend'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
