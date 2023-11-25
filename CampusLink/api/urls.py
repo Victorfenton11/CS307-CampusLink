@@ -22,7 +22,8 @@ urlpatterns = [
     path('threads/', views.getThreads, name='threads'),
     path("threads/<int:thread_id>", views.getThread, name="thread"),
     path('threads/<int:thread_id>/posts', views.getPosts, name='posts'),
-    # path('threads/topic/<int:topic_id>', views.getThreadsTopic, name='getThreadsTopic'),
+
+    path('threads/topic/<int:topic_id>', views.getThreadsTopic, name='getThreadsTopic'),
 
     path('createThread/', views.createThread, name='createThread'),
     path('createPost/', views.createPost, name='createPost'),

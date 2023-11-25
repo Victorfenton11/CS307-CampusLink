@@ -294,9 +294,9 @@ def getPosts(request, thread_id):
 
 @api_view(["POST"])
 def createThread(request):
-    print(request)
+    # print(request)
     data = json.loads(request.body)
-    print(data)
+    # print(data)
     # handle unauthenticated user or invalid user
     try:
         userID = data["creator"]["UserID"]
@@ -320,11 +320,11 @@ def createThread(request):
     serializer = ThreadSerializer(new_thread, many=False)
     return Response(serializer.data)
 
-# THE PROBLEM HAPPENS HERE
+# PROBLEM RESOLVED
 @api_view(["POST"])
 def createPost(request):
     data = json.loads(request.body)
-    print(data)
+    # print(data)
     # handle unauthenticated user or invalid user
     try:
         userID = data["creator"]["UserID"]
@@ -340,7 +340,7 @@ def createPost(request):
     thread = Thread.objects.get(pk=threadID)
     thread.replyCount += 1
     thread.save()
-    print(thread.replyCount)
+    # print(thread.replyCount)
 
     # create new post object
     new_post = Post(content=content, creator=User.objects.get(pk=userID), thread=thread)
@@ -349,5 +349,20 @@ def createPost(request):
     print("Save post successfully")
 
     serializer = PostSerializer(new_post, many=False)
-    print(serializer.data)
+    # print(serializer.data)
     return Response(serializer.data)
+
+# GET THREADS BY TOPIC
+@api_view(['GET'])
+def getThreadsTopic(request, topic_id):
+    print("Hello")
+    paginator = PageNumberPagination()
+    paginator.page_size = 10
+
+    # get threads by topic
+    threads = Thread.objects.filter(topic=topic_id).all().order_by('-updated')
+
+    result_page = paginator.paginate_queryset(threads, request)
+    serializer = ThreadSerializer(result_page, many=True)
+
+    return paginator.get_paginated_response(serializer.data)

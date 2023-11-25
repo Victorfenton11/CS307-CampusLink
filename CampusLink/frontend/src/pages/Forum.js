@@ -17,8 +17,6 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import BookmarksIcon from '@mui/icons-material/Bookmarks';
-
 
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -117,7 +115,7 @@ const Forum = () => {
             </Typography>
           </div>
       
-
+          {/* This is where the topics are. */}
           <List
                 sx={{ width: '100%', maxWidth: 360, bgcolor: '#2B3947' }}
                 aria-label="topics"
