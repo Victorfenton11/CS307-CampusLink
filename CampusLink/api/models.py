@@ -1,5 +1,10 @@
 from django.db import models
-
+from django.contrib.auth.models import (
+    AbstractUser,
+    AbstractBaseUser,
+    BaseUserManager,
+    PermissionsMixin,
+)
 # Create your models here.
 class ClassLocation(models.Model):
     acronym = models.CharField(max_length=6, unique=True)
@@ -10,7 +15,8 @@ class User(models.Model):
     interestValue = 'Your Interest'
     UserID = models.AutoField(primary_key=True)
     Name = models.CharField(max_length=500)
-    Password = models.CharField(max_length=500)
+    # Password = models.CharField(max_length=500)
+    password = models.CharField(max_length=500)
     UserName = models.CharField(max_length=500,unique=True)
     UserEmail = models.CharField(max_length=500,unique=True)
     PhotoFileName = models.CharField(max_length=500, null=True)
@@ -21,10 +27,15 @@ class User(models.Model):
     securityAnswer = models.CharField(max_length=500, blank=True, null=True)
     friends = models.ManyToManyField("User", blank=True)
     isPrivate = models.BooleanField(default=False)
-
+    last_login = models.DateTimeField(null=True, blank=True)
+    email_verified = models.BooleanField(default=False)
+    
+    def get_email_field_name(self):
+        return 'UserEmail'
+    
     def str(self):
         return self.UserName
-
+    
 class FriendRequest(models.Model):
     from_user = models.ForeignKey(User, related_name='sent_requests', on_delete=models.CASCADE)
     to_user = models.ForeignKey(User, related_name='received_requests', on_delete=models.CASCADE)

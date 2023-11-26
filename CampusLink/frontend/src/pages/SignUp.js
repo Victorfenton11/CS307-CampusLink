@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './styles/SignUp.css'
 import logo from '../../static/images/CampusLink_white_text.png'
 import { Link } from 'react-router-dom';
+import swal from 'sweetalert';
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -73,7 +74,7 @@ export default function SignUp() {
     data.append('UserEmail', formData.email);
     data.append('UserName', formData.username);
     // data.append('Password', formData.password);
-    data.append('Password', hashedPassword)
+    data.append('password', hashedPassword)
     data.append('PhoneNumber', formData.phoneNumber);
     data.append('Major', '');
     data.append('Interest', '');
@@ -82,6 +83,8 @@ export default function SignUp() {
     if (formData.profilePic) {
         data.append('photoFileName', formData.profilePic);
     }
+    //add here for email
+
     fetch('/api/user/create/', {
       method: 'POST',
       body: data
@@ -99,6 +102,7 @@ export default function SignUp() {
       else {
         console.log('Success:', data);
         console.log('Clearing error');
+        swal("Registered!", "Registration successful. Please check your email to verify your account.", "success")
         setEmailError('');
       }
     })

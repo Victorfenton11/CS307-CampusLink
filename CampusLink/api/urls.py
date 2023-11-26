@@ -1,5 +1,5 @@
 from django.urls import path, re_path
-from .views import ClassLocationView, GetClassLocation, userApi, SaveFile, create_user, delete_user, send_email2, save_class_list, userNameApi, getFriends, addFriend, removeFriend, GetUserbyEmail, incoming_requests, accept_friend_request, decline_friend_request
+from .views import ClassLocationView, GetClassLocation, userApi, SaveFile, create_user, delete_user, send_email2, save_class_list, userNameApi, getFriends, addFriend, removeFriend, GetUserbyEmail, incoming_requests, accept_friend_request, decline_friend_request, verify_email
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -12,6 +12,7 @@ urlpatterns = [
     re_path(r'^user/savefile', SaveFile),
     re_path(r'^users/([a-zA-Z0-9]+)$', userNameApi),
     path('user/create/', create_user, name='create-user'),
+    path('verify-email/<uidb64>/<token>/', verify_email, name='verify_email'),
     path('user/delete/<int:user_id>/', delete_user, name='delete-user'),
     re_path(r'^email$', send_email2),
     path('save-class-list/', save_class_list, name='save_class_list'),

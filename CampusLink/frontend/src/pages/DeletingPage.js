@@ -48,8 +48,6 @@ export default function DeletingPage() {
         <br />
         <button type="submit" disabled={!isConfirmed}>Delete Account</button>
       </form>
-      <Footer />
     </div>
-    
   );
 }
