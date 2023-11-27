@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './styles/Profile.css'
 import dum_pic from '../../static/images/Test.jpg'
+import { Link, useNavigate } from 'react-router-dom';
 
 
 const Profile = () => {
+  const navigate = useNavigate();
   // State to store user data
   const [userData, setUserData] = useState(null);
   // State to track loading state
@@ -102,6 +104,10 @@ const Profile = () => {
     setUserData({ ...userData, isPrivate: false});
   }
 
+  function handleCalendarClick() {
+    return navigate('/calendar');
+  }
+
   // UseEffect hook to fetch data when the component mounts
   useEffect(() => {
     fetchUserData();
@@ -157,6 +163,7 @@ const Profile = () => {
         <div className='name'> <label className='label'>
           UserName: </label>{userData.UserName}</div>
           <button onClick={handleEditClick}>Edit</button>
+          <button onClick={handleCalendarClick}>My Calendar</button>
     </div>
     )
   }
@@ -182,6 +189,7 @@ const Profile = () => {
           <div className='name'><label className='label'>
           Interest:</label>{userData.Interest}</div>
         <button onClick={handleEditClick}>Edit</button>
+        <button onClick={handleCalendarClick}>My Calendar</button>
     </div>
   );
 };

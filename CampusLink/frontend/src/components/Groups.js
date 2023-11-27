@@ -23,10 +23,6 @@ export default function Groups() {
    }
   };
 
-  const createGroupChat = async () => {
-    return;
-  }
-
   const createCircle = async () => {
     try {
       var name = document.getElementById("newCircleName").value;
@@ -92,32 +88,68 @@ export default function Groups() {
       const DisplayData=data.map(
         (circle)=>{
           const deleteCircle = async (userID) => {
-           try{
-             const userID = sessionStorage.getItem('userID');
-             const fetchString = 'api/deletecircle' + `?id=${userID}` + '&id=' + circle.id;
-             const response = await fetch(fetchString);
-           if (!response.ok) {
-             swal("Error!", "Could not delete the Circle", "error");
-           }
-        
-           swal("Deleted!", `Circle ${circle.Name} successfully deleted.`, "success");
-           // Exit edit mode
-           setIsCreateMode(false);
-           } catch (error) {
-             console.error('Error saving user data:', error.message);
-           }
-           fetchCircleData();
+            try{
+              const userID = sessionStorage.getItem('userID');
+              const fetchString = 'api/deletecircle' + `?id=${userID}` + '&id=' + circle.id;
+              const response = await fetch(fetchString);
+              if (!response.ok) {
+                swal("Error!", "Could not delete the Circle", "error");
+              }
+            
+              swal("Deleted!", `Circle ${circle.Name} successfully deleted.`, "success");
+              // Exit edit mode
+              setIsCreateMode(false);
+            } catch (error) {
+              console.error('Error saving user data:', error.message);
+            }
+            fetchCircleData();
           };
-          console.log(circle);
+          
+          const createGroupChat = async () => {
+            try{
+              axios.get(`https://api.groupme.com/v3`)
+              .then(response => {
+                //TODO
+              })
+              .catch(error => {
+                console.log(error);
+              });
+
+              if (!circle.groupChatCreated) {
+                const fetchString = 'api/creategroupchat' + `?id=${circle.id}`;
+                const response = await fetch(fetchString);
+                if (!response.ok) {
+                  swal("Error!", "Could not create group chat for this Circle", "error");
+                  return;
+                }
+                swal("Created!", `Group Chat for Circle ${circle.Name} successfully created via GroupMe.`, "success");
+                circle.groupChatCreated = true;
+              } else {
+                const fetchString = 'api/updategroupchat' + `?id=${circle.id}`;
+                const response = await fetch(fetchString);
+                if (!response.ok) {
+                  swal("Error!", "Could not update group chat for this Circle", "error");
+                  return;
+                }
+
+                swal("Updated!", `Group Chat for Circle ${circle.Name} successfully updated.`, "success");
+              }
+            } catch (error) {
+              console.error('Error saving user data:', error.message);
+              return;
+            }
+            fetchCircleData();
+
+          }
+
           return(
             <tr key={circle.id}>
-              <td key="{user.UserName}">{circle.Name}</td>
+              <td key="{circle.Name}">{circle.Name}</td>
               <td>{circle.Description}</td>
-              <button className="slide-button" role="button" onClick={createGroupChat}><span class="text">Create Group Chat</span><span>Create Group Chat</span></button>
+              <button className="slide-button" role="button" onClick={() => createGroupChat}><span class="text">{circle.groupChatCreated ? "Update" : "Create"} Group Chat</span><span>Create Group Chat</span></button>
               {circle.owner.UserID == userID && <button className="slide-button" role="button" onClick={deleteCircle}><span class="text">Delete Circle</span><span>are you sure?</span></button>}
             </tr>
           )
-         
         }
       )
       setCircleData(DisplayData);

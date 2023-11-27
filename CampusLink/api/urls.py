@@ -19,6 +19,8 @@ from .views import (
     getCircles,
     create_circle,
     deleteCircle,
+    createGroupChat,
+    updateGroupChat,
 )
 from django.conf.urls.static import static
 from django.conf import settings
@@ -49,5 +51,7 @@ urlpatterns = [
     re_path("addfriend", addFriend.as_view()),
     re_path("removefriend", removeFriend.as_view()),
     re_path("deletecircle", deleteCircle.as_view()),
+    re_path("creategroupchat", createGroupChat.as_view()),
+    re_path("updategroupchat", updateGroupChat.as_view()),
     path("get-security-question", get_security_question),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

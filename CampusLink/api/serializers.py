@@ -28,4 +28,4 @@ class CircleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Circle
-        fields = ("id", "Name", "Description", "owner", "users")
+        fields = ("id", "Name", "Description", "owner", "users", "groupChatCreated")

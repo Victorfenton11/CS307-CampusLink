@@ -79,6 +79,7 @@ class Circle(models.Model):
         blank=True,
     )
     users = models.ManyToManyField("User", blank=True)
+    groupChatCreated = models.BooleanField(default=False)
 
     def __str__(self):
         return self.Name

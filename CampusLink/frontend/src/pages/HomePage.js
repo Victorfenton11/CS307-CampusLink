@@ -7,6 +7,7 @@ import Map from './Map'
 import Discover from './Discover'
 import Circles from './Circles'
 import Profile from './Profile'
+import Calendar from './Calendar'
 
 export default function HomePage({}) {
   return (
@@ -18,6 +19,7 @@ export default function HomePage({}) {
           <Route path='/discover' element={<Discover />}/>
           <Route path='/circles' element={<Circles />}/>
           <Route path='/profile' element={<Profile />}/>
+          <Route path='/calendar' element={<Calendar />}/>
         </Routes>
       </div>
       <Navbar className='navbar'/>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './styles/SignUp.css'
 import logo from '../../static/images/CampusLink_white_text.png'
 import { Link } from 'react-router-dom';
+import swal from 'sweetalert';
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -79,8 +80,7 @@ export default function SignUp() {
       } 
       else {
         console.log('Success:', data);
-        console.log('Clearing error');
-        setEmailError('');
+        setEmailError('');    
       }
     })
     .catch((error) => {

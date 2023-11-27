@@ -278,9 +278,50 @@ class deleteCircle(APIView):
             circle.delete()
             return JsonResponse("Circle Deleted Successfully", safe=False)
         except Exception as e:
-            raise e
             return Response(
                 {"message": "Circle could not be deleted."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+
+class createGroupChat(APIView):
+    lookup_ID_kwarg = "id"
+
+    def get(self, request, format=None):
+        try:
+            id = request.GET.get(self.lookup_ID_kwarg)
+            circle = Circle.objects.get(id=id)
+
+            phoneNumbers = []
+            for user in circle.users.all():
+                if not user.isPrivate:
+                    if user.PhoneNumber != "":
+                        phoneNumbers.append(user.PhoneNumber)
+
+        except:
+            return Response(
+                {"message": "Group chat for Circle could not be created."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+
+class updateGroupChat(APIView):
+    lookup_ID_kwarg = "id"
+
+    def get(self, request, format=None):
+        try:
+            id = request.GET.get(self.lookup_ID_kwarg)
+            circle = Circle.objects.get(id=id)
+
+            phoneNumbers = []
+            for user in circle.users.all():
+                if not user.isPrivate:
+                    if user.PhoneNumber != "":
+                        phoneNumbers.append(user.PhoneNumber)
+
+        except:
+            return Response(
+                {"message": "Group chat for Circle could not be created."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
