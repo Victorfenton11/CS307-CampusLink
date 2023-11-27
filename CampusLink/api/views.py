@@ -149,14 +149,11 @@ def verify_email(request, uidb64, token):
         if default_token_generator.check_token(user, token):
             user.email_verified = True
             user.save()
-            print('Email verified successfully')  # Indicate successful verification
             return Response({'message': 'Email verified successfully'}, status=status.HTTP_200_OK)
         else:
-            print('Invalid verification link')  # Indicate an invalid token
             return Response({'message': 'Invalid verification link'}, status=status.HTTP_400_BAD_REQUEST)
 
     except (TypeError, ValueError, OverflowError, User.DoesNotExist) as e:
-        print(f'Error: {e}')  # Print the exception
         return Response({'message': 'Invalid verification link'}, status=status.HTTP_400_BAD_REQUEST)
 
 

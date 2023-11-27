@@ -59,7 +59,7 @@ const LoginPage = () => {
   async function checkCredentials(passwordInput, passwordStored, ID) {
     passwordInput = await sha1(passwordInput)
     console.log(passwordInput)
-    if (passwordInput === passwordStored) {
+    if (passwordInput === passwordStored && userData.email_verified) {
         setCredential(true);
         console.log("ahhhhhh", ID);
         setUserID(userData.UserID);
@@ -74,7 +74,7 @@ const LoginPage = () => {
 
   useEffect(()=>{
       if (userData != null) {
-          checkCredentials(formData.password, userData.Password, userData.UserID);
+          checkCredentials(formData.password, userData.password, userData.UserID);
       }
   },[userData])
 
