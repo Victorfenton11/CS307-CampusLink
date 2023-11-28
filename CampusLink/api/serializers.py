@@ -44,7 +44,8 @@ class ThreadSerializer(ModelSerializer):
                     "topic",
                     "updated",
                     "replyCount",
-                    "creator_id")
+                    "creator_id",
+                    "anonymous")
 
 
 class PostSerializer(ModelSerializer):
@@ -65,4 +66,5 @@ class PostSerializer(ModelSerializer):
                     "content",
                     "updated",
                     "thread",
-                    "creator_id"))
+                    "creator_id",
+                    "anonymous"))

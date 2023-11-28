@@ -16,6 +16,7 @@ import { createTheme } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
+import CheckIcon from '@mui/icons-material/Check';
 
 
 const ThreadForm = () => {
@@ -28,7 +29,8 @@ const ThreadForm = () => {
     subject: "",
     content: "",
     topic: "",
-    creator: {userData}
+    creator: {userData},
+    anonymous: false
   })
 
   // Function to fetch user data from the API
@@ -96,6 +98,14 @@ const ThreadForm = () => {
     })
     const data = await response.json()
   }
+
+  // set anonymous to true/false
+  const setAnonymous = () => {
+    setThread(prevThread => ({
+      ...prevThread,
+      anonymous: !prevThread.anonymous,
+    }));
+  };
 
   // new thread button theme
   const theme = createTheme({
@@ -167,7 +177,7 @@ const ThreadForm = () => {
           margin="dense"
           id="content"
           name="content"
-          placeholder="What's on your mind?"
+          placeholder="What's on your mind???"
           hiddenLabel
           type="text"
           fullWidth
@@ -183,7 +193,13 @@ const ThreadForm = () => {
       <DialogActions>
       <Stack direction="row" spacing={2}>
         <Button variant="outlined" onClick={handleClose}>Cancel</Button>
+        {/* Create a Button here that sets anonymous to True */}
+        <Button variant="outlined" onClick={setAnonymous}>
+          Send Anonymously {thread.anonymous && <CheckIcon />}
+        </Button>
+
         <Button variant="contained" endIcon={<SendIcon />}  type="submit" >Send</Button>
+
         </Stack>
       </DialogActions>
       </form>

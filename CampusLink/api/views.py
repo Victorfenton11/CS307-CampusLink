@@ -294,7 +294,7 @@ def getPosts(request, thread_id):
 
 @api_view(["POST"])
 def createThread(request):
-    # print(request)
+    # print("HELLO")
     data = json.loads(request.body)
     # print(data)
     # handle unauthenticated user or invalid user
@@ -308,14 +308,20 @@ def createThread(request):
     subject = data["subject"]
     content = data["content"]
     topic = data["topic"][0]["value"]
+    anonymous = data["anonymous"]
+
+    # print(anonymous)
 
     new_thread = Thread(
         subject=subject,
         content=content,
         creator=User.objects.get(pk=userID),
         topic=topic,
+        anonymous=True if anonymous == True else False,
     )
     new_thread.save()
+    # print("The new anonymous")
+    # print(new_thread.anonymous)
 
     serializer = ThreadSerializer(new_thread, many=False)
     return Response(serializer.data)

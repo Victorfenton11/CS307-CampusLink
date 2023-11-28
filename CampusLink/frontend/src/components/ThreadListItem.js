@@ -9,6 +9,7 @@ import Moment from 'react-moment';
 
 
 const ThreadListItem = ({thread}, {index}) => {
+  
   return (
     <div className="thread-list-item">
       <List sx={{ width: '100%', bgcolor: 'blueviolet' }}>
@@ -24,8 +25,11 @@ const ThreadListItem = ({thread}, {index}) => {
                     component="span"
                     variant="body2"
                     color="text.secondary"
-                  >
-                    Created by {thread?.creator_id}
+                  > {/*thread?.anonymous && 'Anonymous' ? 'Anonymous' : 'Created by UserID: {thread?.creator_id}'} */}
+                    Created by UserID: {thread?.creator_id} 
+                    {/* Instead of Created by creator_id, I want to show the name based on the UserID, which is the creator_id */}
+                    
+
                   </Typography>
                   <span style={{ color: 'lavender' }}> 
                     - updated <Moment fromNow>{thread?.updated}</Moment>
