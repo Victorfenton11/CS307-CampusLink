@@ -3,6 +3,7 @@ import Profile from './Profile'
 import './styles/LogIn.css';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../static/images/CampusLink_white_text.png'
+import swal from 'sweetalert';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -63,6 +64,9 @@ const LoginPage = () => {
         setCredential(true);
         console.log("ahhhhhh", ID);
         setUserID(userData.UserID);
+    }
+    else if( !userData.email_verified){
+      swal("verify email!", "you must verify the email before login.", "error")
     }
   }
 
