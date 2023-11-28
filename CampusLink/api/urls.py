@@ -21,6 +21,7 @@ from .views import (
     deleteCircle,
     createGroupChat,
     updateGroupChat,
+    joinCircle,
 )
 from django.conf.urls.static import static
 from django.conf import settings
@@ -55,5 +56,6 @@ urlpatterns = [
     re_path("creategroupchat", createGroupChat.as_view()),
     re_path("updategroupchat", updateGroupChat.as_view()),
     path("get-security-question", get_security_question),
+    path("joincircle", joinCircle.as_view()),
     re_path(r"^rec/([0-9]+)/refresh/([0-9]+)$", refresh),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

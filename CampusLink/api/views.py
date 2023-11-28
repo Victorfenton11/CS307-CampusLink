@@ -265,6 +265,40 @@ class removeFriend(APIView):
         return JsonResponse("Friend Removed Successfully", safe=False)
 
 
+class joinCircle(APIView):
+    lookup_ID_kwarg = "id"
+
+    def get(self, request, format=None):
+        id = request.GET.getlist(self.lookup_ID_kwarg)
+
+        try:
+            user = User.objects.get(UserID=id[0])
+            circle = Circle.objects.get(id=id[1])
+
+            # Check if the user is already part of the circle
+            if user in circle.users.all():
+                return JsonResponse(
+                    "User is already a member of this circle", status=400, safe=False
+                )
+
+            # Add the user to the circle and save
+            circle.users.add(user)
+            circle.save()
+
+            # Update user's circles and save
+            user.Circles.add(circle)
+            user.save()
+
+            return JsonResponse("User joined the circle successfully", safe=False)
+
+        except User.DoesNotExist:
+            return JsonResponse("User does not exist", status=404, safe=False)
+        except Circle.DoesNotExist:
+            return JsonResponse("Circle does not exist", status=404, safe=False)
+        except:
+            return JsonResponse("Could not join circle", status=404, safe=False)
+
+
 class deleteCircle(APIView):
     lookup_ID_kwarg = "id"
 

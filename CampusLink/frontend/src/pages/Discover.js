@@ -29,14 +29,18 @@ function Discover() {
     }
   }
 
-  useEffect(() => {
-    fetch('/api/rec/1/refresh/' + refresh)
+  const getRecommendations = async () => {
+    fetch(`/api/rec/${sessionStorage.getItem('userID')}/refresh/` + refresh)
       .then(response => response.json())
       .then(data => {
         setRecUsers(data.users);
         setRecCircles(data.circles);
       })
       .catch(error => console.error('Error fetching data: ', error));
+  }
+
+  useEffect(() => {
+    getRecommendations();
   }, [refresh]);
 
   return (
@@ -59,21 +63,44 @@ function Discover() {
         </div>
       ))}
       <h1>Circles for you</h1>
-      {recCircles.map(item => (
-        <div key={item.id} className='user-style'
-        onMouseEnter={() => handleMouseEnter(item.id)}
-        onMouseLeave={handleMouseLeave}>
-            <label className="custom-file-upload fas">
-                <div className="img-wrap" >
-                </div>
-            </label>
-            <div className={`user-details ${item.id === hoveredUserId ? 'user-details-visible' : 'user-details-hidden'}`}>
-          <p>Name: {item.Name}</p>
-          <p>Description: {item.Description}</p>
-          <p>Owner: {item.owner.UserName}</p>
+      {recCircles.map( 
+        (item) => {
+        const handleClickCircle = async () => {
+          try{
+            const userID = sessionStorage.getItem('userID');
+            const fetchString = 'api/joincircle' + `?id=${userID}` + '&id=' + item.id;
+            const response = await fetch(fetchString);
+          if (!response.ok) {
+            swal("Error", "Unexpected error while joining Circle. Please try again later.", "error");
+            return;
+          }
+       
+          swal("Joined!", `Successfully joined Circle ${item.Name}`, "success");
+
+          getRecommendations();
+
+          return;
+          } catch (error) {
+            swal("Error", "Unexpected error while joining Circle 2. Please try again later.", "error");
+            return;
+          }
+        }
+
+        return(
+          <div key={item.id} className='user-style'
+          onMouseEnter={() => handleMouseEnter(item.id)}
+          onMouseLeave={handleMouseLeave} onClick={handleClickCircle}>
+              <label className="custom-file-upload fas">
+                  <div className="img-wrap" >
+                  </div>
+              </label>
+              <div className={`user-details ${item.id === hoveredUserId ? 'user-details-visible' : 'user-details-hidden'}`}>
+            <p>Name: {item.Name}</p>
+            <p>Description: {item.Description}</p>
+            <p>Owner: {item.owner.UserName}</p>
+            </div>
           </div>
-        </div>
-      ))}
+        )})}
     <button onClick={handleRefreshClick}>Refresh</button>
     </div>
   );
