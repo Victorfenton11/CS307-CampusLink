@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import swal from 'sweetalert';
-import './styles/Friends.css'
+import './styles/Friends.css';
+import Switch from "react-switch";
 
 export default function Groups() {
 
@@ -9,6 +10,7 @@ export default function Groups() {
   const [isCreateMode, setIsCreateMode] = useState(false);
   const [isIncomingMode, setIsIncomingMode] = useState(false);
   const [usersList, setUsersList] = useState([]);
+  const [checked, setChecked] = useState(false);
 
   const handleCreateClick = () => {
     setIsCreateMode(!isCreateMode);
@@ -38,6 +40,8 @@ export default function Groups() {
       data.append('Description', description);
       data.append('users', usersList);
       data.append('ownerID', sessionStorage.getItem('userID'));
+      console.log(checked);
+      data.append('public', checked);
       const response = await fetch('/api/circle/create/', {
         method: 'POST',
         body: data
@@ -182,6 +186,10 @@ export default function Groups() {
     }
  }, [isIncomingMode]);
 
+ const handleChange = (checked) => {
+  setChecked(checked);
+ }
+
 
   if (isCreateMode) {
     return (
@@ -194,6 +202,7 @@ export default function Groups() {
             <input id="userToAdd" className="inputBox" type="text" placeholder='username'></input>
             <button className="button addButton" onClick={addToCircle}>Add to Circle</button>
             <label className='add-users'>{usersList.join()}</label>
+            <label className='add-users'>Private<Switch onChange={handleChange} checked={checked} uncheckedIcon={false} checkedIcon={false}/>Public</label>
             <button className="button createButton" onClick={createCircle}>Create Circle</button>
             <button className="button" onClick={handleCreateClick}>Cancel</button>
           </div>

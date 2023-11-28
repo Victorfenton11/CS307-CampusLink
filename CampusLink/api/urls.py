@@ -24,6 +24,7 @@ from .views import (
 )
 from django.conf.urls.static import static
 from django.conf import settings
+from .Recommendation import refresh
 
 urlpatterns = [
     path("class-location", ClassLocationView.as_view()),
@@ -54,4 +55,5 @@ urlpatterns = [
     re_path("creategroupchat", createGroupChat.as_view()),
     re_path("updategroupchat", updateGroupChat.as_view()),
     path("get-security-question", get_security_question),
+    re_path(r"^rec/([0-9]+)/refresh/([0-9]+)$", refresh),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

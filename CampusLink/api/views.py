@@ -155,6 +155,7 @@ def create_circle(request):
         "Description": request.data.get("Description"),
         "owner": None,
         "users": None,
+        "public": True if request.data.get("public") == "true" else False,
     }
     serializer = CircleSerializer(data=circle)
     if serializer.is_valid():
