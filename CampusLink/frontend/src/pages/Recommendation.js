@@ -37,24 +37,32 @@ function Recommendation() {
 
   return (
     <div className='rec-style'>
-      <h1>Users that share similar interests with you</h1>
-      {data.map(item => (
-        <div key={item.UserID} className='user-style'
-        onMouseEnter={() => handleMouseEnter(item.UserID)}
-        onMouseLeave={handleMouseLeave}>
+      <div className='discover-header'>
+        <h1>Discover</h1>
+      </div>
+      <div className='recc-users-header'>
+        <h1>Reccomended Users</h1>
+      </div>
+      <div className='recc-users'>
+        {data.map(item => (
+          <div key={item.UserID} className='user-style'
+            onMouseEnter={() => handleMouseEnter(item.UserID)}
+            onMouseLeave={handleMouseLeave}>
             <label className="custom-file-upload fas">
-                <div className="img-wrap" >
-                    <img htmlFor="photo-upload" src={'../../../static/images/' + item.PhotoFileName}/>
-                </div>
+              <div className="img-wrap" >
+                <img htmlFor="photo-upload" src={'../../../static/images/' + item.PhotoFileName} />
+              </div>
             </label>
             <div className={`user-details ${item.UserID === hoveredUserId ? 'user-details-visible' : 'user-details-hidden'}`}>
-          <p>Name: {item.Name}</p>
-          <p>Username: {item.UserName}</p>
-          <p>Interest: {item.Interest}</p>
+              <p>Name: {item.Name}</p>
+              <p>Username: {item.UserName}</p>
+              <p>Interest: {item.Interest}</p>
+            </div>
           </div>
-        </div>
-      ))}
-    <button onClick={handleRefreshClick}>Refresh</button>
+        ))}
+      </div>
+
+      <button onClick={handleRefreshClick}>Refresh</button>
     </div>
   );
 }
