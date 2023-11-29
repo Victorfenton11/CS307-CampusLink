@@ -269,8 +269,12 @@ def getThread(request, thread_id):
         content = {"The Thread does not exist."}
         return Response(content)
 
+    # print(thread)
+
     thread = Thread.objects.get(pk=thread_id)
     serializer = ThreadSerializer(thread, many=False)
+
+    print(serializer.data)
 
     return Response(serializer.data)
 

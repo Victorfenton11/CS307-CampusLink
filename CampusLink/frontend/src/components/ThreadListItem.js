@@ -25,14 +25,14 @@ const ThreadListItem = ({thread}, {index}) => {
                     component="span"
                     variant="body2"
                     color="text.secondary"
-                  > {/*thread?.anonymous && 'Anonymous' ? 'Anonymous' : 'Created by UserID: {thread?.creator_id}'} */}
-                    Created by UserID: {thread?.creator_id} 
+                  > {thread?.anonymous && 'Anonymous' ? 'Posted By Anonymous' : `Posted by UserID: ${thread?.creator_id}`}
+                    {/* Created by UserID: {thread?.creator_id} */}
                     {/* Instead of Created by creator_id, I want to show the name based on the UserID, which is the creator_id */}
                     
 
                   </Typography>
                   <span style={{ color: 'lavender' }}> 
-                    - updated <Moment fromNow>{thread?.updated}</Moment>
+                    , updated <Moment fromNow>{thread?.updated}</Moment>
                   </span>
                 </React.Fragment>
               }

@@ -20,6 +20,11 @@ const Thread = () => {
   const [userData, setUserData] = useState(null); 
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  // initalize thread and posts component state
+  const [thread, setThread] = useState(null)
+  const [posts, setPosts] = useState([])
+  const [hasMore, setHasMore] = useState(true)
+  const [page, setPage] = useState(1)
 
   // Function to fetch user data from the API
   const fetchUserData = async () => {
@@ -48,12 +53,6 @@ const Thread = () => {
   // extract thread id
   let params = useParams()
   let threadID = params.id
-
-  // initalize thread and posts component state
-  const [thread, setThread] = useState(null)
-  const [posts, setPosts] = useState([])
-  const [hasMore, setHasMore] = useState(true)
-  const [page, setPage] = useState(1)
 
   // trigger thread update
   useEffect(() => {
@@ -143,9 +142,10 @@ const Thread = () => {
 
             <Typography sx={{ m: 1, p: 1 }} color="text.secondary">
               {/* Link to the user profile */}
-            <Link to={`/profile/${thread?.creator_id}`} style={{  color: "grey"}}>
-              {thread?.creator}
-              </Link> posted on {thread?.created}
+            {/*<Link to={`/profile/${thread?.creator_id}`} style={{  color: "grey"}}>
+            </Link>  */}
+            {thread?.anonymous && 'Anonymous' ? 'UserID: Anonymous, ' : `UserID: ${thread?.creator_id} `}
+              posted on {thread?.created}
             </Typography>
 
           </CardContent>  
@@ -174,7 +174,7 @@ const Thread = () => {
             ))}
             </div>     
 
-          </InfiniteScroll>    
+        </InfiniteScroll>    
 
       </Container>
 

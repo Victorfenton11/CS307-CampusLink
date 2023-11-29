@@ -16,9 +16,12 @@ const PostCardItem = ({post}) => {
             </Typography>
 
             <Typography sx={{ m: 1, p: 1 }} color="text.secondary">
-            <Link to={`/profile/${post?.creator_id}`} style={{  color: "grey"}}>
+            {/*<Link to={`/profile/${post?.creator_id}`} style={{  color: "grey"}}>
               {post?.creator}
-              </Link> posted on {post?.created}
+            </Link> 
+            */}
+            {post?.anonymous && 'Anonymous' ? 'Posted By Anonymous' : `UserID: ${post?.creator_id}`}
+              , posted on {post?.created}
             </Typography>
 
           </CardContent>  
