@@ -341,6 +341,7 @@ def createPost(request):
 
     content = data["content"]
     threadID = data["thread"]
+    anonymous = data["anonymous"]
 
     # update reply count of the assoicated thread
     thread = Thread.objects.get(pk=threadID)
@@ -349,7 +350,10 @@ def createPost(request):
     # print(thread.replyCount)
 
     # create new post object
-    new_post = Post(content=content, creator=User.objects.get(pk=userID), thread=thread)
+    new_post = Post(content=content, 
+                    creator=User.objects.get(pk=userID), 
+                    thread=thread,
+                    anonymous=True if anonymous == True else False,)
     print(new_post)
     new_post.save()
     print("Save post successfully")

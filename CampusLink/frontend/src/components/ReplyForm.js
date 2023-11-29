@@ -16,12 +16,19 @@ import Link from '@mui/material/Link';
 import AddCommentIcon from '@mui/icons-material/AddComment';
 import Fab from '@mui/material/Fab';
 import Container from '@mui/material/Container';
+import CheckIcon from '@mui/icons-material/Check';
 
 
 const ReplyForm = ({thread}) => {
   const [userData, setUserData] = useState(null);
   const [alertShow, setAlertShow] = useState(false)
   const [open, setOpen] = React.useState(false);
+  const [post, setPost] = useState({
+    content: "",
+    thread: "",
+    creator: {userData},
+    anonymous: false
+  })
 
   // extract thread id
   let params = useParams()
@@ -51,12 +58,6 @@ const ReplyForm = ({thread}) => {
   useEffect(() => {
     setPost({...post, creator: userData})
   }, [userData])
-
-  const [post, setPost] = useState({
-    content: "",
-    thread: "",
-    creator: {userData}
-  })
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -98,6 +99,14 @@ const ReplyForm = ({thread}) => {
         sx: fabStyle,
         icon: <AddCommentIcon />,
         label: 'Add',
+    };
+
+    // set anonymous to true/false
+    const setAnonymous = () => {
+      setPost(prevPost => ({
+        ...prevPost,
+        anonymous: !prevPost.anonymous,
+      }));
     };
 
     const theme = createTheme({
@@ -162,6 +171,11 @@ const ReplyForm = ({thread}) => {
         <DialogActions>
         <Stack direction="row" spacing={2}>
             <Button variant="outlined" onClick={handleClose}>Cancel</Button>
+            
+            <Button variant="outlined" onClick={setAnonymous}>
+              Send Anonymously {post.anonymous && <CheckIcon />}
+            </Button>
+
             <Button variant="contained" endIcon={<SendIcon />}  type="submit" >Send</Button>
             </Stack>
         </DialogActions>
