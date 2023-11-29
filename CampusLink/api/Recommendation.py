@@ -30,7 +30,7 @@ def userNameToID(df, index_of_user, id):
     for i in userName:
         userID = User.objects.get(UserName__iexact=i).UserID
         idList.append(userID)
-    print(idList)
+    #print(idList)
     if id in idList:
         print(id)
         idList.remove(id)
