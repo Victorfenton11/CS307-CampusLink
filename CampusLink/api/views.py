@@ -274,7 +274,7 @@ def getThread(request, thread_id):
     thread = Thread.objects.get(pk=thread_id)
     serializer = ThreadSerializer(thread, many=False)
 
-    print(serializer.data)
+    # print(serializer.data)
 
     return Response(serializer.data)
 
@@ -369,7 +369,7 @@ def createPost(request):
 # GET THREADS BY TOPIC
 @api_view(['GET'])
 def getThreadsTopic(request, topic_id):
-    print("Hello")
+    # print("Hello")
     paginator = PageNumberPagination()
     paginator.page_size = 10
 

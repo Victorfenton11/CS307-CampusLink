@@ -149,18 +149,18 @@ const Forum = () => {
           </div>
           <Item >    
             <InfiniteScroll
-            dataLength={threads.length} //This is important field to render the next data
-            next={fetchData}
-            hasMore={hasMore}
-            loader={<h4 style={{ textAlign: 'center', marginTop: 20}}>Loading...</h4>}
-            endMessage={
-                <p style={{ textAlign: 'center', marginTop: 20}}>
-                <span style={{ color: 'white'}}>You have seen all the threads.</span>
-                </p>
-            }>
-              {threads.map((thread, index) => (
-                <ThreadListItem key={index} thread={thread}/>
-              ))}
+              dataLength={threads.length} //This is important field to render the next data
+              next={fetchData}
+              hasMore={hasMore}
+              loader={<h4 style={{ textAlign: 'center', marginTop: 20}}>Loading...</h4>}
+              endMessage={
+                  <p style={{ textAlign: 'center', marginTop: 20}}>
+                  <span style={{ color: 'white'}}>You have seen all the threads.</span>
+                  </p>
+              }>
+                {threads.map((thread, index) => (
+                  <ThreadListItem key={index} thread={thread}/>
+                ))}
 
             </InfiniteScroll>
           </Item>

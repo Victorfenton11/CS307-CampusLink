@@ -144,7 +144,7 @@ const Thread = () => {
               {/* Link to the user profile */}
             {/*<Link to={`/profile/${thread?.creator_id}`} style={{  color: "grey"}}>
             </Link>  */}
-            {thread?.anonymous && 'Anonymous' ? 'UserID: Anonymous, ' : `UserID: ${thread?.creator_id} `}
+            {thread?.anonymous && 'Anonymous' ? 'UserID: Anonymous, ' : `UserID: ${thread?.creator_id} `} 
               posted on {thread?.created}
             </Typography>
 

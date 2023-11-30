@@ -32,6 +32,7 @@ class ThreadSerializer(ModelSerializer):
         return creator_id 
 
     creator = serializers.CharField()
+
     created = serializers.DateTimeField(format="%d-%m-%Y %H:%M:%S")
 
     class Meta:
