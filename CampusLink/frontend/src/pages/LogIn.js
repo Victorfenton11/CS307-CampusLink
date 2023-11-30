@@ -3,6 +3,7 @@ import Profile from './Profile'
 import './styles/LogIn.css';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../static/images/CampusLink_white_text.png'
+import swal from 'sweetalert';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -12,18 +13,14 @@ const LoginPage = () => {
       username: '',
       password: '',
     });
-  const [userID, setUserID] = useState(1);
   
   // State to track errors
   const [error, setError] = useState(null);
-
-  const [credential, setCredential] = useState(false);
   
   // Function to fetch user data from the API
   console.log(formData)
   async function fetchData(username){
     try {
-      console.log(username);
       // Make API request
       const response = await fetch('/api/users/' + username);
       
@@ -38,7 +35,6 @@ const LoginPage = () => {
       // Check if username password matches
       //const parseTheData = JSON.parse(data);
       //console.log(parseTheData);
-      console.log("Data", data);
       setUserData(data);
 
     } catch (error) {
@@ -51,20 +47,23 @@ const LoginPage = () => {
 
   function checkCredentials(passwordInput, passwordStored, ID) {
     if (passwordInput === passwordStored) {
-        setCredential(true);
-        setUserID(userData.UserID);
+        return true;
     }
+    return false;
   }
 
   function handleSubmit() {
     fetchData(formData.username);
-    console.log(userData);
-    //checkCredentials(formData.password, userData.Password);
   }
 
   useEffect(()=>{
       if (userData != null) {
-          checkCredentials(formData.password, userData.Password, userData.UserID);
+          if (checkCredentials(formData.password, userData.password, userData.UserID)) {
+            sessionStorage.setItem('userID', userData.UserID);
+            return navigate('/');
+          } else {
+            swal("Error!", "Incorrect password", "error");
+          }
       }
   },[userData])
 
@@ -73,11 +72,7 @@ const LoginPage = () => {
   if (error) {
     return <div>Error: {error}</div>;
   }
-  
-  if (credential) {
-      console.log("userID", userID);
-      return navigate('/');
-  }
+
   // Render user profile
   return (
     <div className='login-style'>

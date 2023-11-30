@@ -1,0 +1,91 @@
+:root {
+    --background-color: #2B3947;
+  }
+  @font-face {
+    font-family: 'lato';
+    src:url(./Lato-Light.ttf);
+    font-style: normal;
+  }
+  .rec-style {
+    background-color: hsla(289, 35%, 67%, 0.62);
+    background-image: url('https://cdn.pixabay.com/photo/2016/11/29/02/20/cosmos-1866820_1280.jpg');
+    color: #e5e7ea;
+    overflow-y: scroll;
+    height: 90vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-family: lato;
+    line-height: 2em;
+  }
+  .user-style {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1em;
+  }
+  .user-details {
+    margin-left: 1em;
+    display: flex;
+    flex-direction: column;
+  }
+  .user-details-hidden {
+    display: none;
+  }
+  
+  .user-details-visible {
+    margin-left: 1em;
+    display: flex;
+    flex-direction: column;
+  }
+  .custom-file-upload {
+    border-radius: 50%;
+    position: relative;
+    display: inline-block;
+    padding: 0.5em;
+    cursor: pointer;
+    background: linear-gradient(270deg, #440c5a, #0912b7);
+    margin-bottom: 2em;
+  }
+  .img-wrap{
+    position: relative;
+    width: 8em;
+    height: 8em;
+    object-fit: contain;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+  .rec-style img {
+    width: auto;
+    height: 100%;
+  }
+  .rec-style button{
+    position: relative;
+    color: #22115f;
+    letter-spacing: 0.05em;
+    margin: 1em;
+    font-family: lato;
+    font-size: 1em;
+    padding: 0.5em;
+    text-align: center;
+    transition: 0.5s;
+    border-radius: 0.5em;
+    cursor: pointer;
+    border-radius: 1.5em;
+    border: none;
+    background: #dfdee6;
+  }
+  .rec-style button:hover{
+    left: 0;
+    color: #d22d98;
+    width: 8em;
+  }
+  
+  .rec-style button:focus{
+    outline: none;
+  }
+
+  
+  @media screen and (min-width: 50em)  {
+  
+  }  

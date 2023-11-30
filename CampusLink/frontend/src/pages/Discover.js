@@ -1,89 +1,109 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import './styles/Profile.css'
+import './styles/Discovery.css'
+import swal from 'sweetalert'
 
-import SubjectList from '../components/SubjectList';
-import ClassList from '../components/ClassList';
-import './styles/CourseScheduler.css';
-import SubjectClasses from '../components/SubjectClasses';
+function Discover() {
+  const [recUsers, setRecUsers] = useState([]);
+  const [recCircles, setRecCircles] = useState([]);
+  const [refresh, setRefresh] = useState(0);
+  const [hoveredUserId, setHoveredUserId] = useState(null);
 
-const Discover = () => {
-  const [subjectList, setSubjects] = useState([]);
-  const [selectedSubject, setSelectedSubject] = useState(null);   // Subject selected from dropdown
-  const [subjectClasses, setSubjectClasses] = useState([]);   // Classes for selected subject
-  const [classList, setClassList] = useState([]);
+  const handleMouseEnter = (userId) => {
+    setHoveredUserId(userId);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredUserId(null);
+  };
+
+  const handleRefreshClick = () => {
+    setRefresh(refresh + 1);
+    if (refresh >= 1) {
+        swal({
+            title: "Be careful!",
+            text: "You might start seeing users you have seen before or that don't share similarities with you!",
+            icon: "warning",
+            button: "OK",
+          });
+    }
+  }
+
+  const getRecommendations = async () => {
+    fetch(`/api/rec/${sessionStorage.getItem('userID')}/refresh/` + refresh)
+      .then(response => response.json())
+      .then(data => {
+        setRecUsers(data.users);
+        setRecCircles(data.circles);
+      })
+      .catch(error => console.error('Error fetching data: ', error));
+  }
 
   useEffect(() => {
-    axios.get('https://api.purdue.io/odata/Subjects?$orderby=Abbreviation asc')
-      .then(response => {
-        setSubjects(response.data.value);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []);
-
-  const handleAddSubject = (subject) => {
-    axios.get(`https://api.purdue.io/odata/Courses?$filter=SubjectId eq ${subject.Id}&$orderby=Number asc`)
-      .then(response => {
-        setSubjectClasses(response.data.value);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    setSelectedSubject({ ...subject });
-  };
-
-  const handleAddClass = (course) => {
-    // Check if course is already in class list
-    const existingClass = classList.find(c => c.Id === course.Id);
-    if (existingClass) {
-      alert('This course is already in your class list.');
-      return;
-    }
-
-    setClassList([...classList, { ...course }]);
-  };
-
-  const handleDeleteClass = (course) => {
-    // Remove course from class list
-    setClassList(classList.filter(c => c.Id !== course.Id));
-  };
-
-  const handleSave = () => {
-    axios.post('/api/save-class-list/', { classList })    // Save class list to database
-      .then(response => {
-        alert('Class list saved successfully!');
-      })
-      .catch(error => {
-        console.log(error);
-        alert('Error saving class list.');
-      });
-  };
-
-  const filteredSubject = subjectList.filter(course => {
-    // Filter courses by abbreviation, number, and title
-    const courseInfo = course.Abbreviation + course.Number + course.Title;
-    return courseInfo.toLowerCase().includes(courseInfo.toLowerCase());
-  });
+    getRecommendations();
+  }, [refresh]);
 
   return (
-    <div className="discover-style">
-      <header>
-        <h1>Course Scheduler</h1>
-        <button className='save-btn' onClick={handleSave}>Save</button>
-      </header>
-      <main className="container">
-        <SubjectList subjects={subjectList} onAddSubject={handleAddSubject} />
-        {selectedSubject && (
-          <SubjectClasses classes={subjectClasses} onAddClass={handleAddClass} />
-        )}
-        {classList.length > 0 && (
-          <ClassList classes={classList} onDeleteClass={handleDeleteClass} />
-        )}
-      </main>
+    <div className='rec-style'>
+      <h1>Users that share similar interests with you</h1>
+      {recUsers.map(item => (
+        <div key={item.UserID} className='user-style'
+        onMouseEnter={() => handleMouseEnter(item.UserID)}
+        onMouseLeave={handleMouseLeave}>
+            <label className="custom-file-upload fas">
+                <div className="img-wrap" >
+                    <img htmlFor="photo-upload" src={'../../../static/images/' + item.PhotoFileName}/>
+                </div>
+            </label>
+            <div className={`user-details ${item.UserID === hoveredUserId ? 'user-details-visible' : 'user-details-hidden'}`}>
+          <p>Name: {item.Name}</p>
+          <p>Username: {item.UserName}</p>
+          <p>Interest: {item.Interest}</p>
+          </div>
+        </div>
+      ))}
+      <h1>Circles for you</h1>
+      {recCircles.map( 
+        (item) => {
+        const handleClickCircle = async () => {
+          try{
+            const userID = sessionStorage.getItem('userID');
+            const fetchString = 'api/joincircle' + `?id=${userID}` + '&id=' + item.id;
+            const response = await fetch(fetchString);
+          if (!response.ok) {
+            swal("Error", "Unexpected error while joining Circle. Please try again later.", "error");
+            return;
+          }
+       
+          swal("Joined!", `Successfully joined Circle ${item.Name}`, "success");
+
+          getRecommendations();
+
+          return;
+          } catch (error) {
+            swal("Error", "Unexpected error while joining Circle 2. Please try again later.", "error");
+            return;
+          }
+        }
+
+        return(
+          <div key={item.id} className='user-style'
+          onMouseEnter={() => handleMouseEnter(item.id)}
+          onMouseLeave={handleMouseLeave} onClick={handleClickCircle}>
+              <label className="custom-file-upload fas">
+                  <div className="img-wrap" >
+                  </div>
+              </label>
+              <div className={`user-details ${item.id === hoveredUserId ? 'user-details-visible' : 'user-details-hidden'}`}>
+            <p>Name: {item.Name}</p>
+            <p>Description: {item.Description}</p>
+            <p>Owner: {item.owner.UserName}</p>
+            </div>
+          </div>
+        )})}
+    <button onClick={handleRefreshClick}>Refresh</button>
     </div>
   );
-};
+}
 
 export default Discover;

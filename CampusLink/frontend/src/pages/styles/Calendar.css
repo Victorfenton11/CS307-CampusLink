@@ -1,0 +1,71 @@
+.myCustomHeight {
+    height: 100%;
+}
+
+:root {
+    --background-color: #2B3947;
+  }
+  
+@font-face {
+    font-family: 'lato';
+    src:url(./Lato-Light.ttf);
+    font-style: normal;
+}
+
+.calendar-page {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.rbc-calendar {
+    color: #DEFFFC;
+}
+
+.rbc-month-view {
+    border: 2px solid white !important;
+}
+
+.rbc-header {
+    border-left-color: white !important;
+    border-bottom-color: white !important;
+}
+
+.rbc-day-bg {
+    border-left: 1px solid white !important;
+}
+
+.rbc-month-row {
+    border-top: 1px solid white !important;
+}
+
+.rbc-toolbar {
+    color: #EEE1B3 !important;
+}
+
+.rbc-toolbar button {
+    color: #DEFFFC !important;
+    border-color: white !important;
+}
+
+.rbc-toolbar .rbc-active {
+    color: #002F64 !important;
+}
+
+.rbc-today {
+    background: #002F64 !important;
+}
+
+.rbc-off-range-bg {
+    background: rgba(255, 255, 255, 0.25) !important;
+}
+
+
+@media screen and (min-width: 50em)  {
+    .calendar-page {
+        margin-top: 3em;
+    }
+}

@@ -8,157 +8,16 @@
   font-style: normal;
 }
 
-.circles-style .overlay {
-    background-color: rgba(0, 0, 0, 0.678);
-    position:fixed;
-    left:0;
-    top: 0;
-    width:100%;
-    height:100%;
-    z-index: 1;
-}
-
-.circles-style .overlay-content-wrapper {
-    width: 20vw;
-    height: 10vh;
-    position:relative;
-    display: grid;
-    top: 40%;
-    left: 40%;
-}
-
-.circles-style {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    background: var(--background-color);
-    font-family: lato;
-    letter-spacing: 0.08em;
-    overflow-y: scroll;
-}
-
-.circles-style .List-Wrapper {
-  padding-top: 20px;
-}
-
-.circles-style .content-wrapper {
-    position: absolute;
-    top: 20vh;
-    left: 25%;
-    width: 50%;
-    margin:auto;
-}
-
-   /* Button styles */
-   .circles-style .button {
-    padding: 10px 30px;
-    background: #6c5ce7;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background 0.3s ease-in-out;
-    font-family: lato;
-  }
-  
-  .circles-style .button:hover {
-    background: #49387c;
-  }
-  
-  /* Table styles */
-  .circles-style .table {
-    color: rgb(251, 249, 249); /* Dark text color */
-    width: 100%;
-    box-shadow: 0 20px 20px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Table header styles */
-  .circles-style .table th {
-    text-align: left;
-    padding: 12px;
-    font-weight: bold;
-    border: none;
-  }
-  
-  /* Striped rows */
-  .circles-style .table tr:nth-child(even) {
-    background-color: #3d2e53fb; /* Light purple */
-  }
-
-  .circles-style .table tr {
-    background-color: rgba(73, 45, 45, 0.246);
-    height:7vh;
-    border: none;
-  }
-  
-  .circles-style .table td {
-    margin: 0;
-    border: none;
-  }
-
-
-/* CSS for slide button */
-.circles-style .slide-button {
-  position: relative;
-  overflow: hidden;
-  border: 1px solid #18181a;
-  color: #e3e3e9;
-  display: inline-block;
-  font-size: 15px;
-  line-height: 15px;
-  padding: 18px 18px 17px;
-  text-decoration: none;
-  cursor: pointer;
-  background-color: rgba(73, 45, 45, 0.246);
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  font-family: lato;
-  
-}
-
-.circles-style .slide-button span:first-child {
-  position: relative;
-  transition: color 600ms cubic-bezier(0.48, 0, 0.12, 1);
-  z-index: 10;
-}
-
-.circles-style .slide-button span:last-child {
-  color: white;
-  display: block;
-  position: absolute;
-  bottom: 0;
-  transition: all 500ms cubic-bezier(0.48, 0, 0.12, 1);
-  z-index: 100;
-  opacity: 0;
-  top: 50%;
-  left: 50%;
-  transform: translateY(225%) translateX(-50%);
-  height: 14px;
-  line-height: 13px;
-}
-
-.circles-style .slide-button:after {
-  content: "";
-  position: absolute;
-  bottom: -50%;
-  left: 0;
+.circles-page {
   width: 100%;
   height: 100%;
-  background-color: black;
-  transform-origin: bottom center;
-  transition: transform 600ms cubic-bezier(0.48, 0, 0.12, 1);
-  transform: skewY(9.3deg) scaleY(0);
-  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5em;
 }
 
-.circles-style .slide-button:hover:after {
-  transform-origin: bottom center;
-  transform: skewY(9.3deg) scaleY(2);
-}
-
-.circles-style .slide-button:hover span:last-child {
-  transform: translateX(-50%) translateY(-100%);
-  opacity: 1;
-  transition: all 900ms cubic-bezier(0.48, 0, 0.12, 1);
+.switch-selector {
+  order: 0;
 }

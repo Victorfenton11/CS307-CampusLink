@@ -13,6 +13,10 @@
   overflow-y: scroll;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 .signup-style .form {
   text-align: center;
   margin-left: 0;
@@ -20,8 +24,10 @@
 }
 
 .signup-style .label {
-  display: block;
+  display: flex;
   margin: 10px 0;
+  justify-content: space-between;
+  padding: 0 400px;
 }
 
 .signup-style .input {

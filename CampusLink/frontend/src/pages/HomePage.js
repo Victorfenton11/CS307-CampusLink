@@ -7,8 +7,9 @@ import Map from './Map'
 import Discover from './Discover'
 import Circles from './Circles'
 import Profile from './Profile'
-import Thread from './Thread';
+import Thread from './Thread'
 import Topic from './Topic'
+import Calendar from './Calendar'
 
 export default function HomePage() {
   return (
@@ -24,6 +25,7 @@ export default function HomePage() {
           <Route path='/profile' element={<Profile />}/>
           <Route path='/threads/:id' element={<Thread />} />
           <Route path='/topic/:id' element={<Topic />} />
+          <Route path='/calendar' element={<Calendar />}/>
         </Routes>
       </div>
       <Navbar className='navbar'/>
