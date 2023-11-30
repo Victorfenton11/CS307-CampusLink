@@ -20,7 +20,7 @@ const ResetPassword = () => {
       if (JSON.stringify(data) === '{}') {
         swal("Error!", "The provided email is not associated with any existing accounts.", "error");
       } else {
-        console.log(data);
+        swal("Email Sent!", "Check your email for a link to reset your password", "success");
       }
     });
 

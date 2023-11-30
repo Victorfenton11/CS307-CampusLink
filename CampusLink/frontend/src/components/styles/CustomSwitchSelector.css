@@ -1,0 +1,28 @@
+/* CustomSwitchSelector.css */
+.custom-switch-selector {
+    display: flex;
+  }
+  
+.option {
+padding: 10px 20px;
+margin: 5px;
+border: 1px solid #ccc;
+cursor: pointer;
+transition: background-color 0.3s ease;
+border-radius: 2em;
+color: #EEE1B3;
+}
+
+.option:hover {
+background-color: #f0f0f0;
+color: black;
+}
+
+.option.selected {
+background-color: #6c5ce7;
+color: #fff;
+}
+
+.option.selected:hover {
+background-color: #6c5ce1;
+}  

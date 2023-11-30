@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import SubjectList from '../components/SubjectList';
 import ClassList from '../components/ClassList';
-import '../styles/CourseScheduler.css';
+import './styles/CourseScheduler.css';
 import SubjectClasses from '../components/SubjectClasses';
 
 const CourseScheduler = () => {
@@ -68,24 +68,21 @@ const CourseScheduler = () => {
   });
 
   return (
-    <div className="container">
-    <header>
-      <h1>Course Scheduler</h1>
-      <button onClick={handleSave}>Save</button>
-      <nav>
-        <Link to="/">Back to Landing Page</Link>
-      </nav>
-    </header>
-    <main className="main-container">
-      <SubjectList subjects={subjectList} onAddSubject={handleAddSubject} />
-      {selectedSubject && (
-        <SubjectClasses classes={subjectClasses} onAddClass={handleAddClass} />
-      )}
-      {classList.length > 0 && (
-         <ClassList classes={classList} onDeleteClass={handleDeleteClass} />
-      )}
-    </main>
-  </div>
+    <div className="discover-style">
+      <header>
+        <h1>Course Scheduler</h1>
+        <button class='save-btn' onClick={handleSave}>Save</button>
+      </header>
+      <main className="container">
+        <SubjectList subjects={subjectList} onAddSubject={handleAddSubject} />
+        {selectedSubject && (
+          <SubjectClasses classes={subjectClasses} onAddClass={handleAddClass} />
+        )}
+        {classList.length > 0 && (
+          <ClassList classes={classList} onDeleteClass={handleDeleteClass} />
+        )}
+      </main>
+    </div>
   );
 };
 

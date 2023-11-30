@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './styles/Profile.css'
 import dum_pic from '../../static/images/Test.jpg'
+import { Link, useNavigate } from 'react-router-dom';
 
 
 const Profile = () => {
+  const navigate = useNavigate();
   // State to store user data
   const [userData, setUserData] = useState(null);
   // State to track loading state
@@ -21,7 +23,8 @@ const Profile = () => {
   const fetchUserData = async (userID) => {
     try {
       // Make API request
-      const response = await fetch('/api/user/1');
+      const userID = sessionStorage.getItem('userID');
+      const response = await fetch(`/api/user/${userID}`);
       
       // Check if the request was successful
       if (!response.ok) {
@@ -69,7 +72,8 @@ const Profile = () => {
   const handleSaveClick = async (userID) => {
     // Perform logic to save the modified data to the API
     try{
-      const response = await fetch('/api/user/1', {
+      const userID = sessionStorage.getItem('userID');
+      const response = await fetch(`/api/user/${userID}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -85,6 +89,7 @@ const Profile = () => {
 
     // Exit edit mode
     setIsEditMode(false);
+    setImgError(false);
     } catch (error) {
       console.error('Error saving user data:', error.message);
     }
@@ -97,6 +102,10 @@ const Profile = () => {
   function handlePublic() {
     setIsPrivate(false);
     setUserData({ ...userData, isPrivate: false});
+  }
+
+  function handleCalendarClick() {
+    return navigate('/calendar');
   }
 
   // UseEffect hook to fetch data when the component mounts
@@ -130,6 +139,8 @@ const Profile = () => {
         <input type="text" value={userData.UserName} onChange={(e) => setUserData({ ...userData, UserName: e.target.value })} />
         <label className='label'>Email:</label>
         <input type="text" value={userData.UserEmail} onChange={(e) => setUserData({ ...userData, UserEmail: e.target.value })} />
+        <label className='label'>Phone Number:</label>
+        <input type="text" value={userData.PhoneNumber} onChange={(e) => setUserData({ ...userData, PhoneNumber: e.target.value })} />
         <label className='label'>Major:</label>
         <input type="text" value={userData.Major} onChange={(e) => setUserData({ ...userData, Major: e.target.value })} />
         <button className='margin-topp' onClick={handlePrivate}>I want my information to be private</button>
@@ -152,6 +163,7 @@ const Profile = () => {
         <div className='name'> <label className='label'>
           UserName: </label>{userData.UserName}</div>
           <button onClick={handleEditClick}>Edit</button>
+          <button onClick={handleCalendarClick}>My Calendar</button>
     </div>
     )
   }
@@ -171,10 +183,13 @@ const Profile = () => {
         <div className='name'><label className='label'>
           Email:</label>{userData.UserEmail}</div>
         <div className='name'><label className='label'>
+          Phone Number:</label>{userData.PhoneNumber}</div>
+        <div className='name'><label className='label'>
           Major:</label>{userData.Major}</div>
           <div className='name'><label className='label'>
           Interest:</label>{userData.Interest}</div>
         <button onClick={handleEditClick}>Edit</button>
+        <button onClick={handleCalendarClick}>My Calendar</button>
     </div>
   );
 };
