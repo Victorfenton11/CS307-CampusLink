@@ -46,9 +46,9 @@ export default function Calendar(props) {
             <button className='calendar-button' onClick={handleAddClick}>Add Event</button>
         </div>
         <Modal show={showModal} handleClose={handleAddClick}>
-            <h4>Add Event</h4>
-            <input id="newEventName" className="inputBox" type="text" placeholder='New Event Name'></input>
-            <input id="newEventDescription" className="inputBox" type="text" placeholder='Description'></input>
+            <h4 className='title'>New Event</h4>
+            <input id="newEventName" className="inputBox" type="text" placeholder='Title'></input>
+            <input id="newEventDescription" className="inputBox" type="text" placeholder='Location'></input>
             <button className='create-button' onClick={addEvent}>Create Event</button>
         </Modal>
     </div>

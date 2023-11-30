@@ -108,10 +108,14 @@
     color: black;
     margin-left: auto;
     margin-right: auto;
+    font-size: 1em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    padding: 0.2em;
 }
 
 .inputBox::placeholder {
-    color: #002F64;
+    color: rgb(46, 45, 45);
 }
 
 .create-button {
@@ -127,6 +131,15 @@
     border-radius: 0.2em;
     color: #EEE1B3;
   }
+
+.calendar-page .title {
+    font-weight: 400;
+    font-size: 1em;
+    color: #EEE1B3;
+    margin-left: 0;
+    margin-bottom: 1em;
+    padding: 0;
+}
 
 @media screen and (min-width: 50em)  {
     .calendar-page {

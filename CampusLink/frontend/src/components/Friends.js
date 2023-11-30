@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import swal from 'sweetalert';
-import './styles/Friends.css'
+import './styles/Friends.css';
+import ClickableProfile from '../components/ClickableProfile';
 
 export default function Friends() {
 
@@ -78,7 +79,9 @@ export default function Friends() {
           };
           return(
             <tr>
-              <td key="{user.UserName}">{user.UserName}</td>
+              <td key="{user.UserName}">
+                <ClickableProfile username={user.UserName} userID={user.UserID}></ClickableProfile>
+              </td>
               <td>{user.Name}</td>
               <td>{user.UserEmail}</td>
               <button className="slide-button" role="button" onClick={removeFriend}><span class="text">Remove Friend</span><span>are you sure?</span></button>
