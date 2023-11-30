@@ -1,11 +1,13 @@
 :root {
   --background-color: #2B3947;
 }
+
 @font-face {
   font-family: 'lato';
   src:url(./Lato-Light.ttf);
   font-style: normal;
 }
+
 .discover-header {
   position: relative;
   top: 3%;
@@ -17,8 +19,9 @@
 }
 
 .recc-users-header {
-  font-size: 15px;
-  text-decoration: underline;
+  font-size: 1em;
+  text-decoration: underline solid #DEFFFC;
+  text-decoration-thickness: 2px;
   font-weight: 200;
 }
 .recc-users {

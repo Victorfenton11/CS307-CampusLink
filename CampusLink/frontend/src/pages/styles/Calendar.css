@@ -114,6 +114,13 @@
     padding: 0.2em;
 }
 
+.datetime-picker {
+    background: white;
+    padding: 0;
+    margin: 0;
+    width: auto;
+}
+
 .inputBox::placeholder {
     color: rgb(46, 45, 45);
 }

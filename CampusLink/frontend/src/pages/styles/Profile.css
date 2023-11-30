@@ -9,7 +9,7 @@
 .profile-style {
   background-color: rgba(213, 213, 213, 0.842);
   color: #5e7cb9;
-  height: 83%;
+  height: 900px;
   width: 76vw;
   display: flex;
   flex-direction: column;
@@ -22,6 +22,7 @@
   left: 13%;
   position: relative;
   top: 22%;
+  overflow: hidden;
 }
 
 .top {
@@ -30,7 +31,7 @@
   text-align: center;
   text-transform: uppercase;
   font-weight: bold;
-  color: #87ced6;
+  color: #2912bd;
   max-width: 20em;
   overflow-wrap: break-word;
 }
@@ -69,18 +70,20 @@
   padding: 0.5em 0.5em 0.5em 1em;
   font-size: 1em;
   transition: 0.2s;
+  
 }
 .profile-style input[type="file"] {
   display: none;
 }
 .custom-file-upload {
   border-radius: 50%;
-  position: relative;
+  position: absolute;
   display: inline-block;
   padding: 2.5em;
   cursor: pointer;
   background: linear-gradient(270deg, #440c5a, #0912b7);
   margin-bottom: 1em;
+  top: 5%;
 }
 .img-wrap{
   position: relative;
@@ -117,21 +120,6 @@
   margin:0.001em;
   }
   
-.profile-style button{
-  position: relative;
-  color: #054231;
-  letter-spacing: 0.05em;
-  margin: 1em;
-  font-size: 1em;
-  padding: 0.5em;
-  text-align: center;
-  transition: 0.5s;
-  cursor: pointer;
-  border-radius: 1.5em;
-  border: none;
-  background: #dfdee6;
-  transition: 1s;
-}
 .save{
   font-weight: 600;
   left: -1em;
@@ -153,17 +141,110 @@
   margin-bottom: 10em;
 }
 
-.profile-style button:hover{
-  left: 0;
+
+.profile-moreinfo {
+  position: relative;
+  left: 0%;
+  padding-top: 55px;
+}
+.profile-moreinfo p {
+  position: relative;
+  left: 16%;
+}
+
+.profile-names {
+  position:absolute;
+  top: 300px;
+}
+
+.privacy-buttons button {
+  color: #054231;
+  letter-spacing: 0.05em;
+  margin: 1em;
+  font-size: 1em;
+  padding: 0.5em;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 1.5em;
+  border: none;
+  background: #dfdee6;
+  transition: 1s;
+}
+
+.privacy-buttons button:hover{
   color: #fff;
   border-radius: 0em;
   transition: 1s;
 }
 
-.profile-style button:focus{
-  outline: none;
+.edit-button {
+  position: absolute;
+  color: #054231;
+  letter-spacing: 0.05em;
+  margin: 1em;
+  font-size: 1em;
+  padding: 0.5em;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 1.5em;
+  border: none;
+  background: #dfdee6;
+  transition: 1s;
+  top:570px
 }
 
+.edit-button:hover {
+  color: #fff;
+  border-radius: 0em;
+  transition: 1s;
+}
+
+.save-btn-edit {
+  position: absolute;
+  color: #054231;
+  letter-spacing: 0.05em;
+  margin: 1em;
+  font-size: 1em;
+  padding: 0.5em;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 1.5em;
+  border: none;
+  background: #dfdee6;
+  transition: 1s;
+  top: 700px;
+}
+
+.bap button {
+  color: #054231;
+  letter-spacing: 0.05em;
+  margin: 1em;
+  font-size: 1em;
+  padding: 0.5em;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 1.5em;
+  border: none;
+  background: #dfdee6;
+  transition: 1s;
+}
+
+.bap button:hover {
+  color: #fff;
+  border-radius: 0em;
+  transition: 1s;
+}
+
+.bap {
+  position: absolute;
+  top: 715px;
+}
+
+.save-btn-edit:hover {
+  color: #fff;
+  border-radius: 0em;
+  transition: 1s;
+}
 @media screen and (min-width: 50em)  {
 
-}
+}  
