@@ -132,9 +132,12 @@ const Profile = () => {
         <input type="text" value={userData.UserEmail} onChange={(e) => setUserData({ ...userData, UserEmail: e.target.value })} />
         <label className='label'>Major:</label>
         <input type="text" value={userData.Major} onChange={(e) => setUserData({ ...userData, Major: e.target.value })} />
-        <button className='margin-topp' onClick={handlePrivate}>I want my information to be private</button>
-        <button onClick={handlePublic}>I want my information to be public</button>
-        <button className='save-btn' onClick={handleSaveClick}>Save</button>
+        <div className="privacy-buttons">
+          <button onClick={handlePrivate}>I want my information to be private</button>
+          <button onClick={handlePublic}>I want my information to be public</button>
+          
+        </div>
+        <button className='save-btn-edit' onClick={handleSaveClick}>Save</button>
       </div>
     );
   }
@@ -142,14 +145,26 @@ const Profile = () => {
   if (userData.isPrivate) {
     return (
       <div className='profile-style'>
-      <label className="custom-file-upload fas">
-        <div className="img-wrap" >
-            <img htmlFor="photo-upload" src={'../../static/images/' + userData.PhotoFileName} onClick={onClickHandler}/>
+      <label htmlFor="photo-upload" className="custom-file-upload fas">
+        <div className="img-wrap img-upload" >
+            <img htmlFor="photo-upload" src={imgError ?dum_pic:'../../../Photos/' + userData.PhotoFileName} onError={handleImgError}/>
         </div>
         </label>
-        <div className='name'>{userData.Name}</div>
-        <div className='name'>{userData.UserName}</div>
-          <button onClick={handleEditClick}>Edit</button>
+        <div className='profile-names'>
+          <div className='name'>{userData.Name}</div>
+          <div className='name'>{userData.UserName}</div>
+        </div>
+        <div className='profile-moreinfo'>
+          <p>email - {userData.UserEmail}</p>
+          <p>major - {userData.Major}</p>
+          <p>interests - {userData.Interest}</p>
+          <div className='profile-bio'>
+            {userData.UserBio}
+          </div>
+        </div>
+        
+        
+        <button className="edit-button" onClick={handleEditClick}>Edit</button>
     </div>
     )
   }
@@ -157,21 +172,27 @@ const Profile = () => {
   // Render user profile
   return (
     <div className='profile-style'>
-      <label className="custom-file-upload fas">
-        <div className="img-wrap" >
-            <img htmlFor="photo-upload" src={'../../static/images/' + userData.PhotoFileName} onClick={onClickHandler}/>
-        </div>
-        </label>
-        <div className='name'><label className='label'></label> {userData.Name}</div>
+    <label className="custom-file-upload fas">
+      <div className="img-wrap" >
+          <img htmlFor="photo-upload" src={'../../static/images/' + userData.PhotoFileName} onClick={onClickHandler}/>
+      </div>
+      </label>
+      <div className='profile-names'>
+        <div className='name'>{userData.Name}</div>
         <div className='name'>{userData.UserName}</div>
-        <div className='name'><label className='label'>
-          Email:</label>{userData.UserEmail}</div>
-        <div className='name'><label className='label'>
-          Major:</label>{userData.Major}</div>
-          <div className='name'><label className='label'>
-          Interest:</label>{userData.Interest}</div>
-        <button onClick={handleEditClick}>Edit</button>
-    </div>
+      </div>
+      <div className='profile-moreinfo'>
+        <p>email - {userData.UserEmail}</p>
+        <p>major - {userData.Major}</p>
+        <p>interests - {userData.Interest}</p>
+        <div className='profile-bio'>
+          {userData.UserBio}
+        </div>
+      </div>
+      
+      
+      <button onClick={handleEditClick}>Edit</button>
+  </div>
   );
 };
 

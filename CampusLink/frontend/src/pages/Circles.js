@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import './styles/Circles.css'
-import ProfileCard from '../components/ProfileCard';
 import ClickableProfile from '../components/ClickableProfile'
 
 export default function Circles() {
