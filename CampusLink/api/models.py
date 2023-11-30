@@ -30,7 +30,13 @@ class Class(models.Model):
         return f'{self.abbreviation} - {self.name}'
     
 class Event(models.Model):
+    id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200)
     description = models.TextField(null=True)
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
+    start = models.DateTimeField()
+    end = models.DateTimeField()
+
+class Upload(models.Model):
+    id = models.AutoField(primary_key=True)
+    UserID = models.IntegerField()
+    url = models.CharField(max_length=1000)

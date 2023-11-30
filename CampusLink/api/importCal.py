@@ -6,69 +6,42 @@ import numpy as np
 from .models import Event
 from django.views.decorators.csrf import csrf_exempt
 from django.http.response import JsonResponse
+from django.shortcuts import render
+from rest_framework import generics, status
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .serializers import UploadSerializer, EventSerializer
+from .models import Upload
+from rest_framework.parsers import JSONParser
+from django.http.response import JsonResponse
+
+@csrf_exempt
+def UploadURL(request, id):
+    print("We reach this stage")
+    if request.method=='POST':
+        url_data=JSONParser().parse(request)
+        upload_serializer=UploadSerializer(data=url_data)
+        if upload_serializer.is_valid():
+            upload_serializer.save()
+            url = upload_serializer.data['url']
+            print(url)
+            parseURL(url)
+            print("???")
+            return JsonResponse("Added Successfully",safe=False)
+        return JsonResponse("Failed to Add",safe=False)
 
 
-# Parse the URL
-url = "https://calendar.google.com/calendar/ical/ht3jlfaac5lfd6263ulfh4tql8%40group.calendar.google.com/public/basic.ics"
-cal = Calendar(requests.get(url).text)
+def parseURL(url):
+    cal = Calendar(requests.get(url).text)
+    #for i in range(len(list(cal.timeline))):
+    for i in range(3):
+      e = list(cal.timeline)[i]
+      event_data = Event(title=e.name, start=e.begin.datetime.date(), end = e.end.datetime.date())
+      event_data.save()
+    #return JsonResponse("Done", safe=False)
 
-# Print all the events
-print(cal.events)
-events = cal.events
-sorted_events = sorted(events, reverse = True)
-print(type(sorted_events))
-for event in sorted_events:
-    print(type(event))
-#sorted_events
-e = list(cal.timeline)[0]
-print(e.name)
-print(e.begin)
-
-calendar = Calendar()
-
-def addEvent(request):
-    event_data = Event.objects.create(title=e.name, start_time=e.begin, end_time = e.end)
-    return JsonResponse("Done")
-
-
-#Add Event to ics
-tz = 'Europe/Paris'
-first_day = arrow.get("2022-02-14").replace(tzinfo=tz)
-last_day = arrow.get("2022-02-18").replace(tzinfo=tz)
- 
-for day in arrow.Arrow.range('day', first_day, last_day):
-    event = Event()
-    event.name = "Working on the task"
-    event.begin = day.replace(hour=8).to('utc').datetime
-    event.end = day.replace(hour=10).to('utc').datetime
-    event.transparent = False
-    calendar.events.add(event)
- 
-    event = Event()
-    event.name = "Continue on the task?"
-    event.begin = day.replace(hour=10).to('utc').datetime
-    event.end = day.replace(hour=11).to('utc').datetime
-    event.transparent = True
-    calendar.events.add(event)
-
-
-#print(calendar)
-'''
-events = []
-in_event = False
-lines = calendar.split('\n')
-for line in lines:
-  if line == 'BEGIN:VEVENT':
-    event = {}
-    in_event = True
-    continue
-  if line == 'END:VEVENT':
-    events.append(event)
-    in_event = False
-    continue
-  if in_event:
-    key,val = line.split(':')
-    event[key]= val
-for event in events:
-  print(event)
-  '''
+def getEvents(request):
+      event = Event.objects.all()
+      event_serializer = EventSerializer(event, many=True)
+      print(event_serializer.data)
+      return JsonResponse(event_serializer.data, safe=False)

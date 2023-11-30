@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import ClassLocation, User
+from .models import ClassLocation, User, Upload, Event
 
 class ClassLocationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,3 +17,13 @@ class FriendSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields=('UserID', 'Name', 'friends')
+
+class UploadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Upload
+        fields=('UserID','url')
+
+class EventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Event
+        fields=('title','description', 'start', 'end')
