@@ -13,7 +13,7 @@ staticfiles/
 local_settings.py
 
 # Virtual Environment
-venv/
+.venv/
 .env
 
 # Node.js / React
