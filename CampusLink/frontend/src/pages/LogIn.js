@@ -18,7 +18,6 @@ const LoginPage = () => {
   const [error, setError] = useState(null);
   
   // Function to fetch user data from the API
-  console.log(formData)
   async function fetchData(username){
     try {
       // Make API request
@@ -26,7 +25,8 @@ const LoginPage = () => {
       
       // Check if the request was successful
       if (!response.ok) {
-        throw new Error('Failed to fetch user data');
+        swal("Login Error", "Invalid username or password!", "error");
+        return;
       }
 
       // Parse JSON response
@@ -40,16 +40,30 @@ const LoginPage = () => {
     } catch (error) {
       // Set error state
       setError(error.message);
-
+      return;
     }
   };
 
+  async function sha1(message) {
+    const msgBuffer = new TextEncoder().encode(message); // Encode as UTF-8
+    const hashBuffer = await crypto.subtle.digest('SHA-1', msgBuffer); // Hash the message
+    const hashArray = Array.from(new Uint8Array(hashBuffer)); // Convert buffer to byte array
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); // Convert bytes to hex string
+    return hashHex;
+  }
 
-  function checkCredentials(passwordInput, passwordStored, ID) {
-    if (passwordInput === passwordStored) {
-        return true;
+  async function checkCredentials(passwordInput, passwordStored, ID) {
+    passwordInput = await sha1(passwordInput)
+    if (passwordInput === passwordStored && userData.email_verified) {
+      sessionStorage.setItem('userID', ID);
+      return navigate('/');
     }
-    return false;
+    else if( !userData.email_verified){
+      swal("Verify email!", "You must verify your email before you can login.", "error")
+      return;
+    }
+    swal("Error!", "Incorrect password", "error");
+    return;
   }
 
   function handleSubmit() {
@@ -58,12 +72,7 @@ const LoginPage = () => {
 
   useEffect(()=>{
       if (userData != null) {
-          if (checkCredentials(formData.password, userData.password, userData.UserID)) {
-            sessionStorage.setItem('userID', userData.UserID);
-            return navigate('/');
-          } else {
-            swal("Error!", "Incorrect password", "error");
-          }
+        checkCredentials(formData.password, userData.password, userData.UserID);
       }
   },[userData])
 

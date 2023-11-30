@@ -45,7 +45,13 @@ function Discover() {
 
   return (
     <div className='rec-style'>
-      <h1>Users that share similar interests with you</h1>
+      <div className='discover-header'>
+        <h1>Discover</h1>
+      </div>
+      <div className='recc-users-header'>
+        <h1>Reccomended Users</h1>
+      </div>
+      <div className='recc-users'>
       {recUsers.map(item => (
         <div key={item.UserID} className='user-style'
         onMouseEnter={() => handleMouseEnter(item.UserID)}
@@ -62,7 +68,11 @@ function Discover() {
           </div>
         </div>
       ))}
-      <h1>Circles for you</h1>
+      </div>
+      <div className='recc-users-header'>
+        <h1>Reccomended Circles</h1>
+      </div>
+      <div className='recc-users'>
       {recCircles.map( 
         (item) => {
         const handleClickCircle = async () => {
@@ -101,7 +111,8 @@ function Discover() {
             </div>
           </div>
         )})}
-    <button onClick={handleRefreshClick}>Refresh</button>
+      </div>
+      <button onClick={handleRefreshClick}>Refresh</button>
     </div>
   );
 }

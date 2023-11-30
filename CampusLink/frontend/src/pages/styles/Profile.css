@@ -2,12 +2,15 @@
   --background-color: #2B3947;
 }
 
+.page {
+  overflow-y:scroll;
+}
+
 .profile-style {
-  background-color: var(--background-color);
+  background-color: rgba(213, 213, 213, 0.842);
   color: #5e7cb9;
-  overflow-y: scroll;
-  height: 100vh;
-  width: 100%;
+  height: 83%;
+  width: 76vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -15,6 +18,10 @@
   line-height: 2em;
   color: #054231;
   justify-content: center;
+  border-radius: 1em;
+  left: 13%;
+  position: relative;
+  top: 22%;
 }
 
 .top {
@@ -49,10 +56,11 @@
 
 .name{ 
   text-align: center;
-  text-transform: uppercase;
   font-weight: 300;
-  color: #735b84;
+  color: #33293a;
   max-width: 20em;
+  font-size: 2em;
+  padding-bottom: 30px;
 }
 .profile-style input{
   font-family: Georgia, serif;
@@ -69,10 +77,10 @@
   border-radius: 50%;
   position: relative;
   display: inline-block;
-  padding: 0.5em;
+  padding: 2.5em;
   cursor: pointer;
   background: linear-gradient(270deg, #440c5a, #0912b7);
-  margin-bottom: 2em;
+  margin-bottom: 1em;
 }
 .img-wrap{
   position: relative;
@@ -118,11 +126,11 @@
   padding: 0.5em;
   text-align: center;
   transition: 0.5s;
-  border-radius: 0.5em;
   cursor: pointer;
   border-radius: 1.5em;
   border: none;
   background: #dfdee6;
+  transition: 1s;
 }
 .save{
   font-weight: 600;
@@ -148,7 +156,8 @@
 .profile-style button:hover{
   left: 0;
   color: #fff;
-  width: 8em;
+  border-radius: 0em;
+  transition: 1s;
 }
 
 .profile-style button:focus{
@@ -157,4 +166,4 @@
 
 @media screen and (min-width: 50em)  {
 
-}  
+}

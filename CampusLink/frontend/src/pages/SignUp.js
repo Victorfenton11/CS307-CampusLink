@@ -11,6 +11,7 @@ export default function SignUp() {
     username: '',
     password: '',
     profilePic: null,
+    phoneNumber: '',
     securityQuestion: '', // New field for security question
     securityAnswer: '',   // New field for security answer
   });
@@ -23,6 +24,14 @@ export default function SignUp() {
 
   //this will handle the non-purdue email
   const [emailError, setEmailError] = useState('');
+
+  async function sha1(message) {
+    const msgBuffer = new TextEncoder().encode(message); // Encode as UTF-8
+    const hashBuffer = await crypto.subtle.digest('SHA-1', msgBuffer); // Hash the message
+    const hashArray = Array.from(new Uint8Array(hashBuffer)); // Convert buffer to byte array
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); // Convert bytes to hex string
+    return hashHex;
+  }
 
   function validateEmail(email) {
     const re = /^[^\s@]+@purdue\.edu$/;
@@ -44,19 +53,27 @@ export default function SignUp() {
     });
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     if (!validateEmail(formData.email)) {
       setEmailError('Please enter a valid Purdue email address');
       return; 
     }
+    const phoneNumberPattern = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+    if (!phoneNumberPattern.test(formData.phoneNumber)) {
+        setEmailError('Please enter a valid phone number.'); 
+        return;
+    }
     setEmailError(''); // Clear error message if email is valid
+
     // Handle form submission logic here
+    const hashedPassword = await sha1(formData.password);
     const data = new FormData();
     data.append('Name', formData.name);
     data.append('UserEmail', formData.email);
     data.append('UserName', formData.username);
-    data.append('password', formData.password);
+    data.append('password', hashedPassword)
+    data.append('PhoneNumber', formData.phoneNumber);
     data.append('Major', '');
     data.append('Interest', '');
     data.append('securityQuestion', formData.securityQuestion);
@@ -80,6 +97,7 @@ export default function SignUp() {
       } 
       else {
         console.log('Success:', data);
+        swal("Registered!", "Registration successful. Please check your email to verify your account.", "success");
         setEmailError('');    
       }
     })
@@ -102,6 +120,19 @@ export default function SignUp() {
         <label className='label'>
           Email
           <input type="email" name="email" className='input input_box' onChange={handleChange}  />
+        </label>
+        <br />
+        <label className='label'>
+          Phone Number
+          <input
+            type="tel"
+            name="phoneNumber"
+            className='input input_box'
+            onChange={handleChange}
+            placeholder="Enter your phone number"
+            pattern="^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$"
+            required
+          />
         </label>
         <br />
         <label className='label'>

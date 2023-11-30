@@ -19,6 +19,18 @@ const Profile = () => {
 
   const [isPrivate, setIsPrivate] = useState(false);
 
+
+  const handleSignOut = () => {
+
+    sessionStorage.removeItem('userID');
+
+    navigate('/login');
+  };
+
+  const redirectToDeletingPage = () => {
+    navigate('/deletingpage'); 
+  };
+
   // Function to fetch user data from the API
   const fetchUserData = async (userID) => {
     try {
@@ -164,6 +176,8 @@ const Profile = () => {
           UserName: </label>{userData.UserName}</div>
           <button onClick={handleEditClick}>Edit</button>
           <button onClick={handleCalendarClick}>My Calendar</button>
+          <button onClick={handleSignOut}>Sign Out</button>
+          <button onClick={redirectToDeletingPage}>Delete Account</button>
     </div>
     )
   }
@@ -190,6 +204,8 @@ const Profile = () => {
           Interest:</label>{userData.Interest}</div>
         <button onClick={handleEditClick}>Edit</button>
         <button onClick={handleCalendarClick}>My Calendar</button>
+        <button onClick={handleSignOut}>Sign Out</button>
+        <button onClick={redirectToDeletingPage}>Delete Account</button>
     </div>
   );
 };

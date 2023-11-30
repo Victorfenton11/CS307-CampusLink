@@ -52,6 +52,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     isPrivate = models.BooleanField(default=False)
     last_login = models.DateTimeField(null=True, blank=True)
     Circles = models.ManyToManyField("Circle", blank=True)
+    email_verified = models.BooleanField(default=False)
 
     password = models.CharField(max_length=128, default="")
 
@@ -62,6 +63,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = "UserEmail"
     REQUIRED_FIELDS = []
+
+    def get_email_field_name(self):
+        return "UserEmail"
 
     def str(self):
         return self.UserName
