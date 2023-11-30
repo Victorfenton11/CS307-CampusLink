@@ -22,6 +22,7 @@ from .views import (
     createGroupChat,
     updateGroupChat,
     joinCircle,
+    verify_email,
 )
 from django.conf.urls.static import static
 from django.conf import settings
@@ -36,8 +37,9 @@ urlpatterns = [
     re_path(r"^user/savefile", SaveFile),
     re_path(r"^users/([a-zA-Z0-9]+)$", userNameApi),
     path("user/create/", create_user, name="create-user"),
+    path("verify-email/<uidb64>/<token>/", verify_email, name="verify_email"),
     path("circle/create/", create_circle),
-    path("user/delete/<str:user_email>/", delete_user, name="delete-user"),
+    path("user/delete/<int:user_id>/", delete_user, name="delete-user"),
     path("save-class-list/", save_class_list, name="save_class_list"),
     re_path(r"^viewfriends/([0-9]+)$", getFriends),
     re_path(r"^viewcircles/([0-9]+)$", getCircles),

@@ -134,9 +134,51 @@ def create_user(request):
     if request.method == "POST":
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            user = serializer.save(email_verified=False)
+            send_verification_email(user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+def send_verification_email(user):
+    token = default_token_generator.make_token(user)
+    uid = urlsafe_base64_encode(force_bytes(user.UserID))
+    verification_link = f"http://localhost:8080/verify-email/{uid}/{token}"
+    send_mail(
+        "Verify Your Email",
+        f"Please verify your email by clicking on this link: {verification_link}",
+        "campuslinkhelp@gmail.com",
+        [user.UserEmail],
+        fail_silently=False,
+    )
+
+
+@api_view(["GET"])
+def verify_email(request, uidb64, token):
+    print("verify_email view called")  # Indicate that the view has been called
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        print(f"Decoded UID: {uid}")  # Print the decoded UID
+
+        user = User.objects.get(pk=uid)
+        print(f"User retrieved: {user}")  # Print information about the user
+
+        if default_token_generator.check_token(user, token):
+            user.email_verified = True
+            user.save()
+            return Response(
+                {"message": "Email verified successfully"}, status=status.HTTP_200_OK
+            )
+        else:
+            return Response(
+                {"message": "Invalid verification link"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist) as e:
+        return Response(
+            {"message": "Invalid verification link"}, status=status.HTTP_400_BAD_REQUEST
+        )
 
 
 @api_view(["POST"])
@@ -172,9 +214,9 @@ def create_circle(request):
 
 
 @api_view(["DELETE"])
-def delete_user(request, user_email):
+def delete_user(request, user_id):
     try:
-        user = User.objects.get(email=user_email)
+        user = User.objects.get(email=user_id)
     except User.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
