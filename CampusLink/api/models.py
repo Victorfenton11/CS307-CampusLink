@@ -56,6 +56,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_login = models.DateTimeField(null=True, blank=True)
     Circles = models.ManyToManyField("Circle", blank=True)
 
+    UserAnonymous = models.BooleanField(default=False)
+    UserNameAnonymous = models.BooleanField(default=False)
+    UserEmailAnonymous = models.BooleanField(default=False)
+    UserPhoneNumberAnonymous = models.BooleanField(default=False)
+    UserMajorAnonymous = models.BooleanField(default=False)
+
     password = models.CharField(max_length=128, default="")
 
     is_active = models.BooleanField(default=True)

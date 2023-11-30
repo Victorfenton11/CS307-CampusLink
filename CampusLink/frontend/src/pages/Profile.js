@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './styles/Profile.css'
 import dum_pic from '../../static/images/Test.jpg'
 import { Link, useNavigate } from 'react-router-dom';
-
+import Switch from "react-switch";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -18,6 +18,20 @@ const Profile = () => {
   const [isEditMode, setIsEditMode] = useState(false);
 
   const [isPrivate, setIsPrivate] = useState(false);
+
+  const [isPrivateUser, setIsPrivateUser] = useState(false);
+  const [isPrivateUserName, setIsPrivateName] = useState(false);
+  const [isPrivateUserEmail, setIsPrivateEmail] = useState(false);
+  const [isPrivateUserPhoneNumber, setIsPrivatePhoneNumber] = useState(false);
+  const [isPrivateUserMajor, setIsPrivateMajor] = useState(false);
+
+
+  // STATE FOR HIDING USER PROFILE SECTIONS
+  const [checkedUser, setCheckedUser] = useState(false);
+  const [checkedUserName, setCheckedUserName] = useState(false);
+  const [checkedUserEmail, setCheckedUserEmail] = useState(false);
+  const [checkedUserPhoneNumber, setCheckedUserPhoneNumber] = useState(false);
+  const [checkedUserMajor, setCheckedUserMajor] = useState(false);
 
   // Function to fetch user data from the API
   const fetchUserData = async (userID) => {
@@ -123,6 +137,32 @@ const Profile = () => {
     return <div>Error: {error}</div>;
   }
 
+  // FUNCTIONS FOR HIDING USER PROFILE SECTIONS
+  const handleChangeUser = (checkedUser) => {
+    setCheckedUser(checkedUser);
+    userData.UserAnonymous = !userData.UserAnonymous;
+  }
+
+  const handleChangeUserName = (checkedUserName) => {
+    setCheckedUserName(checkedUserName);
+    userData.UserNameAnonymous = !userData.UserNameAnonymous;
+  }
+
+  const handleChangeUserEmail = (checkedUserEmail) => {
+    setCheckedUserEmail(checkedUserEmail);
+    userData.UserEmailAnonymous = !userData.UserEmailAnonymous;
+  }
+
+  const handleChangeUserPhoneNumber = (checkedUserPhoneNumber) => {
+    setCheckedUserPhoneNumber(checkedUserPhoneNumber);
+    userData.UserPhoneNumberAnonymous = !userData.UserPhoneNumberAnonymous;
+  }
+
+  const handleChangeUserMajor = (checkedUserMajor) => {
+    setCheckedUserMajor(checkedUserMajor);
+    userData.UserMajorAnonymous = !userData.UserMajorAnonymous;
+  }
+
   if (isEditMode) {
     return (
       <div className="profile-style">
@@ -133,16 +173,104 @@ const Profile = () => {
         </div>
         <input id="photo-upload" type="file" onChange={imageUpload}/> 
         </label>
-        <label className='label'>Name:</label>
-        <input type="text" value={userData.Name} onChange={(e) => setUserData({ ...userData, Name: e.target.value })} />
-        <label className='label'>UserName:</label>
-        <input type="text" value={userData.UserName} onChange={(e) => setUserData({ ...userData, UserName: e.target.value })} />
-        <label className='label'>Email:</label>
-        <input type="text" value={userData.UserEmail} onChange={(e) => setUserData({ ...userData, UserEmail: e.target.value })} />
-        <label className='label'>Phone Number:</label>
-        <input type="text" value={userData.PhoneNumber} onChange={(e) => setUserData({ ...userData, PhoneNumber: e.target.value })} />
-        <label className='label'>Major:</label>
-        <input type="text" value={userData.Major} onChange={(e) => setUserData({ ...userData, Major: e.target.value })} />
+        
+        {/* NAME */}
+        <label className='label'>
+          Name:
+          <input
+            type="text"
+            value = {userData?.UserAnonymous && "Anonymous"
+              ? "Anonymous"
+              : `${userData.UserName}`
+            }
+          
+            onChange={(e) => setUserData({ ...userData, Name: e.target.value })}
+          />
+          <Switch
+            onChange={handleChangeUser}
+            checked={checkedUser}
+            uncheckedIcon={false}
+            checkedIcon={false}
+          />
+        </label>
+        {/* USERNAME */}
+        <label className='label'>
+          UserName:
+          <input
+            type="text"
+            value = {userData?.UserNameAnonymous && "Anonymous"
+              ? "Anonymous"
+              : `${userData.UserName}`
+            }
+            onChange={(e) => setUserData({ ...userData, UserName: e.target.value })}
+          />
+          <Switch
+            onChange={handleChangeUserName}
+            checked={checkedUserName}
+            uncheckedIcon={false}
+            checkedIcon={false}
+          />
+        </label>
+
+        {/* EMAIL */}
+        <label className='label'>
+          Email:
+          <input
+            type="text"
+            value = {userData?.UserEmailAnonymous && "Anonymous"
+              ? "Anonymous"
+              : `${userData.UserEmail}`
+            }
+            onChange={(e) => setUserData({ ...userData, UserEmail: e.target.value })}
+          />
+          <Switch
+            onChange={handleChangeUserEmail}
+            checked={checkedUserEmail}
+            uncheckedIcon={false}
+            checkedIcon={false}
+          />
+        </label>
+
+        {/* PHONE NUMBER */}
+        <label className='label'>
+          Phone Number:
+          <input
+            type="text"
+            value = {userData?.UserPhoneNumberAnonymous && "Anonymous"
+              ? "Anonymous"
+              : `${userData.UserPhoneNumber}`
+            }
+            onChange={(e) => setUserData({ ...userData, PhoneNumber: e.target.value })}
+          />
+          <Switch
+            onChange={handleChangeUserPhoneNumber}
+            checked={checkedUserPhoneNumber}
+            uncheckedIcon={false}
+            checkedIcon={false}
+          />
+        </label>
+
+        {/* MAJOR */}
+        <label className='label'>
+          Major:
+          <input
+            type="text"
+            value = {userData?.UserMajorAnonymous && "Anonymous"
+              ? "Anonymous"
+              : `${userData.UserMajor}`
+            }
+            onChange={(e) => setUserData({ ...userData, Major: e.target.value })}
+          />
+          <Switch
+            onChange={handleChangeUserMajor}
+            checked={checkedUserMajor}
+            uncheckedIcon={false}
+            checkedIcon={false}
+          />
+        </label>
+
+
+
         <button className='margin-topp' onClick={handlePrivate}>I want my information to be private</button>
         <button onClick={handlePublic}>I want my information to be public</button>
         <button className='save-btn' onClick={handleSaveClick}>Save</button>
