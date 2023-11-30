@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import ClassLocation, User
 from rest_framework.serializers import ModelSerializer
 from .models import Thread, Post, User
-from api.models import ClassLocation, User, Class
+from api.models import ClassLocation, User, Class, Circle
 
 class ClassLocationSerializer(serializers.ModelSerializer):
     class Meta:

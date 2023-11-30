@@ -1,6 +1,29 @@
 from django.urls import path, re_path
 from . import views
-from .views import ClassLocationView, GetClassLocation
+from .views import (
+    ClassLocationView,
+    GetClassLocation,
+    userApi,
+    SaveFile,
+    create_user,
+    delete_user,
+    save_class_list,
+    userNameApi,
+    getFriends,
+    addFriend,
+    removeFriend,
+    ResetPassword,
+    get_security_question,
+    incoming_requests,
+    accept_friend_request,
+    decline_friend_request,
+    getCircles,
+    create_circle,
+    deleteCircle,
+    createGroupChat,
+    updateGroupChat,
+    joinCircle,
+)
 from django.conf.urls.static import static
 from django.conf import settings
 from .Recommendation import refresh
