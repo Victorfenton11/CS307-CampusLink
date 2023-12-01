@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import moment from "moment";
 import './styles/Calendar.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import { useScrollTrigger } from '@material-ui/core';
 import Modal from '../components/Modal'
 
 const localizer = momentLocalizer(moment);
