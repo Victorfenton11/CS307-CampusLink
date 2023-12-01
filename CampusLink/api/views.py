@@ -10,7 +10,6 @@ from django.views.decorators.csrf import csrf_exempt
 from api.models import Class
 from django.views.static import serve
 
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from django.http.response import JsonResponse
 from rest_framework.decorators import api_view
@@ -29,11 +28,9 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.pagination import PageNumberPagination
 from django.core.exceptions import ObjectDoesNotExist
 
-
 class ClassLocationView(generics.ListAPIView):
     queryset = ClassLocation.objects.all()
     serializer_class = ClassLocationSerializer
-
 
 
 class GetClassLocation(APIView):
@@ -611,16 +608,28 @@ def createPost(request):
                     anonymous=True if anonymous == True else False,)
     print(new_post)
     new_post.save()
-    print("Save post successfully")
+    # print("Save post successfully")
 
     serializer = PostSerializer(new_post, many=False)
     # print(serializer.data)
     return Response(serializer.data)
 
+# delete all the following comments
 @api_view(["DELETE"])
 def deleteAllPosts(request):
     Post.objects.all().delete()
     return Response({"message": "All posts deleted."})
+
+# delete one comment on a thread
+@api_view(["DELETE"])
+def deletePost(request):
+    try:
+        post_id = request.META.get('HTTP_POST_ID')
+        post = Post.objects.get(id=post_id)
+        post.delete()
+        return Response({"message": "Post deleted."})
+    except Post.DoesNotExist:
+        return Response({"error": "Post not found."}, status=404)
 
 # GET THREADS BY TOPIC
 @api_view(['GET'])

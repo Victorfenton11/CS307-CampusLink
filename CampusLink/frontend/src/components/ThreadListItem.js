@@ -6,7 +6,7 @@ import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import Moment from 'react-moment';
-
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const ThreadListItem = ({thread}, {index}) => {
   
@@ -26,9 +26,6 @@ const ThreadListItem = ({thread}, {index}) => {
                     variant="body2"
                     color="text.secondary"
                   > {thread?.anonymous && 'Anonymous' ? 'Posted By Anonymous' : `Posted by UserID: ${thread?.creator_id}`}
-                    {/* Created by UserID: {thread?.creator_id} */}
-                    {/* Instead of Created by creator_id, I want to show the name based on the UserID, which is the creator_id */}
-                    
 
                   </Typography>
                   <span style={{ color: 'lavender' }}> 
@@ -36,11 +33,13 @@ const ThreadListItem = ({thread}, {index}) => {
                   </span>
                 </React.Fragment>
               }
-            />
-            
+            />       
           </Link>
-      </ListItem>
-      <Divider component="li" sx={{marginLeft: '2%', marginRight: '2%'}}/>
+        </ListItem>
+          {/*// create delete button using the delete icon that calls the delete thread function */}
+          {/*<DeleteIcon aria-label="delete" onClick={() => deleteThread(thread.id)}> 
+          </DeleteIcon> */}
+\      <Divider component="li" sx={{marginLeft: '2%', marginRight: '2%'}}/>
       </List>
     </div>
    

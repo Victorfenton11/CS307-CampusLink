@@ -22,7 +22,7 @@ from .views import (
     deleteCircle,
     createGroupChat,
     updateGroupChat,
-    joinCircle,
+    joinCircle
 )
 from django.conf.urls.static import static
 from django.conf import settings
@@ -72,4 +72,6 @@ urlpatterns = [
     path('createPost/', views.createPost, name='createPost'),
     
     path('posts/delete/', views.deleteAllPosts, name='delete-all-posts'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('posts/deleteOne/', views.deletePost, name='delete-post'), # delete individual post
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 

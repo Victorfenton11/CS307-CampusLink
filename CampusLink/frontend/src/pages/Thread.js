@@ -15,7 +15,6 @@ import ShareIcon from "@mui/icons-material/Share";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ReplyForm from "../components/ReplyForm";
 import PostCardItem from "../components/PostCardItem";
-import DeleteIcon from '@mui/icons-material/Delete';
 
 const Thread = () => {
   // get the user first
