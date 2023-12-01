@@ -6,9 +6,31 @@ import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import Moment from 'react-moment';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { useState, useEffect } from "react";
 
 const ThreadListItem = ({thread}, {index}) => {
+  const [userName, setUserName] = useState(null);
+  const fetchUserData = async () => {
+    try {
+      let url = "/api/user/" + thread.creator_id;
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch user data");
+      }
+      // Parse JSON response
+      const data = await response.json();
+
+      setUserName(data.UserName);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  // UseEffect hook to fetch data when the component mounts
+  useEffect(() => {
+    fetchUserData();
+  }, []);
   
   return (
     <div className="thread-list-item">
@@ -25,7 +47,7 @@ const ThreadListItem = ({thread}, {index}) => {
                     component="span"
                     variant="body2"
                     color="text.secondary"
-                  > {thread?.anonymous && 'Anonymous' ? 'Posted By Anonymous' : `Posted by UserID: ${thread?.creator_id}`}
+                  > {thread?.anonymous ? 'Posted by Anonymous' : `Posted by: ${userName}`}
 
                   </Typography>
                   <span style={{ color: 'lavender' }}> 
@@ -36,10 +58,7 @@ const ThreadListItem = ({thread}, {index}) => {
             />       
           </Link>
         </ListItem>
-          {/*// create delete button using the delete icon that calls the delete thread function */}
-          {/*<DeleteIcon aria-label="delete" onClick={() => deleteThread(thread.id)}> 
-          </DeleteIcon> */}
-\      <Divider component="li" sx={{marginLeft: '2%', marginRight: '2%'}}/>
+      <Divider component="li" sx={{marginLeft: '2%', marginRight: '2%'}}/>
       </List>
     </div>
    

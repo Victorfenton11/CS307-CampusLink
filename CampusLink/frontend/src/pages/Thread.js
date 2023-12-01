@@ -1,36 +1,31 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Grid from "@mui/material/Grid";
-{
-  /*import AuthContext from '../context/AuthContext'*/
-}
-import { Link } from "react-router-dom";
-import ShareIcon from "@mui/icons-material/Share";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ReplyForm from "../components/ReplyForm";
 import PostCardItem from "../components/PostCardItem";
 
 const Thread = () => {
-  // get the user first
-  const [userData, setUserData] = useState(null);
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
   // initalize thread and posts component state
   const [thread, setThread] = useState(null);
   const [posts, setPosts] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
+  const [userName, setUserName] = useState(null);
+
+  // extract thread id
+  let params = useParams();
+  let threadID = params.id;
 
   // Function to fetch user data from the API
-  const fetchUserData = async () => {
+  const fetchUserName = async () => {
     try {
-      const response = await fetch("/api/user/1");
+      let url = "/api/user/" + thread.creator_id;
+      const response = await fetch(url);
 
       if (!response.ok) {
         throw new Error("Failed to fetch user data");
@@ -38,22 +33,11 @@ const Thread = () => {
       // Parse JSON response
       const data = await response.json();
 
-      setUserData(data);
-      setIsLoading(false);
+      setUserName(data.UserName);
     } catch (error) {
-      setError(error.message);
-      setIsLoading(false);
+      console.log(error.message);
     }
   };
-
-  // UseEffect hook to fetch data when the component mounts
-  useEffect(() => {
-    fetchUserData();
-  }, []);
-
-  // extract thread id
-  let params = useParams();
-  let threadID = params.id;
 
   // trigger thread update
   useEffect(() => {
@@ -65,6 +49,10 @@ const Thread = () => {
 
     getThread();
   }, [threadID]);
+
+  useEffect(() => {
+    fetchUserName();
+  }, [thread]);
 
   // trigger posts update
   useEffect(() => {
@@ -156,10 +144,10 @@ const Thread = () => {
             </Typography>
 
             <Typography sx={{ m: 1, p: 1 }} color="text.secondary">
-              {thread?.anonymous && "Anonymous"
-                ? "UserID: Anonymous, "
-                : `UserID: ${thread?.creator_id} `}
-              posted on {thread?.created}
+              {thread?.anonymous 
+                ? "Posted by: Anonymous, "
+                : `Posted by: ${userName} `}
+              at {thread?.created}
             </Typography>
           </CardContent>
         </Card>

@@ -3,8 +3,10 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Grid from "@mui/material/Grid";
+import { useState, useEffect } from "react";
 
 const PostCardItem = ({post}) => {
+  const [userName, setUserName] = useState(null);
 
   // delete comment
   const deletePost = async () => {
@@ -25,6 +27,27 @@ const PostCardItem = ({post}) => {
       console.error(error);
     }
   };
+
+  const fetchUserName = async () => {
+    try {
+      let url = "/api/user/" + post.creator_id;
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch user data");
+      }
+      // Parse JSON response
+      const data = await response.json();
+
+      setUserName(data.UserName);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserName();
+  }, []);
     
   return (
     <div>
@@ -46,7 +69,7 @@ const PostCardItem = ({post}) => {
                   {post?.creator}
                 </Link> 
                 */}
-                {post?.anonymous && 'Anonymous' ? 'Posted By Anonymous' : `UserID: ${post?.creator_id}`}
+                {post?.anonymous ? 'Posted by Anonymous' : `Posted by: ${userName}`}
                   , posted on {post?.created}
               </Typography>
         </CardContent>  
