@@ -28,6 +28,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.pagination import PageNumberPagination
 from django.core.exceptions import ObjectDoesNotExist
 
+
 class ClassLocationView(generics.ListAPIView):
     queryset = ClassLocation.objects.all()
     serializer_class = ClassLocationSerializer
@@ -386,8 +387,8 @@ class GetUserbyEmail(APIView):
 @csrf_exempt
 def accept_friend_request(request, user_id, user_name):
     try:
-        print(user_id)
-        print(user_name)
+        # print(user_id)
+        # print(user_name)
         current_user = User.objects.get(UserID=user_id)
         friend_requesting_user = User.objects.get(UserName=user_name)
         friend_request = FriendRequest.objects.get(
@@ -415,8 +416,8 @@ def accept_friend_request(request, user_id, user_name):
 @csrf_exempt
 def decline_friend_request(request, user_id, user_name):
     try:
-        print(user_id)
-        print(user_name)
+        # print(user_id)
+        # print(user_name)
         current_user = User.objects.get(UserID=user_id)
         friend_requesting_user = User.objects.get(UserName=user_name)
         friend_request = FriendRequest.objects.get(
@@ -578,6 +579,7 @@ def createThread(request):
     serializer = ThreadSerializer(new_thread, many=False)
     return Response(serializer.data)
 
+
 # PROBLEM RESOLVED
 @api_view(["POST"])
 def createPost(request):
@@ -602,10 +604,12 @@ def createPost(request):
     # print(thread.replyCount)
 
     # create new post object
-    new_post = Post(content=content, 
-                    creator=User.objects.get(pk=userID), 
-                    thread=thread,
-                    anonymous=True if anonymous == True else False,)
+    new_post = Post(
+        content=content,
+        creator=User.objects.get(pk=userID),
+        thread=thread,
+        anonymous=True if anonymous == True else False,
+    )
     print(new_post)
     new_post.save()
     # print("Save post successfully")
@@ -614,32 +618,35 @@ def createPost(request):
     # print(serializer.data)
     return Response(serializer.data)
 
+
 # delete all the following comments
 @api_view(["DELETE"])
 def deleteAllPosts(request):
     Post.objects.all().delete()
     return Response({"message": "All posts deleted."})
 
+
 # delete one comment on a thread
 @api_view(["DELETE"])
 def deletePost(request):
     try:
-        post_id = request.META.get('HTTP_POST_ID')
+        post_id = request.META.get("HTTP_POST_ID")
         post = Post.objects.get(id=post_id)
         post.delete()
         return Response({"message": "Post deleted."})
     except Post.DoesNotExist:
         return Response({"error": "Post not found."}, status=404)
 
+
 # GET THREADS BY TOPIC
-@api_view(['GET'])
+@api_view(["GET"])
 def getThreadsTopic(request, topic_id):
     # print("Hello")
     paginator = PageNumberPagination()
     paginator.page_size = 10
 
     # get threads by topic
-    threads = Thread.objects.filter(topic=topic_id).all().order_by('-updated')
+    threads = Thread.objects.filter(topic=topic_id).all().order_by("-updated")
 
     result_page = paginator.paginate_queryset(threads, request)
     serializer = ThreadSerializer(result_page, many=True)
