@@ -92,7 +92,7 @@ const fetchData = async () => {
 
   // style the paper component
   const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : "blueviolet",
     ...theme.typography.body2,
     padding: theme.spacing(),
     textAlign: 'left',
@@ -111,7 +111,9 @@ const fetchData = async () => {
         
         <Grid item xs={12} >
           <div className='d-flex justify-content-between mb-3'>
-          <Typography variant="h5" > {topics[topicID-1]} Threads</Typography>
+          <Typography variant="h5" style={{ color: 'white' }}> 
+            {topics[topicID-1]} Threads
+          </Typography>
           <ThreadForm />
           </div>
           <Item >    
@@ -121,7 +123,7 @@ const fetchData = async () => {
             hasMore={hasMore}
             loader={<h4 style={{ textAlign: 'center', marginTop: 20}}>Loading...</h4>}
             endMessage={
-                <p style={{ textAlign: 'center', marginTop: 20}}>
+                <p style={{ textAlign: 'center', marginTop: 20, color: "white"}}>
                 <span>You have seen all the threads.</span>
                 </p>
             }>
