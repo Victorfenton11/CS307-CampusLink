@@ -64,7 +64,7 @@ const Discover = () => {
         swal({
           title: "Congrats!",
           text: "Class list saved successfully!",
-          icon: "Success",
+          icon: "success",
           button: "Aww yiss!",
         });
         //alert('Class list saved successfully!');

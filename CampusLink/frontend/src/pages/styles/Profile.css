@@ -8,7 +8,7 @@
 }
 .profile-style {
   background-color: var(--background-color);
-  color: #5e7cb9;
+  color: rgb(125, 226, 244);
   overflow-y: scroll;
   height: 100vh;
   width: 100%;

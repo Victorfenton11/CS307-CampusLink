@@ -52,7 +52,7 @@ const UrlUploader = () => {
 
   return (
     <div className='center-container-cal'>
-      <label className='label-cal' htmlFor="urlInput">Enter URL:  </label>
+      <label className='label-cal' htmlFor="urlInput">Add by URL:  </label>
       <input
         className='input-cal'
         type="text"
