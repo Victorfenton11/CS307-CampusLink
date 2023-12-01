@@ -23,8 +23,8 @@ class User(models.Model):
         return self.UserName
 
 class Class(models.Model):
-    abbreviation = models.CharField(max_length=10)
-    name = models.CharField(max_length=100)
+    abbreviation = models.CharField(max_length=500)
+    name = models.CharField(max_length=500)
 
     def __str__(self):
         return f'{self.abbreviation} - {self.name}'
@@ -33,8 +33,8 @@ class Event(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200)
     description = models.TextField(null=True)
-    start = models.DateTimeField()
-    end = models.DateTimeField()
+    start = models.DateField()
+    end = models.DateField()
 
 class Upload(models.Model):
     id = models.AutoField(primary_key=True)

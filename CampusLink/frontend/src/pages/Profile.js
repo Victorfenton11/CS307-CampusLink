@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './styles/Profile.css'
 import dum_pic from '../../static/images/Test.jpg'
-
+import ClassListOnProfile from '../components/ClassListOnProfile';
 
 const Profile = () => {
   // State to store user data
@@ -132,6 +132,7 @@ const Profile = () => {
         <input type="text" value={userData.UserEmail} onChange={(e) => setUserData({ ...userData, UserEmail: e.target.value })} />
         <label className='label'>Major:</label>
         <input type="text" value={userData.Major} onChange={(e) => setUserData({ ...userData, Major: e.target.value })} />
+        <ClassListOnProfile/>
         <button className='margin-topp' onClick={handlePrivate}>I want my information to be private</button>
         <button onClick={handlePublic}>I want my information to be public</button>
         <button className='save-btn' onClick={handleSaveClick}>Save</button>

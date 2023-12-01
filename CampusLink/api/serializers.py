@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import ClassLocation, User, Upload, Event
+from .models import ClassLocation, User, Upload, Event, Class
 
 class ClassLocationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -27,3 +27,8 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model=Event
         fields=('title','description', 'start', 'end')
+
+class ClassSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Class
+        fields=('abbreviation','name')

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import ClassLocationSerializer, UserSerializer, FriendSerializer
+from .serializers import ClassLocationSerializer, UserSerializer, FriendSerializer, ClassSerializer
 from .models import ClassLocation, User, Class
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -128,34 +128,30 @@ def delete_user(request, user_email):
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-def send_email2(request):
-    subject = "Subject here"
-    message =  "Here is the message."
-    from_email = settings.EMAIL_HOST_USER
-    if subject and message and from_email:
-        try:
-            send_mail(subject, message, from_email, ["your_email@purdue.edu"])
-        except BadHeaderError:
-            return HttpResponse("Invalid header found.")
-        return HttpResponseRedirect("/contact/thanks/")
-    else:
-        # In reality we'd use a form class
-        # to get proper validation errors.
-        return HttpResponse("Make sure all fields are entered and valid.")
 
 # handles POST request to save class list
 @csrf_exempt
 def save_class_list(request):
     if request.method == 'POST':
-        class_list = request.POST.getlist('classList[]')
-        Class.objects.all().delete()   # Delete all existing classes
-        for class_data in class_list:
-            class_obj = Class(**class_data)
-            class_obj.save()
+        class_list=JSONParser().parse(request)["classList"]
+        #class_list = request.POST.getlist('classList[]')
+        #print(len(class_list))
+        #Class.objects.all().delete()   # Delete all existing classes
+        for i in range(len(class_list)):
+            abbr = class_list[i]["Title"]
+            num = class_list[i]["Number"]
+            class_data = Class(abbreviation=abbr, name = num)
+            class_data.save()
         return JsonResponse({'success': True})
     else:
         return JsonResponse({'success': False, 'error': 'Invalid request method'})
 
+@csrf_exempt
+def getClasses(request):
+    if request.method=='GET':
+        class_data = Class.objects.all()
+        class_serializer = ClassSerializer(class_data, many=True)
+        return JsonResponse(class_serializer.data, safe=False)
 
 def getFriends(request, id): 
     if request.method=='GET' and id !=0:
