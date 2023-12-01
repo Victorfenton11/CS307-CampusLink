@@ -19,14 +19,14 @@ def UploadURL(request, id):
     print("We reach this stage")
     if request.method=='POST':
         url_data=JSONParser().parse(request)
-        upload_serializer=UploadSerializer(data=url_data)
-        if upload_serializer.is_valid():
-            upload_serializer.save()
-            url = upload_serializer.data['url']
-            print(url)
-            parseURL(url)
-            print("???")
-            return JsonResponse("Added Successfully",safe=False)
+        url_val = url_data['url']
+        if url_val.endswith('ics'):
+            upload_serializer=UploadSerializer(data=url_data)
+            if upload_serializer.is_valid():
+                upload_serializer.save()
+                url = upload_serializer.data['url']
+                parseURL(url)
+                return JsonResponse("Added Successfully",safe=False)
         return JsonResponse("Failed to Add",safe=False)
 
 def parseURL(url):
@@ -42,5 +42,5 @@ def parseURL(url):
 def getEvents(request):
       event = Event.objects.all()
       event_serializer = EventSerializer(event, many=True)
-      print(event_serializer.data)
+      #print(event_serializer.data)
       return JsonResponse(event_serializer.data, safe=False)

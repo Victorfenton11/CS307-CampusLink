@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import swal from 'sweetalert';
+import './styles/importCal.css';
 
 const UrlUploader = () => {
   const navigate = useNavigate();
@@ -28,7 +30,17 @@ const UrlUploader = () => {
         url: url,
       }),
     });
-    navigate('/calendar');
+    if (url.endsWith('ics')) {
+      navigate('/calendar');
+    }
+    else {
+      swal({
+        title: "Invalid URL",
+        text: "Please enter an valid url",
+        icon: "warning",
+        button: "OK",
+      });
+    }
     if (!response.ok) {
       throw new Error('Failed to save user data');
     }
@@ -39,9 +51,10 @@ const UrlUploader = () => {
 
 
   return (
-    <div>
-      <label htmlFor="urlInput">Enter URL:</label>
+    <div className='center-container-cal'>
+      <label className='label-cal' htmlFor="urlInput">Enter URL:  </label>
       <input
+        className='input-cal'
         type="text"
         id="urlInput"
         value={url}
@@ -49,7 +62,7 @@ const UrlUploader = () => {
         placeholder="Enter URL here"
       />
 
-      <button onClick={handleUpload}>Upload</button>
+      <button className='upload-button-Cal' onClick={handleUpload}>Upload</button>
 
     </div>
   );

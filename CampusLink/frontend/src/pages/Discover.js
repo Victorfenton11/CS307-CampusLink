@@ -6,6 +6,7 @@ import SubjectList from '../components/SubjectList';
 import ClassList from '../components/ClassList';
 import './styles/CourseScheduler.css';
 import SubjectClasses from '../components/SubjectClasses';
+import swal from 'sweetalert'
 
 const Discover = () => {
   const [subjectList, setSubjects] = useState([]);
@@ -60,6 +61,12 @@ const Discover = () => {
     axios.post('/api/save-class-list/', { classList })    // Save class list to database
       .then(response => {
         console.log('Class list saved successfully!');
+        swal({
+          title: "Congrats!",
+          text: "Class list saved successfully!",
+          icon: "Success",
+          button: "Aww yiss!",
+        });
         //alert('Class list saved successfully!');
       })
       .catch(error => {
