@@ -12,10 +12,10 @@ import Grid from "@mui/material/Grid";
 }
 import { Link } from "react-router-dom";
 import ShareIcon from "@mui/icons-material/Share";
-import IconButton from "@mui/material/IconButton";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ReplyForm from "../components/ReplyForm";
 import PostCardItem from "../components/PostCardItem";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const Thread = () => {
   // get the user first
@@ -120,6 +120,20 @@ const Thread = () => {
     setPage(page + 1);
   };
 
+  // delete Posts
+  const deleteAllPosts = async () => {
+    try {
+      const response = await fetch('/api/posts/delete/', { method: 'DELETE' });
+      if (!response.ok) {
+        throw new Error('Failed to delete posts');
+      }
+      // Refresh the posts in your state
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div style={{ marginTop: 100 }}>
       <Container>
@@ -130,9 +144,8 @@ const Thread = () => {
                 {thread?.subject}
               </Typography>
 
-              <IconButton aria-label="settings">
-                <MoreVertIcon />
-              </IconButton>
+              <button onClick={deleteAllPosts}>Delete All Comments</button>
+
             </Grid>
 
             <Typography

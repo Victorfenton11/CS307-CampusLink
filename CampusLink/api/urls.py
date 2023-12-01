@@ -70,4 +70,6 @@ urlpatterns = [
 
     path('createThread/', views.createThread, name='createThread'),
     path('createPost/', views.createPost, name='createPost'),
+    
+    path('posts/delete/', views.deleteAllPosts, name='delete-all-posts'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

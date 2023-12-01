@@ -617,6 +617,11 @@ def createPost(request):
     # print(serializer.data)
     return Response(serializer.data)
 
+@api_view(["DELETE"])
+def deleteAllPosts(request):
+    Post.objects.all().delete()
+    return Response({"message": "All posts deleted."})
+
 # GET THREADS BY TOPIC
 @api_view(['GET'])
 def getThreadsTopic(request, topic_id):
