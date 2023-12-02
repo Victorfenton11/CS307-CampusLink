@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Redirecting to GroupMe Authentication</title>
+    <script>
+      // Redirect to GroupMe authentication page
+      const UserID = "{{ UserID }}";
+      window.location.href = `https://oauth.groupme.com/oauth/authorize?client_id=vWKMOdPNN11WyX5tW0rJ8jkJBokJidezS8myiHCIChiUmYK6&state=${UserID}`;
+
+      // Replace YOUR_CLIENT_ID and YOUR_REDIRECT_URI with your actual values
+    </script>
+  </head>
+  <body>
+    <p>Redirecting you to GroupMe authentication...</p>
+  </body>
+</html>

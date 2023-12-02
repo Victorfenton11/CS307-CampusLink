@@ -2,15 +2,12 @@
   --background-color: #2B3947;
 }
 
-.page {
-  overflow-y:scroll;
-}
-
 .profile-style {
-  background-color: rgba(213, 213, 213, 0.842);
+  background-color: var(--background-color);
   color: #5e7cb9;
-  height: 900px;
-  width: 76vw;
+  overflow-y: scroll;
+  height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,11 +15,6 @@
   line-height: 2em;
   color: #054231;
   justify-content: center;
-  border-radius: 1em;
-  left: 13%;
-  position: relative;
-  top: 22%;
-  overflow: hidden;
 }
 
 .top {
@@ -31,7 +23,7 @@
   text-align: center;
   text-transform: uppercase;
   font-weight: bold;
-  color: #2912bd;
+  color: #87ced6;
   max-width: 20em;
   overflow-wrap: break-word;
 }
@@ -57,11 +49,10 @@
 
 .name{ 
   text-align: center;
+  text-transform: uppercase;
   font-weight: 300;
-  color: #33293a;
+  color: #735b84;
   max-width: 20em;
-  font-size: 2em;
-  padding-bottom: 30px;
 }
 .profile-style input{
   font-family: Georgia, serif;
@@ -70,20 +61,18 @@
   padding: 0.5em 0.5em 0.5em 1em;
   font-size: 1em;
   transition: 0.2s;
-  
 }
 .profile-style input[type="file"] {
   display: none;
 }
 .custom-file-upload {
   border-radius: 50%;
-  position: absolute;
+  position: relative;
   display: inline-block;
-  padding: 2.5em;
+  padding: 0.5em;
   cursor: pointer;
   background: linear-gradient(270deg, #440c5a, #0912b7);
-  margin-bottom: 1em;
-  top: 5%;
+  margin-bottom: 2em;
 }
 .img-wrap{
   position: relative;
@@ -120,6 +109,21 @@
   margin:0.001em;
   }
   
+.profile-style button{
+  position: relative;
+  color: #054231;
+  letter-spacing: 0.05em;
+  margin: 0.5em;
+  font-size: 1em;
+  padding: 0.5em;
+  text-align: center;
+  transition: 0.5s;
+  border-radius: 0.5em;
+  cursor: pointer;
+  border-radius: 1.5em;
+  border: none;
+  background: #dfdee6;
+}
 .save{
   font-weight: 600;
   left: -1em;
@@ -141,110 +145,16 @@
   margin-bottom: 10em;
 }
 
-
-.profile-moreinfo {
-  position: relative;
-  left: 0%;
-  padding-top: 55px;
-}
-.profile-moreinfo p {
-  position: relative;
-  left: 16%;
-}
-
-.profile-names {
-  position:absolute;
-  top: 300px;
-}
-
-.privacy-buttons button {
-  color: #054231;
-  letter-spacing: 0.05em;
-  margin: 1em;
-  font-size: 1em;
-  padding: 0.5em;
-  text-align: center;
-  cursor: pointer;
-  border-radius: 1.5em;
-  border: none;
-  background: #dfdee6;
-  transition: 1s;
-}
-
-.privacy-buttons button:hover{
+.profile-style button:hover{
+  left: 0;
   color: #fff;
-  border-radius: 0em;
-  transition: 1s;
+  width: 8em;
 }
 
-.edit-button {
-  position: absolute;
-  color: #054231;
-  letter-spacing: 0.05em;
-  margin: 1em;
-  font-size: 1em;
-  padding: 0.5em;
-  text-align: center;
-  cursor: pointer;
-  border-radius: 1.5em;
-  border: none;
-  background: #dfdee6;
-  transition: 1s;
-  top:570px
+.profile-style button:focus{
+  outline: none;
 }
 
-.edit-button:hover {
-  color: #fff;
-  border-radius: 0em;
-  transition: 1s;
-}
-
-.save-btn-edit {
-  position: absolute;
-  color: #054231;
-  letter-spacing: 0.05em;
-  margin: 1em;
-  font-size: 1em;
-  padding: 0.5em;
-  text-align: center;
-  cursor: pointer;
-  border-radius: 1.5em;
-  border: none;
-  background: #dfdee6;
-  transition: 1s;
-  top: 700px;
-}
-
-.bap button {
-  color: #054231;
-  letter-spacing: 0.05em;
-  margin: 1em;
-  font-size: 1em;
-  padding: 0.5em;
-  text-align: center;
-  cursor: pointer;
-  border-radius: 1.5em;
-  border: none;
-  background: #dfdee6;
-  transition: 1s;
-}
-
-.bap button:hover {
-  color: #fff;
-  border-radius: 0em;
-  transition: 1s;
-}
-
-.bap {
-  position: absolute;
-  top: 715px;
-}
-
-.save-btn-edit:hover {
-  color: #fff;
-  border-radius: 0em;
-  transition: 1s;
-}
 @media screen and (min-width: 50em)  {
 
 }  

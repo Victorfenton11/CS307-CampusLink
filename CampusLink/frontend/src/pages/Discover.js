@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './styles/Profile.css'
 import './styles/Discovery.css'
+import ClickableProfile from '../components/ClickableProfile';
 import swal from 'sweetalert'
 
 function Discover() {
@@ -61,10 +62,10 @@ function Discover() {
                     <img htmlFor="photo-upload" src={'../../../static/images/' + item.PhotoFileName}/>
                 </div>
             </label>
-            <div className={`user-details ${item.UserID === hoveredUserId ? 'user-details-visible' : 'user-details-hidden'}`}>
-          <p>Name: {item.Name}</p>
-          <p>Username: {item.UserName}</p>
-          <p>Interest: {item.Interest}</p>
+          <div className={`user-details ${item.UserID === hoveredUserId ? 'user-details-visible' : 'user-details-hidden'}`}>
+            <p>Name: {item.Name}</p>
+            <p>Username: {item.UserName}</p>
+            <p>Interest: {item.Interest}</p>
           </div>
         </div>
       ))}

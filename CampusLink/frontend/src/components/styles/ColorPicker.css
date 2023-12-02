@@ -1,0 +1,19 @@
+.color-picker {
+    font-size: 1em;
+    min-height: 4em;
+    justify-content: center;
+    align-items: center;
+}
+
+.color-shower {
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.color-ball {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: 'inline-block';
+    margin-left: 10px;
+}

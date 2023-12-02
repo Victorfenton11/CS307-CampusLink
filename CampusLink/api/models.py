@@ -59,6 +59,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
+    GroupMeAuth = models.CharField(max_length=500, default="")
+
     objects = CustomUserManager()
 
     USERNAME_FIELD = "UserEmail"
@@ -69,6 +71,13 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def str(self):
         return self.UserName
+
+
+class Calendar(models.Model):
+    Events = models.ManyToManyField("Event", blank=True)
+
+    def __str__(self):
+        return self.Events
 
 
 class Circle(models.Model):
@@ -85,9 +94,28 @@ class Circle(models.Model):
     users = models.ManyToManyField("User", blank=True)
     groupChatCreated = models.BooleanField(default=False)
     public = models.BooleanField(default=False)
+    calendarCreated = models.BooleanField(default=False)
+    calendar = models.ForeignKey(
+        Calendar,
+        related_name="calendar",
+        default=None,
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+    )
 
     def __str__(self):
         return self.Name
+
+
+class Event(models.Model):
+    id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=200)
+    description = models.TextField(null=True)
+    start = models.DateField()
+    end = models.DateField()
+    color = models.CharField(max_length=100, default="#3174ad")
+    isPrivate = models.BooleanField(default=False)
 
 
 class CircleJoinRequest(models.Model):
@@ -117,8 +145,8 @@ class FriendRequest(models.Model):
 
 
 class Class(models.Model):
-    abbreviation = models.CharField(max_length=10)
-    name = models.CharField(max_length=100)
+    abbreviation = models.CharField(max_length=500)
+    name = models.CharField(max_length=500)
 
     def __str__(self):
         return f"{self.abbreviation} - {self.name}"

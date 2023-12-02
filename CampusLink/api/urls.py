@@ -23,10 +23,14 @@ from .views import (
     updateGroupChat,
     joinCircle,
     verify_email,
+    getGroupMeAuth,
+    AuthenticateGroupMe,
+    getClasses,
 )
 from django.conf.urls.static import static
 from django.conf import settings
 from .Recommendation import refresh
+from .importCal import getEvents
 
 urlpatterns = [
     path("class-location", ClassLocationView.as_view()),
@@ -56,8 +60,12 @@ urlpatterns = [
     re_path("removefriend", removeFriend.as_view()),
     re_path("deletecircle", deleteCircle.as_view()),
     re_path("creategroupchat", createGroupChat.as_view()),
+    re_path("getGroupMeAuth", getGroupMeAuth.as_view()),
+    path("authenticate-groupme", AuthenticateGroupMe.as_view()),
     re_path("updategroupchat", updateGroupChat.as_view()),
     path("get-security-question", get_security_question),
+    re_path(r"^getEvents$", getEvents),
+    re_path(r"^getClasses$", getClasses),
     path("joincircle", joinCircle.as_view()),
     re_path(r"^rec/([0-9]+)/refresh/([0-9]+)$", refresh),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

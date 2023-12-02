@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import ClassLocation, User, Circle
+from .models import ClassLocation, User, Circle, Event, Calendar, Class
 
 
 class ClassLocationSerializer(serializers.ModelSerializer):
@@ -20,6 +20,26 @@ class FriendSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ("UserID", "Name", "friends")
+
+
+class EventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = "__all__"
+
+
+class CalendarSerializer(serializers.ModelSerializer):
+    Events = EventSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Event
+        fields = "__all__"
+
+
+class ClassSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Class
+        fields = ("abbreviation", "name")
 
 
 class CircleSerializer(serializers.ModelSerializer):

@@ -7,6 +7,7 @@ from .serializers import (
     UserSerializer,
     FriendSerializer,
     CircleSerializer,
+    ClassSerializer,
 )
 from .models import ClassLocation, User, Class, FriendRequest, Circle
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -19,6 +20,7 @@ from django.core.mail import BadHeaderError, send_mail
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_str, force_bytes
+import requests
 
 
 class ClassLocationView(generics.ListAPIView):
@@ -229,14 +231,26 @@ def delete_user(request, user_id):
 @csrf_exempt
 def save_class_list(request):
     if request.method == "POST":
-        class_list = request.POST.getlist("classList[]")
-        Class.objects.all().delete()  # Delete all existing classes
-        for class_data in class_list:
-            class_obj = Class(**class_data)
-            class_obj.save()
+        class_list = JSONParser().parse(request)["classList"]
+        # class_list = request.POST.getlist('classList[]')
+        # print(len(class_list))
+        # Class.objects.all().delete()   # Delete all existing classes
+        for i in range(len(class_list)):
+            abbr = class_list[i]["Title"]
+            num = class_list[i]["Number"]
+            class_data = Class(abbreviation=abbr, name=num)
+            class_data.save()
         return JsonResponse({"success": True})
     else:
         return JsonResponse({"success": False, "error": "Invalid request method"})
+
+
+@csrf_exempt
+def getClasses(request):
+    if request.method == "GET":
+        class_data = Class.objects.all()
+        class_serializer = ClassSerializer(class_data, many=True)
+        return JsonResponse(class_serializer.data, safe=False)
 
 
 def getFriends(request, id):
@@ -379,6 +393,63 @@ class createGroupChat(APIView):
             return Response(
                 {"message": "Group chat for Circle could not be created."},
                 status=status.HTTP_400_BAD_REQUEST,
+            )
+
+
+class getGroupMeAuth(APIView):
+    lookup_ID_kwarg = "id"
+
+    def get(self, request, format=None):
+        try:
+            id = request.GET.get(self.lookup_ID_kwarg)
+            user = User.objects.get(UserID=id)
+
+            if user.GroupMeAuth == "":
+                context = {
+                    "UserID": id,
+                }
+                return render(request, "redirectGroupMe.html", context)
+
+            return Response(
+                user.GroupMeAuth,
+                status=status.HTTP_200_OK,
+            )
+        except:
+            return Response(
+                {"message": "Group chat for Circle could not be created."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+
+class AuthenticateGroupMe(APIView):
+    def get(self, request, format=None):
+        try:
+            code = request.GET.get("code")  # Extract 'code' parameter from URL
+            UserID = request.GET.get("state")  # Extract 'state' parameter as user ID
+
+            token_endpoint = "https://oauth.groupme.com/oauth/token"
+            client_id = "vWKMOdPNN11WyX5tW0rJ8jkJBokJidezS8myiHCIChiUmYK6"
+            redirect_uri = "http://localhost:8080/api/authenticate-groupme"  # Should match your redirect URI
+
+            payload = {
+                "client_id": client_id,
+                "redirect_uri": redirect_uri,
+                "grant_type": "authorization_code",
+                "code": code,
+            }
+
+            res = requests.post(token_endpoint, data=payload)
+            access_token = res.json().get("access_token")
+
+            # Update user model with the obtained authentication token
+            user = User.objects.get(UserID=int(UserID))
+            user.GroupMeAuth = access_token
+            user.save()
+
+            return redirect("http://localhost:8080/login")
+        except Exception as e:
+            return Response(
+                {"message": f"Error: {str(e)}"}, status=status.HTTP_400_BAD_REQUEST
             )
 
 

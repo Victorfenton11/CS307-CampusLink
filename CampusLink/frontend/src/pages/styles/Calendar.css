@@ -62,7 +62,7 @@
     background: rgba(255, 255, 255, 0.25) !important;
 }
 
-.button-container {
+.calendar-page .button-container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -112,13 +112,16 @@
     margin-top: 0.5em;
     margin-bottom: 0.5em;
     padding: 0.2em;
+    width: 85%;
+    max-width: 90%;
 }
 
 .datetime-picker {
     background: white;
-    padding: 0;
-    margin: 0;
-    width: auto;
+    width: 87% !important;
+    max-width: 90%;
+    margin-top: 0.5em !important;
+    margin-bottom: 0.5em !important;
 }
 
 .inputBox::placeholder {
@@ -148,12 +151,23 @@
     padding: 0;
 }
 
+.add-users {
+    display: flex;
+    align-items: center;
+    font-size: 1.2em;
+}
+
+.switch-button {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
 @media screen and (min-width: 50em)  {
     .calendar-page {
         margin-top: 3em;
     }
 
-    .button-container {
+    .calendar-page .button-container {
         width: 60%;
     }
 }

@@ -127,20 +127,22 @@
     text-decoration: none;
     cursor: pointer;
     background-color: rgba(73, 45, 45, 0.246);
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
     font-family: lato;
-    
+  }
+
+  .circles-style .button-animation {
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
   }
   
-  .circles-style .slide-button span:first-child {
+  .circles-style .button-animation span:first-child {
     position: relative;
     transition: color 600ms cubic-bezier(0.48, 0, 0.12, 1);
     z-index: 10;
   }
   
-  .circles-style .slide-button span:last-child {
+  .circles-style .button-animation span:last-child {
     color: white;
     display: block;
     position: absolute;
@@ -155,7 +157,7 @@
     line-height: 13px;
   }
   
-  .circles-style .slide-button:after {
+  .circles-style .button-animation:after {
     content: "";
     position: absolute;
     bottom: -50%;
@@ -169,12 +171,12 @@
     z-index: 50;
   }
   
-  .circles-style .slide-button:hover:after {
+  .circles-style .button-animation:hover:after {
     transform-origin: bottom center;
     transform: skewY(9.3deg) scaleY(2);
   }
   
-  .circles-style .slide-button:hover span:last-child {
+  .circles-style .button-animation:hover span:last-child {
     transform: translateX(-50%) translateY(-100%);
     opacity: 1;
     transition: all 900ms cubic-bezier(0.48, 0, 0.12, 1);

@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
+import axios from 'axios';
 import swal from 'sweetalert';
 import './styles/Friends.css';
 import Switch from "react-switch";
+import Modal from '../components/Modal'
+
+const GROUPME_ACCESS_TOKEN = "8yDAHep5FyzkLBMOUVlG12RYaqpfPkwFz1zbtBea";
 
 export default function Groups() {
-
   const [circleData, setCircleData] = useState([]);
   const [invitations, setInvitations] = useState([]);
   const [isCreateMode, setIsCreateMode] = useState(false);
@@ -108,50 +111,99 @@ export default function Groups() {
             }
             fetchCircleData();
           };
+
+          
+            const createCollabCalendar = async () => {
+              circle.calendarCreated = true;
+              return;
+            }
           
           const createGroupChat = async () => {
             try{
-              axios.get(`https://api.groupme.com/v3`)
-              .then(response => {
-                //TODO
-              })
-              .catch(error => {
-                console.log(error);
-              });
-
-              if (!circle.groupChatCreated) {
-                const fetchString = 'api/creategroupchat' + `?id=${circle.id}`;
-                const response = await fetch(fetchString);
-                if (!response.ok) {
-                  swal("Error!", "Could not create group chat for this Circle", "error");
-                  return;
-                }
-                swal("Created!", `Group Chat for Circle ${circle.Name} successfully created via GroupMe.`, "success");
-                circle.groupChatCreated = true;
+              const fetchString = 'api/getGroupMeAuth' + `?id=${userID}`;
+              const response = await fetch(fetchString);
+              if (!response.ok) {
+                swal("Error!", "Could not fetch GroupMe credentials", "error");
+                return;
               } else {
-                const fetchString = 'api/updategroupchat' + `?id=${circle.id}`;
-                const response = await fetch(fetchString);
-                if (!response.ok) {
-                  swal("Error!", "Could not update group chat for this Circle", "error");
-                  return;
-                }
+                const responseData = await response.text();
+                if (responseData.startsWith('<!DOCTYPE html>')) {
+                  const confirm = await swal("GroupMe Not Connected!", "Your CampusLink account is not yet connected to your GroupMe credentials. You will be redirected to GroupMe to authenticate your credentials, and then you will have to log back into Campuslink. After that, you're all set to send messages and create groups!", "warning");
+                  document.write(responseData); // Render the HTML content
+                } else {
+                  if (!circle.groupChatCreated) {
+                    const apiUrl = 'https://api.groupme.com/v3/groups';
+                    const data = {
+                      name: circle.Name,
+                      share: true,
+                      description: circle.Description,
+                    }
+    
+                    const config = {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                        'X-Access-Token': GROUPME_ACCESS_TOKEN,
+                      },
+                      body: JSON.stringify(data),
+                    };
+    
+                    const response = await fetch(apiUrl, config);
+                    if (!response.ok) {
+                      swal("Error!", "Could not create GroupMe group", "error");
+                      return;
+                    }
+                    const responseJson = await response.json();
 
-                swal("Updated!", `Group Chat for Circle ${circle.Name} successfully updated.`, "success");
+                    if (circle.users.length === 1) return;
+
+                    const addUrl = `https://api.groupme.com/v3/groups/:${responseJson.group_id}/members/add`;
+                    const newMembers = [];
+
+                    for (let i = 0; i < circle.users.length; i++) {
+                      let member = circle.users[i];
+                      if (member.UserID !== userID && !member.isPrivate) {
+                        if (member.PhoneNumber !== "") {
+                          newMembers.push({
+                            nickname: member.Name,
+                            phone_number: member.PhoneNumber,
+                          });
+                        }
+                      }
+                    }
+
+                    const addConfig = {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                        'X-Access-Token': GROUPME_ACCESS_TOKEN,
+                      },
+                      body: JSON.stringify({members: newMembers}),
+                    };
+    
+                    const addResponse = await fetch(addUrl, addConfig);
+
+                    swal("Create Success!", "GroupMe group chat successfully created! Open the GroupMe app to view it.", "success");
+                    circle.groupChatCreated = true;
+                  } else {
+                    swal("Update Success!", "GroupMe group chat successfully updated with any new users! Open the GroupMe app to view it.", "success");
+                  }
+                }
               }
             } catch (error) {
-              console.error('Error saving user data:', error.message);
+              console.error('Error creating GroupMe group:', error.message);
               return;
             }
             fetchCircleData();
-
           }
 
           return(
             <tr key={circle.id}>
               <td key="{circle.Name}">{circle.Name}</td>
               <td>{circle.Description}</td>
-              <button className="slide-button" role="button" onClick={() => createGroupChat}><span class="text">{circle.groupChatCreated ? "Update" : "Create"} Group Chat</span><span>Create Group Chat</span></button>
-              {circle.owner.UserID == userID && <button className="slide-button" role="button" onClick={deleteCircle}><span class="text">Delete Circle</span><span>are you sure?</span></button>}
+              <button className="slide-button" role="button" onClick={createCollabCalendar}>{circle.calendarCreated ? "View" : "Create"} Collaborative Calendar</button>
+              <button className="slide-button" role="button" onClick={createGroupChat}>{circle.groupChatCreated ? "Update" : "Create"} Group Chat</button>
+              {circle.owner.UserID == userID && <button className="slide-button button-animation" role="button" onClick={deleteCircle}><span class="text">Delete Circle</span><span>are you sure?</span></button>}
             </tr>
           )
         }
@@ -195,17 +247,16 @@ export default function Groups() {
     return (
       <div className="circles-style">
         <div className="overlay">
-          <div className="overlay-content-wrapper">
+          <Modal show={isCreateMode} handleClose={handleCreateClick}>
             <input id="newCircleName" className="inputBox" type="text" placeholder='New Circle Name'></input>
             <input id="newCircleDescription" className="inputBox description" type="text" placeholder='Description'></input>
             <label className='add-users'>Add Users:</label>
             <input id="userToAdd" className="inputBox" type="text" placeholder='username'></input>
             <button className="button addButton" onClick={addToCircle}>Add to Circle</button>
             <label className='add-users'>{usersList.join()}</label>
-            <label className='add-users'>Private<Switch onChange={handleChange} checked={checked} uncheckedIcon={false} checkedIcon={false}/>Public</label>
+            <label className='add-users'>Private<Switch className='switch-button' onChange={handleChange} checked={checked} uncheckedIcon={false} checkedIcon={false}/>Public</label>
             <button className="button createButton" onClick={createCircle}>Create Circle</button>
-            <button className="button" onClick={handleCreateClick}>Cancel</button>
-          </div>
+          </Modal>
         </div>
         <div className="content-wrapper">
             <div className="button-container">

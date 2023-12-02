@@ -77,6 +77,30 @@ export default function Friends() {
            }
            fetchFriendData();
           };
+
+          const messageUser = async () => {
+            try{
+              const fetchString = 'api/getGroupMeAuth' + `?id=${userID}`;
+              const response = await fetch(fetchString);
+              if (!response.ok) {
+                swal("Error!", "Could not fetch GroupMe credentials", "error");
+                return;
+              } else {
+                const responseData = await response.text();
+                if (responseData.startsWith('<!DOCTYPE html>')) {
+                  const confirm = await swal("GroupMe Not Connected!", "Your CampusLink account is not yet connected to your GroupMe credentials. You will be redirected to GroupMe to authenticate your credentials, and then you will have to log back into Campuslink. After that, you're all set to send messages and create groups!", "warning");
+                  document.write(responseData); // Render the HTML content
+                } else {
+                  const apiUrl = 'https://api.groupme.com/v3/direct_messages';
+                  //TODO
+                }
+              }
+            } catch (error) {
+              console.error('Error creating GroupMe group:', error.message);
+              return;
+            }
+          }
+
           return(
             <tr>
               <td key="{user.UserName}">
@@ -84,8 +108,8 @@ export default function Friends() {
               </td>
               <td>{user.Name}</td>
               <td>{user.UserEmail}</td>
-              <button className="slide-button" role="button" onClick={removeFriend}><span class="text">Remove Friend</span><span>are you sure?</span></button>
-             
+              <button className="slide-button button-animation" role="button" onClick={removeFriend}><span class="text">Remove Friend</span><span>are you sure?</span></button>
+              {user.PhoneNumber !== "" && <button className="slide-button" role="button" onClick={messageUser}>Message via GroupMe</button>}
             </tr>
           )
          
