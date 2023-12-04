@@ -153,18 +153,19 @@ export default function Groups() {
                       body: JSON.stringify(data),
                     };
     
-                    const response = await fetch(apiUrl, config);
-                    if (!response.ok) {
+                    let newGroupId = null;
+                    await fetch(apiUrl, config).then(response => response.json()).then(data => {
+                      newGroupId = data.response.group_id;
+                      console.log(newGroupId);
+                    }).catch(error => {
+                      console.error("Error creating group:", error);
                       swal("Error!", "Could not create GroupMe group", "error");
                       return;
-                    }
-                    const responseJson = await response.json();
+                    })
 
                     if (circle.users.length === 1) return;
 
-                    console.log(responseJson.group_id);
-
-                    const addUrl = `https://api.groupme.com/v3/groups/:${responseJson.group_id}/members/add`;
+                    const addUrl = `https://api.groupme.com/v3/groups/${newGroupId}/members/add`;
                     const newMembers = [];
 
                     for (let i = 0; i < circle.users.length; i++) {

@@ -98,11 +98,6 @@ export default function Friends() {
 
                   const access_token = responseData.slice(1, -1);
                   const apiUrl = 'https://api.groupme.com/v3/direct_messages';
-                  const data = {
-                    source_guid: "BAAAAAP",
-                    recipient_id: user.GroupMeId,
-                    text: "Hello! via CampusLink",
-                  }
   
                   const config = {
                     method: 'POST',
@@ -110,16 +105,21 @@ export default function Friends() {
                       'Content-Type': 'application/json',
                       'X-Access-Token': access_token,
                     },
-                    body: JSON.stringify(data),
+                    body: JSON.stringify({
+                      direct_message: {recipient_id: user.GroupMeId, text: "Hello! via Campuslink."}
+                    }),
                   };
   
-                  const response = await fetch(apiUrl, config);
-                  if (!response.ok) {
+                  await fetch(apiUrl, config).then(response => response.json())
+                  .then(data => {
+                    console.log('Direct message sent:', data);
+                    swal("Message Success!", "Successfully sent a message to this user via GroupMe. Open the GroupMe app to continue your conversation!", "success");
+                  })
+                  .catch(error => {
+                    console.error('Error sending direct message:', error);
                     swal("Error!", "Could not create GroupMe direct message", "error");
                     return;
-                  }
-                  
-                  swal("Message Success!", "Successfully sent a message to this user via GroupMe. Open the GroupMe app to continue your conversation!", "success");
+                  });                  
                 }
               }
             } catch (error) {
