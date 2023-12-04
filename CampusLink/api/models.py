@@ -60,6 +60,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
 
     GroupMeAuth = models.CharField(max_length=500, default="")
+    GroupMeId = models.CharField(max_length=500, default="")
 
     objects = CustomUserManager()
 

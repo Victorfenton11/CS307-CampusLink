@@ -5,8 +5,6 @@ import './styles/Friends.css';
 import Switch from "react-switch";
 import Modal from '../components/Modal'
 
-const GROUPME_ACCESS_TOKEN = "8yDAHep5FyzkLBMOUVlG12RYaqpfPkwFz1zbtBea";
-
 export default function Groups() {
   const [circleData, setCircleData] = useState([]);
   const [invitations, setInvitations] = useState([]);
@@ -117,6 +115,12 @@ export default function Groups() {
               circle.calendarCreated = true;
               return;
             }
+
+          const setGroupChatCreated = async () => {
+            const fetchString = 'api/setGCcreated' + `?id=${circle.id}`;
+            const response = await fetch(fetchString);
+            fetchCircleData();
+          }
           
           const createGroupChat = async () => {
             try{
@@ -128,10 +132,11 @@ export default function Groups() {
               } else {
                 const responseData = await response.text();
                 if (responseData.startsWith('<!DOCTYPE html>')) {
-                  const confirm = await swal("GroupMe Not Connected!", "Your CampusLink account is not yet connected to your GroupMe credentials. You will be redirected to GroupMe to authenticate your credentials, and then you will have to log back into Campuslink. After that, you're all set to send messages and create groups!", "warning");
-                  document.write(responseData); // Render the HTML content
+                  swal("GroupMe Not Connected!", "Your CampusLink account is not yet connected to your GroupMe credentials. Please navigate to the profile page to connect your GroupMe account.", "error");
+                  return;
                 } else {
                   if (!circle.groupChatCreated) {
+                    const access_token = responseData.slice(1, -1);
                     const apiUrl = 'https://api.groupme.com/v3/groups';
                     const data = {
                       name: circle.Name,
@@ -143,7 +148,7 @@ export default function Groups() {
                       method: 'POST',
                       headers: {
                         'Content-Type': 'application/json',
-                        'X-Access-Token': GROUPME_ACCESS_TOKEN,
+                        'X-Access-Token': access_token,
                       },
                       body: JSON.stringify(data),
                     };
@@ -157,16 +162,28 @@ export default function Groups() {
 
                     if (circle.users.length === 1) return;
 
+                    console.log(responseJson.group_id);
+
                     const addUrl = `https://api.groupme.com/v3/groups/:${responseJson.group_id}/members/add`;
                     const newMembers = [];
 
                     for (let i = 0; i < circle.users.length; i++) {
                       let member = circle.users[i];
                       if (member.UserID !== userID && !member.isPrivate) {
-                        if (member.PhoneNumber !== "") {
+                        if (member.GroupMeId !== "") {
+                          newMembers.push({
+                            nickname: member.Name,
+                            user_id: member.GroupMeId,
+                          });
+                        } else if (member.PhoneNumber !== "") {
                           newMembers.push({
                             nickname: member.Name,
                             phone_number: member.PhoneNumber,
+                          });
+                        } else if (member.UserEmail !== "") {
+                          newMembers.push({
+                            nickname: member.Name,
+                            email: member.UserEmail,
                           });
                         }
                       }
@@ -176,15 +193,20 @@ export default function Groups() {
                       method: 'POST',
                       headers: {
                         'Content-Type': 'application/json',
-                        'X-Access-Token': GROUPME_ACCESS_TOKEN,
+                        'X-Access-Token': access_token,
                       },
                       body: JSON.stringify({members: newMembers}),
                     };
     
                     const addResponse = await fetch(addUrl, addConfig);
+                    if (!addResponse.ok) {
+                      swal("Group Created but not all users added", "Your new GroupMe group chat was successfully created, but not all users were able to be added.", "warning");
+                      setGroupChatCreated();
+                      return;
+                    }
 
                     swal("Create Success!", "GroupMe group chat successfully created! Open the GroupMe app to view it.", "success");
-                    circle.groupChatCreated = true;
+                    setGroupChatCreated();
                   } else {
                     swal("Update Success!", "GroupMe group chat successfully updated with any new users! Open the GroupMe app to view it.", "success");
                   }

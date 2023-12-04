@@ -19,13 +19,12 @@ from .views import (
     getCircles,
     create_circle,
     deleteCircle,
-    createGroupChat,
-    updateGroupChat,
     joinCircle,
     verify_email,
     getGroupMeAuth,
     AuthenticateGroupMe,
     getClasses,
+    SetGroupChatCreated,
 )
 from django.conf.urls.static import static
 from django.conf import settings
@@ -59,10 +58,9 @@ urlpatterns = [
     re_path("addfriend", addFriend.as_view()),
     re_path("removefriend", removeFriend.as_view()),
     re_path("deletecircle", deleteCircle.as_view()),
-    re_path("creategroupchat", createGroupChat.as_view()),
     re_path("getGroupMeAuth", getGroupMeAuth.as_view()),
     path("authenticate-groupme", AuthenticateGroupMe.as_view()),
-    re_path("updategroupchat", updateGroupChat.as_view()),
+    re_path("setGCcreated", SetGroupChatCreated.as_view()),
     path("get-security-question", get_security_question),
     re_path(r"^getEvents$", getEvents),
     re_path(r"^getClasses$", getClasses),

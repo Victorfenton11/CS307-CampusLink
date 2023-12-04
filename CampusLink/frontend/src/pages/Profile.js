@@ -57,12 +57,15 @@ const Profile = () => {
       setIsLoading(false);
     }
   };
+
   const handleEditClick = () => {
     setIsEditMode(true);
   };
+
   const handleImgError= () => {
     setImgError(true);
   };
+
   const onClickHandler = () => {
     imageGalleryRef.current.fullscreen();
   };
@@ -120,6 +123,30 @@ const Profile = () => {
     return navigate('/calendar');
   }
 
+  async function connectGroupMe() {
+    try {
+      const userID = sessionStorage.getItem('userID');
+      const fetchString = 'api/getGroupMeAuth' + `?id=${userID}`;
+      const response = await fetch(fetchString);
+      if (!response.ok) {
+        swal("Error!", "Could not fetch GroupMe credentials", "error");
+        return;
+      } else {
+        const responseData = await response.text();
+        if (responseData.startsWith('<!DOCTYPE html>')) {
+          const confirm = await swal("Redirecting to GroupMe!", "You will be redirected to GroupMe to authenticate your credentials, and then you will have to log back into Campuslink. After that, you're all set to send messages and create groups!", "warning");
+          document.write(responseData); // Render the HTML content
+        } else {
+          swal("Already Connected.", "Your GroupMe Credentails are already connected to your Campuslink account.", "success");
+          return;
+        }
+      }
+    } catch (error) {
+      console.error('Error creating GroupMe group:', error.message);
+      return;
+    }
+  }
+
   // UseEffect hook to fetch data when the component mounts
   useEffect(() => {
     fetchUserData();
@@ -175,6 +202,7 @@ const Profile = () => {
         <div className='name'> <label className='label'>
           UserName: </label>{userData.UserName}</div>
           <button onClick={handleEditClick}>Edit</button>
+          <button onClick={connectGroupMe}>Connect GroupMe Credentials</button>
           <button onClick={handleCalendarClick}>My Calendar</button>
           <button onClick={handleSignOut}>Sign Out</button>
           <button onClick={redirectToDeletingPage}>Delete Account</button>
@@ -203,6 +231,7 @@ const Profile = () => {
           <div className='name'><label className='label'>
           Interest:</label>{userData.Interest}</div>
         <button onClick={handleEditClick}>Edit</button>
+        <button onClick={connectGroupMe}>Connect GroupMe Credentials</button>
         <button onClick={handleCalendarClick}>My Calendar</button>
         <button onClick={handleSignOut}>Sign Out</button>
         <button onClick={redirectToDeletingPage}>Delete Account</button>

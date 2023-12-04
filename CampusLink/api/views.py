@@ -375,27 +375,6 @@ class deleteCircle(APIView):
             )
 
 
-class createGroupChat(APIView):
-    lookup_ID_kwarg = "id"
-
-    def get(self, request, format=None):
-        try:
-            id = request.GET.get(self.lookup_ID_kwarg)
-            circle = Circle.objects.get(id=id)
-
-            phoneNumbers = []
-            for user in circle.users.all():
-                if not user.isPrivate:
-                    if user.PhoneNumber != "":
-                        phoneNumbers.append(user.PhoneNumber)
-
-        except:
-            return Response(
-                {"message": "Group chat for Circle could not be created."},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
-
 class getGroupMeAuth(APIView):
     lookup_ID_kwarg = "id"
 
@@ -441,9 +420,19 @@ class AuthenticateGroupMe(APIView):
             res = requests.post(token_endpoint, data=payload)
             access_token = res.json().get("access_token")
 
+            headers = {
+                "X-Access-Token": access_token,
+                "Content-Type": "application/json",
+            }
+
+            response = requests.get(
+                "https://api.groupme.com/v3/users/me", headers=headers
+            )
+
             # Update user model with the obtained authentication token
             user = User.objects.get(UserID=int(UserID))
             user.GroupMeAuth = access_token
+            user.GroupMeId = response.json()["response"]["id"]
             user.save()
 
             return redirect("http://localhost:8080/login")
@@ -453,7 +442,7 @@ class AuthenticateGroupMe(APIView):
             )
 
 
-class updateGroupChat(APIView):
+class SetGroupChatCreated(APIView):
     lookup_ID_kwarg = "id"
 
     def get(self, request, format=None):
@@ -461,12 +450,13 @@ class updateGroupChat(APIView):
             id = request.GET.get(self.lookup_ID_kwarg)
             circle = Circle.objects.get(id=id)
 
-            phoneNumbers = []
-            for user in circle.users.all():
-                if not user.isPrivate:
-                    if user.PhoneNumber != "":
-                        phoneNumbers.append(user.PhoneNumber)
+            circle.groupChatCreated = True
+            circle.save()
 
+            return Response(
+                {"message": "Successfully set Group Chat Created"},
+                status=status.HTTP_200_OK,
+            )
         except:
             return Response(
                 {"message": "Group chat for Circle could not be created."},

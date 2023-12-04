@@ -88,11 +88,38 @@ export default function Friends() {
               } else {
                 const responseData = await response.text();
                 if (responseData.startsWith('<!DOCTYPE html>')) {
-                  const confirm = await swal("GroupMe Not Connected!", "Your CampusLink account is not yet connected to your GroupMe credentials. You will be redirected to GroupMe to authenticate your credentials, and then you will have to log back into Campuslink. After that, you're all set to send messages and create groups!", "warning");
-                  document.write(responseData); // Render the HTML content
+                  swal("GroupMe Not Connected!", "Your CampusLink account is not yet connected to your GroupMe credentials. Please navigate to the profile page to connect your GroupMe account.", "error");
+                  return;
                 } else {
+                  if (user.GroupMeId === "") {
+                    swal("Friend's GroupMe not Connected!", "The person who you are attempting to message does not have his GroupMe credentials connected to Campuslink yet. Please ask them to connect their GroupMe and try again.", "error");
+                    return;
+                  }
+
+                  const access_token = responseData.slice(1, -1);
                   const apiUrl = 'https://api.groupme.com/v3/direct_messages';
-                  //TODO
+                  const data = {
+                    source_guid: "BAAAAAP",
+                    recipient_id: user.GroupMeId,
+                    text: "Hello! via CampusLink",
+                  }
+  
+                  const config = {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'X-Access-Token': access_token,
+                    },
+                    body: JSON.stringify(data),
+                  };
+  
+                  const response = await fetch(apiUrl, config);
+                  if (!response.ok) {
+                    swal("Error!", "Could not create GroupMe direct message", "error");
+                    return;
+                  }
+                  
+                  swal("Message Success!", "Successfully sent a message to this user via GroupMe. Open the GroupMe app to continue your conversation!", "success");
                 }
               }
             } catch (error) {
