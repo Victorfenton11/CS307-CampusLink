@@ -25,6 +25,14 @@ from .views import (
     AuthenticateGroupMe,
     getClasses,
     SetGroupChatCreated,
+    getThread,
+    getThreads,
+    getPosts,
+    getThreadsTopic,
+    createPost,
+    createThread,
+    deleteAllPosts,
+    deletePost,
 )
 from django.conf.urls.static import static
 from django.conf import settings
@@ -66,4 +74,13 @@ urlpatterns = [
     re_path(r"^getClasses$", getClasses),
     path("joincircle", joinCircle.as_view()),
     re_path(r"^rec/([0-9]+)/refresh/([0-9]+)$", refresh),
+    # THREADS
+    path("threads/", getThreads, name="threads"),
+    path("threads/<int:thread_id>", getThread, name="thread"),
+    path("threads/<int:thread_id>/posts", getPosts, name="posts"),
+    path("threads/topic/<int:topic_id>", getThreadsTopic, name="getThreadsTopic"),
+    path("createThread/", createThread, name="createThread"),
+    path("createPost/", createPost, name="createPost"),
+    path("posts/delete/", deleteAllPosts, name="delete-all-posts"),
+    path("posts/deleteOne/", deletePost, name="delete-post"),  # delete individual post
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

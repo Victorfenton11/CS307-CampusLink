@@ -4,9 +4,11 @@
 
 .profile-style {
   background-color: var(--background-color);
+  top: 0;
   color: #5e7cb9;
-  overflow-y: scroll;
-  height: 100vh;
+  overflow-y: hidden;
+  margin-top: 1.5em;
+  height: auto;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -156,5 +158,10 @@
 }
 
 @media screen and (min-width: 50em)  {
-
+  .profile-style {
+    top: 0.8em;
+    overflow-y: hidden;
+    margin-top: 0.5em;
+    height: auto;
+  }
 }  

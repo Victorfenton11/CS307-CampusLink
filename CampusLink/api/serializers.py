@@ -1,5 +1,16 @@
 from rest_framework import serializers
-from .models import ClassLocation, User, Circle, Event, Calendar, Class
+from .models import (
+    ClassLocation,
+    User,
+    Circle,
+    Event,
+    Calendar,
+    Class,
+    Thread,
+    Post,
+    User,
+)
+from rest_framework.serializers import ModelSerializer
 
 
 class ClassLocationSerializer(serializers.ModelSerializer):
@@ -56,4 +67,57 @@ class CircleSerializer(serializers.ModelSerializer):
             "users",
             "groupChatCreated",
             "public",
+        )
+
+
+# create serializer for Posts and Details
+class ThreadSerializer(ModelSerializer):
+    creator_id = serializers.SerializerMethodField("creator_id")
+
+    def creator_id(self):
+        creator_id = serializers.IntegerField()
+        return creator_id
+
+    creator = serializers.CharField()
+
+    created = serializers.DateTimeField(format="%d-%m-%Y %H:%M:%S")
+
+    class Meta:
+        model = Thread
+        fields = (
+            "id",
+            "creator",
+            "created",
+            "subject",
+            "content",
+            "topic",
+            "updated",
+            "replyCount",
+            "creator_id",
+            "anonymous",
+        )
+
+
+class PostSerializer(ModelSerializer):
+    creator_id = serializers.SerializerMethodField("creator_id")
+
+    def creator_id(self):
+        creator_id = serializers.IntegerField()
+        return creator_id
+
+    creator = serializers.CharField()
+    created = serializers.DateTimeField(format="%d-%m-%Y %H:%M:%S")
+    updated = serializers.DateTimeField(format="%d-%m-%Y %H:%M:%S")
+
+    class Meta:
+        model = Post
+        fields = (
+            "id",
+            "creator",
+            "created",
+            "content",
+            "updated",
+            "thread",
+            "creator_id",
+            "anonymous",
         )

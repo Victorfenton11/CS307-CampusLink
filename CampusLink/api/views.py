@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -9,7 +9,7 @@ from .serializers import (
     CircleSerializer,
     ClassSerializer,
 )
-from .models import ClassLocation, User, Class, FriendRequest, Circle
+from .models import ClassLocation, User, Class, FriendRequest, Circle, Post, Thread
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
@@ -21,6 +21,12 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_str, force_bytes
 import requests
+from .serializers import ThreadSerializer, PostSerializer
+import json
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework.pagination import PageNumberPagination
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class ClassLocationView(generics.ListAPIView):
@@ -572,3 +578,164 @@ class ResetPassword(APIView):
             except:
                 pass
         return Response(data, status=status.HTTP_200_OK)
+
+
+# handles GET request to get class list
+# TODO: implement this
+
+
+# for the POST pages
+@api_view(["GET"])
+def getThreads(request):
+    # set pagination
+    paginator = PageNumberPagination()
+    paginator.page_size = 15
+    threads = Thread.objects.all().order_by("-updated")
+    result_page = paginator.paginate_queryset(threads, request)
+    serializer = ThreadSerializer(result_page, many=True)
+
+    return paginator.get_paginated_response(serializer.data)
+
+
+@api_view(["GET"])
+def getThread(request, thread_id):
+    try:
+        thread = Thread.objects.get(pk=thread_id)
+    except thread.DoesNotExist:
+        content = {"The Thread does not exist."}
+        return Response(content)
+
+    # print(thread)
+
+    thread = Thread.objects.get(pk=thread_id)
+    serializer = ThreadSerializer(thread, many=False)
+
+    # print(serializer.data)
+
+    return Response(serializer.data)
+
+
+@api_view(["GET"])
+def getPosts(request, thread_id):
+    # set pagination
+    paginator = PageNumberPagination()
+    paginator.page_size = 10
+
+    # get the thread
+    thread = Thread.objects.get(pk=thread_id)
+
+    # get all post belong to the given thread
+    posts = thread.thread_posts.order_by("created").all()
+    result_page = paginator.paginate_queryset(posts, request)
+    serializer = PostSerializer(result_page, many=True)
+
+    return paginator.get_paginated_response(serializer.data)
+
+
+@api_view(["POST"])
+def createThread(request):
+    # print("HELLO")
+    data = json.loads(request.body)
+    # print(data)
+    # handle unauthenticated user or invalid user
+    try:
+        userID = data["creator"]["UserID"]
+    except TypeError:
+        return Response(
+            {"res": "Unauthenticated user"}, status=status.HTTP_401_UNAUTHORIZED
+        )
+
+    subject = data["subject"]
+    content = data["content"]
+    topic = data["topic"][0]["value"]
+    anonymous = data["anonymous"]
+
+    # print(anonymous)
+
+    new_thread = Thread(
+        subject=subject,
+        content=content,
+        creator=User.objects.get(pk=userID),
+        topic=topic,
+        anonymous=True if anonymous == True else False,
+    )
+    new_thread.save()
+    # print("The new anonymous")
+    # print(new_thread.anonymous)
+
+    serializer = ThreadSerializer(new_thread, many=False)
+    return Response(serializer.data)
+
+
+# PROBLEM RESOLVED
+@api_view(["POST"])
+def createPost(request):
+    data = json.loads(request.body)
+    # print(data)
+    # handle unauthenticated user or invalid user
+    try:
+        userID = data["creator"]["UserID"]
+    except TypeError:
+        return Response(
+            {"res": "Unauthenticated user"}, status=status.HTTP_401_UNAUTHORIZED
+        )
+
+    content = data["content"]
+    threadID = data["thread"]
+    anonymous = data["anonymous"]
+
+    # update reply count of the assoicated thread
+    thread = Thread.objects.get(pk=threadID)
+    thread.replyCount += 1
+    thread.save()
+    # print(thread.replyCount)
+
+    # create new post object
+    new_post = Post(
+        content=content,
+        creator=User.objects.get(pk=userID),
+        thread=thread,
+        anonymous=True if anonymous == True else False,
+    )
+    print(new_post)
+    new_post.save()
+    # print("Save post successfully")
+
+    serializer = PostSerializer(new_post, many=False)
+    # print(serializer.data)
+    return Response(serializer.data)
+
+
+# delete all the following comments
+@api_view(["DELETE"])
+def deleteAllPosts(request):
+    Post.objects.all().delete()
+    return Response({"message": "All posts deleted."})
+
+
+# delete one comment on a thread
+@api_view(["DELETE"])
+def deletePost(request):
+    try:
+        post_id = request.META.get("HTTP_POST_ID")
+        post = Post.objects.get(id=post_id)
+        post.delete()
+        return Response({"message": "Post deleted."})
+    except Post.DoesNotExist:
+        return Response({"error": "Post not found."}, status=404)
+
+
+# GET THREADS BY TOPIC
+@api_view(["GET"])
+def getThreadsTopic(request, topic_id):
+    # print("Hello")
+    paginator = PageNumberPagination()
+    paginator.page_size = 10
+
+    # get threads by topic
+    threads = Thread.objects.filter(topic=topic_id).all().order_by("-updated")
+
+    result_page = paginator.paginate_queryset(threads, request)
+    serializer = ThreadSerializer(result_page, many=True)
+
+    return paginator.get_paginated_response(serializer.data)

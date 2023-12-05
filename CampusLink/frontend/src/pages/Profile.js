@@ -182,6 +182,8 @@ const Profile = () => {
         <input type="text" value={userData.PhoneNumber} onChange={(e) => setUserData({ ...userData, PhoneNumber: e.target.value })} />
         <label className='label'>Major:</label>
         <input type="text" value={userData.Major} onChange={(e) => setUserData({ ...userData, Major: e.target.value })} />
+        <label className='label'>Interest:</label>
+        <input type="text" value={userData.Interest} onChange={(e) => setUserData({ ...userData, Interest: e.target.value })} />
         <button className='margin-topp' onClick={handlePrivate}>I want my information to be private</button>
         <button onClick={handlePublic}>I want my information to be public</button>
         <button className='save-btn' onClick={handleSaveClick}>Save</button>
